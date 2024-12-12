@@ -12,4 +12,11 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\CareerBoostAI.Application\CareerBoostAI.Application.csproj" />
+      <ProjectReference Include="..\CareerBoostAI.Contracts\CareerBoostAI.Contracts.csproj" />
+      <ProjectReference Include="..\CareerBoostAI.Infrastructure\CareerBoostAI.Infrastructure.csproj" />
+      <ProjectReference Include="..\CareerBoostAI.Persistence\CareerBoostAI.Persistence.csproj" />
+    </ItemGroup>
+
 </Project>
