@@ -15,4 +15,9 @@
             <CopyToPublishDirectory>Never</CopyToPublishDirectory>
         </None>
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\CareerBoostAI.Application\CareerBoostAI.Application.csproj" />
+      <ProjectReference Include="..\CareerBoostAI.Infrastructure\CareerBoostAI.Infrastructure.csproj" />
+      <ProjectReference Include="..\CareerBoostAI.Persistence\CareerBoostAI.Persistence.csproj" />
+    </ItemGroup>
 </Project>
