@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CareerBoostAI.Application.Abstractions.Mediator;
+using MediatR;
 
 namespace CareerBoostAI.Application.Candidate.Commands.CreateProfile;
 
@@ -9,4 +10,4 @@ public sealed record CreateProfileCommand(
     DateTime DateOfBirth,
     string PhoneCode,
     string PhoneNumber
-) : IRequest;
+) : ICommand;

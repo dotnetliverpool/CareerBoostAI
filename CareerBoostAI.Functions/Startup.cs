@@ -1,4 +1,4 @@
-﻿using CareerBoostAI.Application;
+﻿using CareerBoostAI.Application.Extensions;
 using CareerBoostAI.Functions;
 using CareerBoostAI.Infrastructure;
 using CareerBoostAI.Persistence;

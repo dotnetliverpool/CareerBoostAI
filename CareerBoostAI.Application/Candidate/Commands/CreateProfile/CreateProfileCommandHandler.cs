@@ -1,10 +1,11 @@
-﻿using MediatR;
+﻿using CareerBoostAI.Application.Abstractions.Mediator;
+using MediatR;
 
 namespace CareerBoostAI.Application.Candidate.Commands.CreateProfile;
 
-public class CreateProfileCommandHandler : IRequestHandler<CreateProfileCommand>
+public class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand>
 {
-    public Task Handle(CreateProfileCommand request, CancellationToken cancellationToken)
+    public Task<object> Handle(CreateProfileCommand request, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
         // create and validate Value objects

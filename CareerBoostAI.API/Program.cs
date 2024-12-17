@@ -2,7 +2,7 @@
 
 using System.Reflection;
 using CareerBoostAI.API.Extensions;
-using CareerBoostAI.Application;
+using CareerBoostAI.Application.Extensions;
 using CareerBoostAI.Infrastructure;
 using CareerBoostAI.Persistence;
 
