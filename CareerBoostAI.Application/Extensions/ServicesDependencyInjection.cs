@@ -2,7 +2,7 @@
 
 namespace CareerBoostAI.Application;
 
-public static class DependencyInjection
+public static class ServicesDependencyInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {

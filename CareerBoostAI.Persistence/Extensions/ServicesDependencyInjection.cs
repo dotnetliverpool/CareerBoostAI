@@ -2,7 +2,7 @@
 
 namespace CareerBoostAI.Persistence;
 
-public static class DependencyInjection
+public static class ServicesDependencyInjection
 {
     public static IServiceCollection AddPersistence(this IServiceCollection services)
     {
