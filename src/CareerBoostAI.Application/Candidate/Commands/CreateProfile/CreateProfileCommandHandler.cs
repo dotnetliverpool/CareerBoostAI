@@ -5,7 +5,7 @@ namespace CareerBoostAI.Application.Candidate.Commands.CreateProfile;
 
 public class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand>
 {
-    public Task<object> Handle(CreateProfileCommand request, CancellationToken cancellationToken)
+    public Task Handle(CreateProfileCommand request, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
         // create and validate Value objects
