@@ -1,7 +1,6 @@
 ﻿using CareerBoostAI.Application.Extensions;
 using CareerBoostAI.Functions;
 using CareerBoostAI.Infrastructure;
-using CareerBoostAI.Persistence;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 
@@ -15,7 +14,6 @@ public class Startup : FunctionsStartup
         var config = BuildConfiguration(builder.GetContext().ApplicationRootPath);
         builder.Services.AddApplication();
         builder.Services.AddInfrastructure();
-        builder.Services.AddPersistence();
     }
 
     private IConfiguration BuildConfiguration(string applicationRootPath)
