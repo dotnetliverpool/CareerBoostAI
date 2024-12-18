@@ -6,8 +6,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Application",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Infrastructure", "src\CareerBoostAI.Infrastructure\CareerBoostAI.Infrastructure.csproj", "{80F8370C-1ED7-423E-9039-10516EC9A9BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Persistence", "src\CareerBoostAI.Persistence\CareerBoostAI.Persistence.csproj", "{6B94AA1D-92F9-436F-9D38-5CEC92B41012}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.IntegrationTests", "Tests\CareerBoostAI.IntegrationTests\CareerBoostAI.IntegrationTests.csproj", "{C7404FB4-2004-4583-A3FE-691239CA01F8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Contracts", "src\CareerBoostAI.Contracts\CareerBoostAI.Contracts.csproj", "{4D84DA8A-FDBD-4176-9593-1B691B286E6E}"
@@ -34,10 +32,6 @@ Global
 		{80F8370C-1ED7-423E-9039-10516EC9A9BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80F8370C-1ED7-423E-9039-10516EC9A9BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80F8370C-1ED7-423E-9039-10516EC9A9BD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6B94AA1D-92F9-436F-9D38-5CEC92B41012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6B94AA1D-92F9-436F-9D38-5CEC92B41012}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6B94AA1D-92F9-436F-9D38-5CEC92B41012}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6B94AA1D-92F9-436F-9D38-5CEC92B41012}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C7404FB4-2004-4583-A3FE-691239CA01F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C7404FB4-2004-4583-A3FE-691239CA01F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7404FB4-2004-4583-A3FE-691239CA01F8}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -17,7 +17,6 @@
       <ProjectReference Include="..\CareerBoostAI.Application\CareerBoostAI.Application.csproj" />
       <ProjectReference Include="..\CareerBoostAI.Contracts\CareerBoostAI.Contracts.csproj" />
       <ProjectReference Include="..\CareerBoostAI.Infrastructure\CareerBoostAI.Infrastructure.csproj" />
-      <ProjectReference Include="..\CareerBoostAI.Persistence\CareerBoostAI.Persistence.csproj" />
     </ItemGroup>
 
 </Project>
