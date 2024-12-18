@@ -15,10 +15,12 @@ public class Candidate : AggregateRoot<CandidateId>
     
 
     public Candidate(
+        CandidateId id,
         CandidateFirstName firstName, 
         CandidateLastName lastName,
         CandidateDOB dateOfBirth)
     {
+        Id = id;
         _firstName = firstName;
         _lastName = lastName;
         _dateOfBirth = dateOfBirth;
