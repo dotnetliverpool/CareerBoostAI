@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <Folder Include="DomainEvents\" />
+      <Folder Include="Repositories\" />
     </ItemGroup>
 
 </Project>

@@ -11,7 +11,7 @@ public class CandidateFactory
         List<CandidateCV> candidateCvs)
     {
         var candidate =  new Candidate(id, firstName, lastName, dateOfBirth);
-        // add emails, phone numbers and cvs
+        // TODO : add emails, phone numbers and cvs
         return candidate;
     }
 }

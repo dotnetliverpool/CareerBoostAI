@@ -1,20 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.API", "CareerBoostAI.API\CareerBoostAI.API.csproj", "{229BD5B1-23E5-4611-9490-D244D2471D67}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.API", "src\CareerBoostAI.API\CareerBoostAI.API.csproj", "{229BD5B1-23E5-4611-9490-D244D2471D67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Application", "CareerBoostAI.Application\CareerBoostAI.Application.csproj", "{52425E7F-3272-4BD2-9F27-6671F78F7478}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Application", "src\CareerBoostAI.Application\CareerBoostAI.Application.csproj", "{52425E7F-3272-4BD2-9F27-6671F78F7478}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Infrastructure", "CareerBoostAI.Infrastructure\CareerBoostAI.Infrastructure.csproj", "{80F8370C-1ED7-423E-9039-10516EC9A9BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Infrastructure", "src\CareerBoostAI.Infrastructure\CareerBoostAI.Infrastructure.csproj", "{80F8370C-1ED7-423E-9039-10516EC9A9BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Persistence", "CareerBoostAI.Persistence\CareerBoostAI.Persistence.csproj", "{6B94AA1D-92F9-436F-9D38-5CEC92B41012}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Persistence", "src\CareerBoostAI.Persistence\CareerBoostAI.Persistence.csproj", "{6B94AA1D-92F9-436F-9D38-5CEC92B41012}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.IntegrationTests", "Tests\CareerBoostAI.IntegrationTests\CareerBoostAI.IntegrationTests.csproj", "{C7404FB4-2004-4583-A3FE-691239CA01F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Contracts", "CareerBoostAI.Contracts\CareerBoostAI.Contracts.csproj", "{4D84DA8A-FDBD-4176-9593-1B691B286E6E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Contracts", "src\CareerBoostAI.Contracts\CareerBoostAI.Contracts.csproj", "{4D84DA8A-FDBD-4176-9593-1B691B286E6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Functions", "CareerBoostAI.Functions\CareerBoostAI.Functions.csproj", "{955B3645-4C40-4779-88FE-286FE6F97078}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Functions", "src\CareerBoostAI.Functions\CareerBoostAI.Functions.csproj", "{955B3645-4C40-4779-88FE-286FE6F97078}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Domain", "CareerBoostAI.Domain\CareerBoostAI.Domain.csproj", "{0C0D0F06-F1E9-47EC-B7A9-FFF250AEB027}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Domain", "src\CareerBoostAI.Domain\CareerBoostAI.Domain.csproj", "{0C0D0F06-F1E9-47EC-B7A9-FFF250AEB027}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
