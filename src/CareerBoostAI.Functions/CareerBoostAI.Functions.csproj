@@ -21,4 +21,7 @@
       <ProjectReference Include="..\CareerBoostAI.Application\CareerBoostAI.Application.csproj" />
       <ProjectReference Include="..\CareerBoostAI.Infrastructure\CareerBoostAI.Infrastructure.csproj" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Extensions\" />
+    </ItemGroup>
 </Project>

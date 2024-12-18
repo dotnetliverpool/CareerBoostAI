@@ -1,6 +1,6 @@
 ﻿using CareerBoostAI.Application.Extensions;
 using CareerBoostAI.Functions;
-using CareerBoostAI.Infrastructure;
+using CareerBoostAI.Infrastructure.Extensions;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 
@@ -13,7 +13,7 @@ public class Startup : FunctionsStartup
     {
         var config = BuildConfiguration(builder.GetContext().ApplicationRootPath);
         builder.Services.AddApplication();
-        builder.Services.AddInfrastructure();
+        builder.Services.AddInfrastructure(config);
     }
 
     private IConfiguration BuildConfiguration(string applicationRootPath)
@@ -21,6 +21,7 @@ public class Startup : FunctionsStartup
         var configuration = new ConfigurationBuilder()
             .SetBasePath(applicationRootPath)
             .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
+            .AddJsonFile("dev.settings.json", optional:true, reloadOnChange: true)
             .AddJsonFile("settings.json", optional: true, reloadOnChange: true)
             .AddEnvironmentVariables()
             .Build();
