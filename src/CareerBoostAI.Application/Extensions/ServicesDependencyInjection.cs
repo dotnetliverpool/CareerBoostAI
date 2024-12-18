@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using CareerBoostAI.Domain.Factories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CareerBoostAI.Application.Extensions;
@@ -9,6 +10,8 @@ public static class ServicesDependencyInjection
     {
         services.AddMediatR(config => 
             config.RegisterServicesFromAssembly(AssemblyReference.Assembly));
+
+        services.AddSingleton<ICandidateFactory, CandidateFactory>();
         return services;
     }
 }

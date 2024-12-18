@@ -3,9 +3,9 @@ using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.Factories;
 
-public class CandidateFactory
+public sealed class CandidateFactory : ICandidateFactory
 {
-    Candidate Create(CandidateId id, CandidateFirstName firstName,
+    public Candidate Create(CandidateId id, CandidateFirstName firstName,
         CandidateLastName lastName, List<CandidateEmail> emails,
         CandidateDOB dateOfBirth, List<PhoneNumber> phoneNumbers,
         List<CandidateCV> candidateCvs)

@@ -15,4 +15,8 @@
       <ProjectReference Include="..\CareerBoostAI.Domain\CareerBoostAI.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Services\" />
+    </ItemGroup>
+
 </Project>
