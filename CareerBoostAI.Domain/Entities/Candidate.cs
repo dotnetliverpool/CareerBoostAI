@@ -1,10 +1,11 @@
-﻿using CareerBoostAI.Domain.ValueObjects;
+﻿using CareerBoostAI.Domain.Abstractions;
+using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.Entities;
 
-public class Candidate
+public class Candidate : AggregateRoot<CandidateId>
 {
-    public Guid Id { get; private set; }
+    public CandidateId Id { get; private set; }
     private CandidateFirstName _firstName;
     private CandidateLastName _lastName;
     private CandidateDOB _dateOfBirth;
