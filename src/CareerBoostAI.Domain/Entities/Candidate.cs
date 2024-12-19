@@ -11,7 +11,7 @@ public class Candidate : AggregateRoot<CandidateId>
     private CandidateDOB _dateOfBirth;
     private List<CandidateEmail> _emails = new();
     private List<PhoneNumber> _phoneNumbers = new();
-    private List<CandidateCV> _cvs = new();
+    private List<CandidateCv> _cvs = new();
     
 
     public Candidate(

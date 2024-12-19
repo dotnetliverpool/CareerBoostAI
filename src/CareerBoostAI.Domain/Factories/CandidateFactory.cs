@@ -8,7 +8,7 @@ public sealed class CandidateFactory : ICandidateFactory
     public Candidate Create(CandidateId id, CandidateFirstName firstName,
         CandidateLastName lastName, List<CandidateEmail> emails,
         CandidateDOB dateOfBirth, List<PhoneNumber> phoneNumbers,
-        List<CandidateCV> candidateCvs)
+        List<CandidateCv> candidateCvs)
     {
         var candidate =  new Candidate(id, firstName, lastName, dateOfBirth);
         // TODO : add emails, phone numbers and cvs

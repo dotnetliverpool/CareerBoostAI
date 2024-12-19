@@ -1,12 +1,12 @@
 using System.Reflection;
 using CareerBoostAI.API.Extensions;
 using CareerBoostAI.Application.Extensions;
-using CareerBoostAI.Infrastructure;
+using CareerBoostAI.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services.AddApplication();
-    builder.Services.AddInfrastructure();
+    builder.Services.AddInfrastructure(builder.Configuration);
     
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
