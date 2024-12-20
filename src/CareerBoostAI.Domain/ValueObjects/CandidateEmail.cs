@@ -1,51 +1,43 @@
 ﻿using System.Text.RegularExpressions;
+using CareerBoostAI.Domain.Exceptions;
 
 namespace CareerBoostAI.Domain.ValueObjects;
 
-public class CandidateEmail
+public class CandidateEmail : ValueObject
 {
     public string Value { get; }
 
     // Constructor with validation for email format
-    public CandidateEmail(string value)
+    private CandidateEmail(string value)
+    {
+        Value = value;
+    }
+
+    public static CandidateEmail Create(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            throw new ArgumentException("Email cannot be empty or whitespace.", nameof(value));
+            throw new EmptyArgumentException(nameof(CandidateEmail));
         }
 
         if (!IsValidEmail(value))
         {
-            throw new ArgumentException("Invalid email format.", nameof(value));
+            throw new InvalidEmailFormatException(value);
         }
 
-        Value = value;
+        return new CandidateEmail(value);
     }
 
-    private bool IsValidEmail(string email)
+    private static bool IsValidEmail(string email)
     {
         // Simple email validation (this can be more complex if needed)
         var emailRegex = new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
         return emailRegex.IsMatch(email);
     }
 
-    public override bool Equals(object? obj)
-    {
-        if (obj is CandidateEmail other)
-        {
-            return Value.Equals(other.Value, StringComparison.OrdinalIgnoreCase);
-        }
 
-        return false;
-    }
-
-    public override int GetHashCode()
+    protected override IEnumerable<object> GetAtomicValues()
     {
-        return Value.ToLowerInvariant().GetHashCode();
-    }
-
-    public override string ToString()
-    {
-        return Value;
+        yield return Value;
     }
 }

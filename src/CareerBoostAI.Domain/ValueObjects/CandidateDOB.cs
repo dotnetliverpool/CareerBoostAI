@@ -1,37 +1,40 @@
-﻿namespace CareerBoostAI.Domain.ValueObjects;
+﻿using CareerBoostAI.Domain.Exceptions;
 
-public class CandidateDOB
+namespace CareerBoostAI.Domain.ValueObjects;
+
+public class CandidateDOB : ValueObject
 {
     public DateTime Value { get; }
 
     // Constructor to ensure the date of birth is in the past
-    public CandidateDOB(DateTime value)
+    private CandidateDOB(DateTime value)
     {
-        if (value >= DateTime.Now)
-        {
-            throw new ArgumentException("Date of birth must be in the past.", nameof(value));
-        }
-
         Value = value;
     }
 
-    public override bool Equals(object? obj)
+    public static CandidateDOB Create(DateTime value)
     {
-        if (obj is CandidateDOB other)
+        var age = CalculateAge(value);
+
+        
+        if (age < 10 || age > 120)
         {
-            return Value.Equals(other.Value);
+            throw new AgeNotWithinAcceptedRangeException();
         }
+        return new CandidateDOB(value);
+    }
+    
+    private static int CalculateAge(DateTime birthDate)
+    {
+        var today = DateTime.Today;
+        int age = today.Year - birthDate.Year;
 
-        return false;
+        return age;
     }
 
-    public override int GetHashCode()
-    {
-        return Value.GetHashCode();
-    }
 
-    public override string ToString()
+    protected override IEnumerable<object> GetAtomicValues()
     {
-        return Value.ToString("yyyy-MM-dd");
+        yield return Value;
     }
 }

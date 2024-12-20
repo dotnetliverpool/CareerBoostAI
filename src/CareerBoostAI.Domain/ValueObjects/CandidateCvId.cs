@@ -1,6 +1,6 @@
 ﻿namespace CareerBoostAI.Domain.ValueObjects;
 
-public class CandidateCvId
+public class CandidateCvId : ValueObject
 {
     public Guid Value { get; }
 
@@ -15,24 +15,9 @@ public class CandidateCvId
     {
         return new CandidateCvId(Guid.NewGuid());
     }
-
-    public override bool Equals(object? obj)
+    
+    protected override IEnumerable<object> GetAtomicValues()
     {
-        if (obj is CandidateCvId other)
-        {
-            return Value.Equals(other.Value);
-        }
-
-        return false;
-    }
-
-    public override int GetHashCode()
-    {
-        return Value.GetHashCode();
-    }
-
-    public override string ToString()
-    {
-        return Value.ToString();
+        yield return Value;
     }
 }

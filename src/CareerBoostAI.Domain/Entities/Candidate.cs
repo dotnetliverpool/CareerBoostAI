@@ -26,5 +26,10 @@ public class Candidate : AggregateRoot<CandidateId>
         _dateOfBirth = dateOfBirth;
     }
 
+    public void AddCv(CandidateCv cv)
+    {
+        
+    }
+
     
 }

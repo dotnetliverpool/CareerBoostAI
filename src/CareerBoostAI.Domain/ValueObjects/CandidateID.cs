@@ -2,7 +2,7 @@
 
 namespace CareerBoostAI.Domain.ValueObjects;
 
-public class CandidateId
+public class CandidateId : ValueObject
 {
     public Guid Value { get; }
 
@@ -21,4 +21,9 @@ public class CandidateId
         
     public static implicit operator CandidateId(Guid id)
         => new(id);
+
+    protected override IEnumerable<object> GetAtomicValues()
+    {
+        yield return Value;
+    }
 }

@@ -2,18 +2,25 @@
 
 namespace CareerBoostAI.Domain.ValueObjects;
 
-public class CandidateFirstName
+public class CandidateFirstName : ValueObject
 {
     public string Value { get;  }
 
-    public CandidateFirstName(string value)
+    private CandidateFirstName(string value)
+    {
+        
+
+        Value = value;
+    }
+
+    public static CandidateFirstName Create(string value)
     {
         if (string.IsNullOrEmpty(value))
         {
-            throw new EmptyCandidateNameException();
+            throw new EmptyArgumentException(nameof(CandidateFirstName));
         }
 
-        Value = value;
+        return new CandidateFirstName(value);
     }
 
     public static implicit operator string(CandidateFirstName firstName)
@@ -21,4 +28,9 @@ public class CandidateFirstName
 
     public static implicit operator CandidateFirstName(string firstName)
         => new(firstName);
+
+    protected override IEnumerable<object> GetAtomicValues()
+    {
+        yield return Value;
+    }
 }

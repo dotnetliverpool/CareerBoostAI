@@ -1,44 +1,30 @@
-﻿namespace CareerBoostAI.Domain.ValueObjects;
+﻿using CareerBoostAI.Domain.Exceptions;
 
-public class CandidateLastName
+namespace CareerBoostAI.Domain.ValueObjects;
+
+public class CandidateLastName : ValueObject
 {
-    // Private field for last name
     public string Value { get; }
-
-    // Constructor to enforce validation
+    
     public CandidateLastName(string value)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            throw new ArgumentException("Last name cannot be empty or whitespace.", nameof(value));
-        }
-
-        if (value.Length > 100)
-        {
-            throw new ArgumentException("Last name cannot be longer than 100 characters.", nameof(value));
-        }
-
+        
         Value = value;
     }
-
-    // Equality methods to compare value objects
-    public override bool Equals(object? obj)
+    
+    public static CandidateLastName Create(string value)
     {
-        if (obj is CandidateLastName other)
+        if (string.IsNullOrEmpty(value))
         {
-            return Value.Equals(other.Value, StringComparison.OrdinalIgnoreCase);
+            throw new EmptyArgumentException(nameof(CandidateLastName));
         }
 
-        return false;
+        return new CandidateLastName(value);
     }
 
-    public override int GetHashCode()
-    {
-        return Value.ToLowerInvariant().GetHashCode();
-    }
 
-    public override string ToString()
+    protected override IEnumerable<object> GetAtomicValues()
     {
-        return Value;
+        yield return Value;
     }
 }

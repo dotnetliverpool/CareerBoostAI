@@ -3,6 +3,8 @@ using CareerBoostAI.Application.Services;
 using CareerBoostAI.Application.Services.CvParseService;
 using CareerBoostAI.Application.Services.EmailService;
 using CareerBoostAI.Application.Services.ReadService.CandidateReadService;
+using CareerBoostAI.Domain.Enums;
+using CareerBoostAI.Domain.Exceptions;
 using CareerBoostAI.Domain.Factories;
 using CareerBoostAI.Domain.Repositories;
 using CareerBoostAI.Domain.ValueObjects;
@@ -40,29 +42,36 @@ public class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand>
     public async Task Handle(CreateProfileCommand request, CancellationToken cancellationToken)
     {
         var candidateDto = await _candidateReadService.SearchCandidateByEmailAsync(request.Email, cancellationToken);
-
         if (candidateDto != null)
         {
-            // throw duplicate profile exception ?
+            throw new DuplicateCandidateProfileException(request.Email);
         }
-        var candidateId = CandidateId.New();
-        var candidate = _candidateFactory.Create(
-            candidateId,
-            new CandidateFirstName(request.FirstName),
-            new CandidateLastName(request.LastName),
-            new List<CandidateEmail>() { new(request.Email) },
-            new CandidateDOB(request.DateOfBirth),
-            new List<PhoneNumber>() { new(request.PhoneNumber) });
         
+        Domain.Entities.Candidate candidate = _candidateFactory.Create(
+            CandidateId.New(),
+            CandidateFirstName.Create(request.FirstName),
+            CandidateLastName.Create(request.LastName),
+            new List<CandidateEmail>() { CandidateEmail.Create(request.Email) },
+            CandidateDOB.Create(request.DateOfBirth),
+            new List<PhoneNumber>() { PhoneNumber.Create(request.PhoneCode, request.PhoneNumber) });
+        
+        // validate extension before save
+        if (!CvFile.IsSupportedFileType(request.CvFileName))
+        {
+            throw new UnsupportedFileTypeException(request.CvFileName);
+        }
         var cvFilePath = await _fileStorageService.UploadFileAsync(request.CvFile, request.CvFileName, cancellationToken);
+        var cvFile = CvFile.Create(request.CvFileName, CvStorageMedium.AzureStorageBlob, cvFilePath);
+        
         var parsedCv = await _cvParseService.ParseCvAsync(request.CvFile, request.CvFileName, cancellationToken);
-        var candidateCvId = CandidateCvId.New();
-        var candidateCv = _candidateCvFactory.Create();
+        
+        var candidateCv = _candidateCvFactory.Create(CandidateCvId.New(), cvFile);
+        candidate.AddCv(candidateCv);
+        
         var adminNotificationMessage =
             $"A new candidate profile has been created for {request.FirstName} {request.LastName}.";
         await _emailSender.SendEmailToAdminAsync(subject: "New Candidate Profile Created", body: adminNotificationMessage);
         await _candidateRepository.AddCandidateAsync(candidate);
-        await _candidateRepository.AddCandidateCvAsync(candidateCv);
         await _unitOfWork.SaveChangesAsync(cancellationToken); 
     }
 }
