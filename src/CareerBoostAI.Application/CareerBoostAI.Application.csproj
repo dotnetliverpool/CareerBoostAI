@@ -17,8 +17,6 @@
 
     <ItemGroup>
       <Folder Include="Candidate\Commands\ParseCV\" />
-      <Folder Include="DTO\" />
-      <Folder Include="Services\" />
     </ItemGroup>
 
 </Project>

@@ -5,8 +5,8 @@ namespace CareerBoostAI.Domain.Factories;
 
 public interface ICandidateFactory
 {
-    Candidate Create(CandidateId id, CandidateFirstName firstName,
+    public  Candidate Create(CandidateId id, CandidateFirstName firstName,
         CandidateLastName lastName, List<CandidateEmail> emails,
-        CandidateDOB dateOfBirth, List<PhoneNumber> phoneNumbers,
-        List<CandidateCv> candidateCvs);
+        CandidateDOB dateOfBirth, List<PhoneNumber> phoneNumbers
+        );
 }

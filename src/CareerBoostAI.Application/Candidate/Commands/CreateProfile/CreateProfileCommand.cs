@@ -9,5 +9,7 @@ public sealed record CreateProfileCommand(
     string Email,
     DateTime DateOfBirth,
     string PhoneCode,
-    string PhoneNumber
+    string PhoneNumber,
+    Stream CvFile,
+    string CvFileName
 ) : ICommand;

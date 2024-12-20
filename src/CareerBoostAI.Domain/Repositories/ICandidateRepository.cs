@@ -6,6 +6,8 @@ namespace CareerBoostAI.Domain.Repositories;
 public interface ICandidateRepository
 {
     Task<Candidate> GetAsync(CandidateId id);
-    Task AddAsync(Candidate candidate);
+    Task AddCandidateAsync(Candidate candidate);
+
+    Task AddCandidateCvAsync(CandidateCv cv);
     Task UpdateAsync(Candidate candidate);
 }
