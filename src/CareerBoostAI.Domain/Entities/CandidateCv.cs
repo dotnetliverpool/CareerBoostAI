@@ -6,7 +6,8 @@ namespace CareerBoostAI.Domain.Entities;
 public class CandidateCv
 {
 
-    public CandidateCvId CvId { get; private set; } 
+    public CandidateCvId Id { get; private set; }
+    private CvFile _file;
     private CandidateFirstName _firstName;
     private CandidateLastName _lastName;
     private CandidateEmail _email;
@@ -22,14 +23,15 @@ public class CandidateCv
         PhoneNumber phoneNumber, 
         CvAddress address,
     CandidateCvAbout about, 
-        CandidateCvId cvId)
+        CandidateCvId id, CvFile file)
     {
         _firstName = firstName;
         _lastName = lastName;
         _email = email;
         _phoneNumber = phoneNumber;
         _about = about;
-        CvId = cvId;
+        Id = id;
+        _file = file;
         _address = address;
     }
     

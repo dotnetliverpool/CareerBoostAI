@@ -10,7 +10,7 @@ using System.Linq;
 /// </summary>
 public abstract class ValueObject : IEquatable<ValueObject>
 {
-    public static bool operator ==(ValueObject a, ValueObject b)
+    public static bool operator ==(ValueObject? a, ValueObject? b)
     {
         if (a is null && b is null)
         {

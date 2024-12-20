@@ -6,11 +6,13 @@ namespace CareerBoostAI.Domain.ValueObjects;
 public class CandidateEmail : ValueObject
 {
     public string Value { get; }
+    public bool IsActive { get;  }
 
     // Constructor with validation for email format
-    private CandidateEmail(string value)
+    private CandidateEmail(string value, bool isActive)
     {
         Value = value;
+        IsActive = isActive;
     }
 
     public static CandidateEmail Create(string value)
@@ -25,7 +27,7 @@ public class CandidateEmail : ValueObject
             throw new InvalidEmailFormatException(value);
         }
 
-        return new CandidateEmail(value);
+        return new CandidateEmail(value, true);
     }
 
     private static bool IsValidEmail(string email)
