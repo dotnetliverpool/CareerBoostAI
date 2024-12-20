@@ -6,14 +6,14 @@ public class CandidateId
 {
     public Guid Value { get; }
 
-    public CandidateId(Guid value)
+    private CandidateId(Guid value)
     {
-        if (value == Guid.Empty)
-        {
-            throw new EmptyCandidateIdException();
-        }
-            
         Value = value;
+    }
+    
+    public static CandidateId New()
+    {
+        return new CandidateId(Guid.NewGuid());
     }
         
     public static implicit operator Guid(CandidateId id)

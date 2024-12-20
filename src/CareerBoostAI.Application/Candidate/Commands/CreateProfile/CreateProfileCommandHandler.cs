@@ -43,20 +43,20 @@ public class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand>
 
         if (candidateDto != null)
         {
-            
+            // throw duplicate profile exception ?
         }
-        var candidateID = new CandidateId(Guid.NewGuid());
+        var candidateId = CandidateId.New();
         var candidate = _candidateFactory.Create(
-            candidateID,
+            candidateId,
             new CandidateFirstName(request.FirstName),
             new CandidateLastName(request.LastName),
-            new List<CandidateEmail>() { new CandidateEmail(request.Email) },
+            new List<CandidateEmail>() { new(request.Email) },
             new CandidateDOB(request.DateOfBirth),
-            new List<PhoneNumber>() { new PhoneNumber(request.PhoneNumber) });
+            new List<PhoneNumber>() { new(request.PhoneNumber) });
         
         var cvFilePath = await _fileStorageService.UploadFileAsync(request.CvFile, request.CvFileName, cancellationToken);
         var parsedCv = await _cvParseService.ParseCvAsync(request.CvFile, request.CvFileName, cancellationToken);
-        var candidateCvId = new CandidateCvId(Guid.NewGuid());
+        var candidateCvId = CandidateCvId.New();
         var candidateCv = _candidateCvFactory.Create();
         var adminNotificationMessage =
             $"A new candidate profile has been created for {request.FirstName} {request.LastName}.";
