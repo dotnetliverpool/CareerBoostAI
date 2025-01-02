@@ -10,7 +10,7 @@ public class Candidate : AggregateRoot<CandidateId>
     private CandidateFirstName _firstName;
     private CandidateLastName _lastName;
     private CandidateDOB _dateOfBirth;
-    private List<CandidateEmail> _emails = new();
+    private  List<CandidateEmail> _emails = new();
     private List<PhoneNumber> _phoneNumbers = new();
     private List<CandidateCv> _cvs = new();
 
