@@ -1,4 +1,5 @@
 ﻿using CareerBoostAI.Infrastructure.EF.Contexts;
+using CareerBoostAI.Infrastructure.EF.Models;
 using CareerBoostAI.Infrastructure.EF.Options;
 using CareerBoostAI.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -12,11 +13,14 @@ public static class ServicesDependencyInjectionExtensions
     public static IServiceCollection AddMySqlService(this IServiceCollection services, IConfiguration configuration)
     {
         var mySqlOptions = configuration.GetOptions<MySqlOptions>("MySql");
-        services.AddDbContext<AppDbContext>(ctx =>
+        var severVersion = new MySqlServerVersion(new Version(mySqlOptions.ServerVersion));
+        
+        services.AddDbContext<CareerBoostDbContext>(options =>
         {
-            var severVersion = new MySqlServerVersion(new Version(mySqlOptions.ServerVersion));
-            ctx.UseMySql(mySqlOptions.ConnectionString, severVersion);
+            options.UseMySql(mySqlOptions.ConnectionString, severVersion);
         });
+        
+       
         return services;
     }
 }

@@ -1,13 +1,13 @@
-﻿using CareerBoostAI.Domain.Entities;
+﻿using CareerBoostAI.Infrastructure.EF.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CareerBoostAI.Infrastructure.EF.Configuration;
 
-public class AppDbConfiguration : IEntityTypeConfiguration<Candidate>
+public class CandidateDbConfiguration : IEntityTypeConfiguration<Candidate>
 {
     public void Configure(EntityTypeBuilder<Candidate> builder)
     {
-        throw new NotImplementedException();
+        
     }
 }

@@ -18,6 +18,7 @@ public class Startup : FunctionsStartup
 
     private IConfiguration BuildConfiguration(string applicationRootPath)
     {
+        
         var configuration = new ConfigurationBuilder()
             .SetBasePath(applicationRootPath)
             .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
