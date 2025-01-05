@@ -5,7 +5,7 @@ namespace CareerBoostAI.Infrastructure.EF.Models;
 
 public class Cv
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     
     [Required]
     [MaxLength(4)]

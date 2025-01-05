@@ -1,6 +1,6 @@
 ﻿namespace CareerBoostAI.Application.DTO;
 
-public class CandidateDTO
+public class CandidateDto
 {
     
 }

@@ -4,5 +4,5 @@ namespace CareerBoostAI.Application.Services.ReadService.CandidateReadService;
 
 public interface ICandidateReadService
 {
-    Task<CandidateDTO> SearchCandidateByEmailAsync(string email, CancellationToken cancellationToken);
+    Task<CandidateDto> SearchCandidateByEmailAsync(string email, CancellationToken cancellationToken);
 }

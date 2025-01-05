@@ -16,12 +16,8 @@ internal sealed class CareerBoostDbContext: DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.HasDefaultSchema("CareerBoostAI");
-
         var candidateConfig = new CandidateDbConfiguration();
-        var cvConfig = new CandidateCvDbConfiguration();
-        modelBuilder.ApplyConfiguration(candidateConfig);
-        modelBuilder.ApplyConfiguration(cvConfig);
+        modelBuilder.ApplyConfiguration<Candidate>(candidateConfig);
         base.OnModelCreating(modelBuilder);
     }
     

@@ -4,7 +4,7 @@ namespace CareerBoostAI.Infrastructure.EF.Models;
 
 public class CvSectionItem
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     
     public int SequenceIndex { get; set; }
     

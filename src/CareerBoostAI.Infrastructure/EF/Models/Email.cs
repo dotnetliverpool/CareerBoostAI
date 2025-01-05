@@ -4,7 +4,7 @@ namespace CareerBoostAI.Infrastructure.EF.Models;
 
 public class Email
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     
     [MaxLength(255)]
     public string Address { get; set; }
