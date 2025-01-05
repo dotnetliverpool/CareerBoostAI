@@ -1,10 +1,16 @@
-﻿namespace CareerBoostAI.Infrastructure.EF.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CareerBoostAI.Infrastructure.EF.Models;
 
 public class CvSection
 {
     public int Id { get; set; }
+    
+    [MaxLength(100)]
     public string Name { get; set; }
-    public int SortOrder { get; set; }
+    
+    public int SequenceIndex { get; set; }
+    
     public List<CvSectionItem> SectionItems { get; set; }
     
     public int CvId { get; set; }

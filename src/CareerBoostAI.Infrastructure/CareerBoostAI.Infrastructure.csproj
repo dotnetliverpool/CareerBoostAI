@@ -21,7 +21,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="EF\Enum\" />
       <Folder Include="Queries\" />
     </ItemGroup>
 
