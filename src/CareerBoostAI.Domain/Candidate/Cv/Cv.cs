@@ -1,10 +1,10 @@
-﻿using System.Collections.Specialized;
-using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
+﻿using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 using CareerBoostAI.Domain.Candidate.ValueObjects;
 using CareerBoostAI.Domain.Common.ValueObjects;
+using CareerBoostAI.Domain.Entities;
 using CareerBoostAI.Domain.ValueObjects;
 
-namespace CareerBoostAI.Domain.Entities;
+namespace CareerBoostAI.Domain.Candidate.Cv;
 
 public class Cv
 {

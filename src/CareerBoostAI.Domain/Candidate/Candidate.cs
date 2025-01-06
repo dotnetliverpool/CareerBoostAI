@@ -14,7 +14,7 @@ public class Candidate : AggregateRoot<CandidateId>
     private DateOfBirth _dateOfBirth;
     private  List<Email> _emails = new();
     private List<PhoneNumber> _phoneNumbers = new();
-    private List<Entities.Cv> _cvs = new();
+    private List<Cv.Cv> _cvs = new();
 
     public string FullName => _firstName + " " + _lastName;
     public Email ActiveEmail
@@ -44,7 +44,7 @@ public class Candidate : AggregateRoot<CandidateId>
         _dateOfBirth = dateOfBirth;
     }
 
-    public void AddCv(Entities.Cv cv)
+    public void AddCv(Cv.Cv cv)
     {
         if (_cvs.Any(existingCv => existingCv.Id.Equals(cv.Id)))
         {
