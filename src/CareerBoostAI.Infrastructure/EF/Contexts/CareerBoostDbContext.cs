@@ -16,8 +16,11 @@ internal sealed class CareerBoostDbContext: DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        var candidateConfig = new CandidateDbConfiguration();
-        modelBuilder.ApplyConfiguration<Candidate>(candidateConfig);
+        
+        var configuration = new CandidateDbConfiguration();
+        modelBuilder.ApplyConfiguration<Candidate>(configuration);
+        modelBuilder.ApplyConfiguration<Cv>(configuration);
+        
         base.OnModelCreating(modelBuilder);
     }
     
