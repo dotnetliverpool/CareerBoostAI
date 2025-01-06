@@ -16,7 +16,7 @@ public class Cv
     private Email _email;
     private PhoneNumber _phoneNumber;
     private CvAddress _address;
-    private CandidateCvAbout _about;
+    private CvAbout _about;
     private List<CvSection> _sections = new();
     
     public Cv(
@@ -25,7 +25,7 @@ public class Cv
         Email email, 
         PhoneNumber phoneNumber, 
         CvAddress address,
-        CandidateCvAbout about, 
+        CvAbout about, 
         CvId id, 
         CvFile file)
     {

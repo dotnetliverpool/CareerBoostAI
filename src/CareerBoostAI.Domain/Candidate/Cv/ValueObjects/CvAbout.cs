@@ -1,10 +1,10 @@
 ﻿namespace CareerBoostAI.Domain.ValueObjects;
 
-public class CandidateCvAbout
+public class CvAbout
 {
     public string Value { get; }
 
-    public CandidateCvAbout(string value)
+    public CvAbout(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
             throw new ArgumentException("About section cannot be empty or whitespace.", nameof(value));
@@ -16,7 +16,7 @@ public class CandidateCvAbout
     }
 
     public override bool Equals(object? obj) =>
-        obj is CandidateCvAbout other && string.Equals(Value, other.Value, StringComparison.OrdinalIgnoreCase);
+        obj is CvAbout other && string.Equals(Value, other.Value, StringComparison.OrdinalIgnoreCase);
 
     public override int GetHashCode() => Value.ToLowerInvariant().GetHashCode();
 
