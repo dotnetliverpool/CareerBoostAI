@@ -1,12 +1,12 @@
-﻿using CareerBoostAI.Domain.Common.ValueObjects;
-using CareerBoostAI.Domain.Entities;
+﻿using CareerBoostAI.Domain.Candidate.ValueObjects;
+using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.ValueObjects;
 
-namespace CareerBoostAI.Domain.Factories;
+namespace CareerBoostAI.Domain.Candidate.Factories;
 
 public interface ICandidateFactory
 {
-    public  Candidate Create(CandidateId id, FirstName firstName,
+    public  Domain.Candidate.Candidate Create(CandidateId id, FirstName firstName,
         LastName lastName, List<Email> emails,
         DateOfBirth dateOfBirth, List<PhoneNumber> phoneNumbers
         );

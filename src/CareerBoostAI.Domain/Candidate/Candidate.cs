@@ -1,9 +1,10 @@
 ﻿using CareerBoostAI.Domain.Abstractions;
+using CareerBoostAI.Domain.Candidate.ValueObjects;
 using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.Exceptions;
 using CareerBoostAI.Domain.ValueObjects;
 
-namespace CareerBoostAI.Domain.Entities;
+namespace CareerBoostAI.Domain.Candidate;
 
 public class Candidate : AggregateRoot<CandidateId>
 {
@@ -13,7 +14,7 @@ public class Candidate : AggregateRoot<CandidateId>
     private DateOfBirth _dateOfBirth;
     private  List<Email> _emails = new();
     private List<PhoneNumber> _phoneNumbers = new();
-    private List<Cv> _cvs = new();
+    private List<Entities.Cv> _cvs = new();
 
     public string FullName => _firstName + " " + _lastName;
     public Email ActiveEmail
@@ -43,7 +44,7 @@ public class Candidate : AggregateRoot<CandidateId>
         _dateOfBirth = dateOfBirth;
     }
 
-    public void AddCv(Cv cv)
+    public void AddCv(Entities.Cv cv)
     {
         if (_cvs.Any(existingCv => existingCv.Id.Equals(cv.Id)))
         {

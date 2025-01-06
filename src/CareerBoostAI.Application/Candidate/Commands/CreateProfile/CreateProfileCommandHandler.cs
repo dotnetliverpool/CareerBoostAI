@@ -3,11 +3,13 @@ using CareerBoostAI.Application.Services;
 using CareerBoostAI.Application.Services.CvParseService;
 using CareerBoostAI.Application.Services.EmailService;
 using CareerBoostAI.Application.Services.ReadService.CandidateReadService;
+using CareerBoostAI.Domain.Candidate;
 using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
+using CareerBoostAI.Domain.Candidate.Factories;
+using CareerBoostAI.Domain.Candidate.ValueObjects;
 using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.Enums;
 using CareerBoostAI.Domain.Exceptions;
-using CareerBoostAI.Domain.Factories;
 using CareerBoostAI.Domain.Repositories;
 using CareerBoostAI.Domain.ValueObjects;
 using MediatR;
@@ -49,7 +51,7 @@ public class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand>
             throw new DuplicateCandidateProfileException(request.Email);
         }
         
-        Domain.Entities.Candidate candidate = _candidateFactory.Create(
+        Domain.Candidate.Candidate candidate = _candidateFactory.Create(
             CandidateId.New(),
             FirstName.Create(request.FirstName),
             LastName.Create(request.LastName),

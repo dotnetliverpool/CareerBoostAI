@@ -1,5 +1,6 @@
 ﻿using System.Collections.Specialized;
 using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
+using CareerBoostAI.Domain.Candidate.ValueObjects;
 using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.ValueObjects;
 

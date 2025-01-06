@@ -1,6 +1,6 @@
-﻿using CareerBoostAI.Domain.Exceptions;
+﻿using CareerBoostAI.Domain.ValueObjects;
 
-namespace CareerBoostAI.Domain.ValueObjects;
+namespace CareerBoostAI.Domain.Candidate.ValueObjects;
 
 public class CandidateId : ValueObject
 {

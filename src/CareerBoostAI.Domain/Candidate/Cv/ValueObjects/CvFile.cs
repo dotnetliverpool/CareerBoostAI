@@ -1,12 +1,7 @@
-﻿using System.Diagnostics;
-using CareerBoostAI.Domain.Enums;
+﻿using CareerBoostAI.Domain.Enums;
 using CareerBoostAI.Domain.Exceptions;
 
-namespace CareerBoostAI.Domain.ValueObjects;
-
-using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
+namespace CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 
 public class CvFile
 {

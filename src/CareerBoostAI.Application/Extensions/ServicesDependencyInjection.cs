@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using CareerBoostAI.Domain.Factories;
+using CareerBoostAI.Domain.Candidate.Factories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CareerBoostAI.Application.Extensions;

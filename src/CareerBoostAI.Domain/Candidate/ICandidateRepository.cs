@@ -1,13 +1,13 @@
-﻿using CareerBoostAI.Domain.Entities;
-using CareerBoostAI.Domain.ValueObjects;
+﻿using CareerBoostAI.Domain.Candidate;
+using CareerBoostAI.Domain.Candidate.ValueObjects;
 
-namespace CareerBoostAI.Domain.Repositories;
+namespace CareerBoostAI.Domain.Candidate;
 
 public interface ICandidateRepository
 {
     Task<Candidate> GetAsync(CandidateId id);
     Task AddCandidateAsync(Candidate candidate);
 
-    Task AddCandidateCvAsync(Cv cv);
+    Task AddCandidateCvAsync(Entities.Cv cv);
     Task UpdateAsync(Candidate candidate);
 }
