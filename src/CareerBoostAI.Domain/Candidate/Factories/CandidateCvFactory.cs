@@ -6,7 +6,7 @@ namespace CareerBoostAI.Domain.Factories;
 public class CandidateCvFactory : ICandidateCvFactory
 {
 
-    public CandidateCv Create(CandidateCvId id, CvFile cvFile)
+    public Cv Create(CandidateCvId id, CvFile cvFile)
     {
         throw new NotImplementedException();
     }

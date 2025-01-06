@@ -8,6 +8,6 @@ public interface ICandidateRepository
     Task<Candidate> GetAsync(CandidateId id);
     Task AddCandidateAsync(Candidate candidate);
 
-    Task AddCandidateCvAsync(CandidateCv cv);
+    Task AddCandidateCvAsync(Cv cv);
     Task UpdateAsync(Candidate candidate);
 }

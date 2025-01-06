@@ -5,5 +5,5 @@ namespace CareerBoostAI.Domain.Factories;
 
 public interface ICandidateCvFactory
 {
-    CandidateCv Create(CandidateCvId id, CvFile cvFile);
+    Cv Create(CandidateCvId id, CvFile cvFile);
 }

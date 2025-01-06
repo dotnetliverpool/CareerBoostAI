@@ -2,17 +2,17 @@
 
 namespace CareerBoostAI.Domain.ValueObjects;
 
-public class CandidateDOB : ValueObject
+public class DateOfBirth : ValueObject
 {
     public DateTime Value { get; }
 
     // Constructor to ensure the date of birth is in the past
-    private CandidateDOB(DateTime value)
+    private DateOfBirth(DateTime value)
     {
         Value = value;
     }
 
-    public static CandidateDOB Create(DateTime value)
+    public static DateOfBirth Create(DateTime value)
     {
         var age = CalculateAge(value);
 
@@ -21,7 +21,7 @@ public class CandidateDOB : ValueObject
         {
             throw new AgeNotWithinAcceptedRangeException();
         }
-        return new CandidateDOB(value);
+        return new DateOfBirth(value);
     }
     
     private static int CalculateAge(DateTime birthDate)

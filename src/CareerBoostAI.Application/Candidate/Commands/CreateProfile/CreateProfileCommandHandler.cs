@@ -49,10 +49,10 @@ public class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand>
         
         Domain.Entities.Candidate candidate = _candidateFactory.Create(
             CandidateId.New(),
-            CandidateFirstName.Create(request.FirstName),
-            CandidateLastName.Create(request.LastName),
-            new List<CandidateEmail>() { CandidateEmail.Create(request.Email) },
-            CandidateDOB.Create(request.DateOfBirth),
+            FirstName.Create(request.FirstName),
+            LastName.Create(request.LastName),
+            new List<Email>() { Email.Create(request.Email) },
+            DateOfBirth.Create(request.DateOfBirth),
             new List<PhoneNumber>() { PhoneNumber.Create(request.PhoneCode, request.PhoneNumber) });
         
         // validate extension before save

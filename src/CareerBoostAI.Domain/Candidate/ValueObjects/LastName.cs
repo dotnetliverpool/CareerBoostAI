@@ -2,24 +2,24 @@
 
 namespace CareerBoostAI.Domain.ValueObjects;
 
-public class CandidateLastName : ValueObject
+public class LastName : ValueObject
 {
     public string Value { get; }
     
-    public CandidateLastName(string value)
+    public LastName(string value)
     {
         
         Value = value;
     }
     
-    public static CandidateLastName Create(string value)
+    public static LastName Create(string value)
     {
         if (string.IsNullOrEmpty(value))
         {
-            throw new EmptyArgumentException(nameof(CandidateLastName));
+            throw new EmptyArgumentException(nameof(LastName));
         }
 
-        return new CandidateLastName(value);
+        return new LastName(value);
     }
 
 

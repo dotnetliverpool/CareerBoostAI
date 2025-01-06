@@ -3,23 +3,23 @@ using CareerBoostAI.Domain.Exceptions;
 
 namespace CareerBoostAI.Domain.ValueObjects;
 
-public class CandidateEmail : ValueObject
+public class Email : ValueObject
 {
     public string Value { get; }
     public bool IsActive { get;  }
 
     // Constructor with validation for email format
-    private CandidateEmail(string value, bool isActive)
+    private Email(string value, bool isActive)
     {
         Value = value;
         IsActive = isActive;
     }
 
-    public static CandidateEmail Create(string value)
+    public static Email Create(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            throw new EmptyArgumentException(nameof(CandidateEmail));
+            throw new EmptyArgumentException(nameof(Email));
         }
 
         if (!IsValidEmail(value))
@@ -27,7 +27,7 @@ public class CandidateEmail : ValueObject
             throw new InvalidEmailFormatException(value);
         }
 
-        return new CandidateEmail(value, true);
+        return new Email(value, true);
     }
 
     private static bool IsValidEmail(string email)

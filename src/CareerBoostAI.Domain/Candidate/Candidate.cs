@@ -7,15 +7,15 @@ namespace CareerBoostAI.Domain.Entities;
 public class Candidate : AggregateRoot<CandidateId>
 {
     public CandidateId Id { get; private set; }
-    private CandidateFirstName _firstName;
-    private CandidateLastName _lastName;
-    private CandidateDOB _dateOfBirth;
-    private  List<CandidateEmail> _emails = new();
+    private FirstName _firstName;
+    private LastName _lastName;
+    private DateOfBirth _dateOfBirth;
+    private  List<Email> _emails = new();
     private List<PhoneNumber> _phoneNumbers = new();
-    private List<CandidateCv> _cvs = new();
+    private List<Cv> _cvs = new();
 
     public string FullName => _firstName + " " + _lastName;
-    public CandidateEmail ActiveEmail
+    public Email ActiveEmail
     {
         get
         {
@@ -32,9 +32,9 @@ public class Candidate : AggregateRoot<CandidateId>
 
     public Candidate(
         CandidateId id,
-        CandidateFirstName firstName, 
-        CandidateLastName lastName,
-        CandidateDOB dateOfBirth)
+        FirstName firstName, 
+        LastName lastName,
+        DateOfBirth dateOfBirth)
     {
         Id = id;
         _firstName = firstName;
@@ -42,7 +42,7 @@ public class Candidate : AggregateRoot<CandidateId>
         _dateOfBirth = dateOfBirth;
     }
 
-    public void AddCv(CandidateCv cv)
+    public void AddCv(Cv cv)
     {
         if (_cvs.Any(existingCv => existingCv.Id.Equals(cv.Id)))
         {

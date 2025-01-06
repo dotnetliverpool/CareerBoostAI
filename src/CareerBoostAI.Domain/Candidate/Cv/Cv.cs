@@ -3,23 +3,23 @@ using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.Entities;
 
-public class CandidateCv
+public class Cv
 {
 
     public CandidateCvId Id { get; private set; }
     private CvFile _file;
-    private CandidateFirstName _firstName;
-    private CandidateLastName _lastName;
-    private CandidateEmail _email;
+    private FirstName _firstName;
+    private LastName _lastName;
+    private Email _email;
     private PhoneNumber _phoneNumber;
     private CvAddress _address;
     private CandidateCvAbout _about;
     private List<CvSection> _sections = new();
     
-    public CandidateCv(
-        CandidateFirstName firstName, 
-        CandidateLastName lastName, 
-        CandidateEmail email, 
+    public Cv(
+        FirstName firstName, 
+        LastName lastName, 
+        Email email, 
         PhoneNumber phoneNumber, 
         CvAddress address,
     CandidateCvAbout about, 

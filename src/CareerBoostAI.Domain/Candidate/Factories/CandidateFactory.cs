@@ -5,9 +5,9 @@ namespace CareerBoostAI.Domain.Factories;
 
 public sealed class CandidateFactory : ICandidateFactory
 {
-    public Candidate Create(CandidateId id, CandidateFirstName firstName,
-        CandidateLastName lastName, List<CandidateEmail> emails,
-        CandidateDOB dateOfBirth, List<PhoneNumber> phoneNumbers
+    public Candidate Create(CandidateId id, FirstName firstName,
+        LastName lastName, List<Email> emails,
+        DateOfBirth dateOfBirth, List<PhoneNumber> phoneNumbers
         )
     {
         var candidate =  new Candidate(id, firstName, lastName, dateOfBirth);
