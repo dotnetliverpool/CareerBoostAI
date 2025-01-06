@@ -1,4 +1,5 @@
-﻿using CareerBoostAI.Domain.Entities;
+﻿using CareerBoostAI.Domain.Common.ValueObjects;
+using CareerBoostAI.Domain.Entities;
 using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.Factories;

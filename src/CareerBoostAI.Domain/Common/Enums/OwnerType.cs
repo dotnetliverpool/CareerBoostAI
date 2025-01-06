@@ -2,6 +2,5 @@
 
 public enum OwnerType
 {
-    [StringValue("Candidate")]
     Candidate
 }

@@ -2,7 +2,7 @@
 
 public class EmptyArgumentException : CareerBoostAIDomainException
 {
-    public EmptyArgumentException(string className) : base($"{className} cannot be empty")
+    public EmptyArgumentException(string argName) : base($"{argName} cannot be empty")
     {
     }
 }

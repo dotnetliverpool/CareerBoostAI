@@ -3,6 +3,7 @@ using CareerBoostAI.Application.Services;
 using CareerBoostAI.Application.Services.CvParseService;
 using CareerBoostAI.Application.Services.EmailService;
 using CareerBoostAI.Application.Services.ReadService.CandidateReadService;
+using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.Enums;
 using CareerBoostAI.Domain.Exceptions;
 using CareerBoostAI.Domain.Factories;

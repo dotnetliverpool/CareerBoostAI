@@ -1,4 +1,5 @@
 ﻿using System.Collections.Specialized;
+using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.Entities;

@@ -1,7 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 using CareerBoostAI.Domain.Exceptions;
+using CareerBoostAI.Domain.ValueObjects;
 
-namespace CareerBoostAI.Domain.ValueObjects;
+namespace CareerBoostAI.Domain.Common.ValueObjects;
 
 public class Email : ValueObject
 {
@@ -15,7 +16,7 @@ public class Email : ValueObject
         IsActive = isActive;
     }
 
-    public static Email Create(string value)
+    public static Email Create(string value, bool isActive = true)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
@@ -27,7 +28,7 @@ public class Email : ValueObject
             throw new InvalidEmailFormatException(value);
         }
 
-        return new Email(value, true);
+        return new Email(value, isActive);
     }
 
     private static bool IsValidEmail(string email)

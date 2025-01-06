@@ -1,6 +1,8 @@
 ﻿using System.Text.RegularExpressions;
+using CareerBoostAI.Domain.Exceptions;
+using CareerBoostAI.Domain.ValueObjects;
 
-namespace CareerBoostAI.Domain.ValueObjects;
+namespace CareerBoostAI.Domain.Common.ValueObjects;
 
 public class PhoneNumber : ValueObject
 {
@@ -18,17 +20,17 @@ public class PhoneNumber : ValueObject
     {
         if (string.IsNullOrEmpty(phoneCode))
         {
-            throw new ArgumentException("Phone code cannot be null or empty.");
+            throw new EmptyArgumentException("PhoneCode");
         }
 
         if (string.IsNullOrEmpty(number))
         {
-            throw new ArgumentException("Phone number cannot be null or empty.");
+            throw new EmptyArgumentException("PhoneNumber");
         }
 
         if (!IsValidPhoneNumber(phoneCode + number))
         {
-            throw new ArgumentException("Invalid phone number format.");
+            throw new InvalidPhoneNumberException(phoneCode, number);
         }
 
         return new PhoneNumber(phoneCode, number);
