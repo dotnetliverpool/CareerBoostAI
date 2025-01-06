@@ -1,4 +1,5 @@
 ﻿using System.Collections.Specialized;
+using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.ValueObjects;
 
@@ -7,7 +8,7 @@ namespace CareerBoostAI.Domain.Entities;
 public class Cv
 {
 
-    public CandidateCvId Id { get; private set; }
+    public CvId Id { get; private set; }
     private CvFile _file;
     private FirstName _firstName;
     private LastName _lastName;
@@ -23,8 +24,9 @@ public class Cv
         Email email, 
         PhoneNumber phoneNumber, 
         CvAddress address,
-    CandidateCvAbout about, 
-        CandidateCvId id, CvFile file)
+        CandidateCvAbout about, 
+        CvId id, 
+        CvFile file)
     {
         _firstName = firstName;
         _lastName = lastName;

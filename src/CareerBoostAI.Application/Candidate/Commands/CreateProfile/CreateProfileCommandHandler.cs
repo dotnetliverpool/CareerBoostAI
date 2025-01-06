@@ -3,6 +3,7 @@ using CareerBoostAI.Application.Services;
 using CareerBoostAI.Application.Services.CvParseService;
 using CareerBoostAI.Application.Services.EmailService;
 using CareerBoostAI.Application.Services.ReadService.CandidateReadService;
+using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.Enums;
 using CareerBoostAI.Domain.Exceptions;
@@ -66,7 +67,7 @@ public class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand>
         
         var parsedCv = await _cvParseService.ParseCvAsync(request.CvFile, request.CvFileName, cancellationToken);
         
-        var candidateCv = _candidateCvFactory.Create(CandidateCvId.New(), cvFile);
+        var candidateCv = _candidateCvFactory.Create(CvId.New(), cvFile);
         candidate.AddCv(candidateCv);
         
         var adminNotificationMessage =

@@ -1,19 +1,21 @@
-﻿namespace CareerBoostAI.Domain.ValueObjects;
+﻿using CareerBoostAI.Domain.ValueObjects;
 
-public class CandidateCvId : ValueObject
+namespace CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
+
+public class CvId : ValueObject
 {
     public Guid Value { get; }
 
     // Constructor to initialize CandidateCvId with a new Guid
-    private CandidateCvId(Guid value)
+    private CvId(Guid value)
     {
         Value = value;
     }
 
     // Factory method for generating a new CandidateCvId with a new GUID
-    public static CandidateCvId New()
+    public static CvId New()
     {
-        return new CandidateCvId(Guid.NewGuid());
+        return new CvId(Guid.NewGuid());
     }
     
     protected override IEnumerable<object> GetAtomicValues()
