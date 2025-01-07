@@ -1,4 +1,5 @@
-﻿using CareerBoostAI.Application.DTO;
+﻿using CareerBoostAI.Application.Candidate.DTO;
+using CareerBoostAI.Application.DTO;
 
 namespace CareerBoostAI.Application.Services.ReadService.CandidateReadService;
 

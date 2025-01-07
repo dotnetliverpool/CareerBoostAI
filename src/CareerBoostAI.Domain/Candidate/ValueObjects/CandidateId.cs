@@ -16,7 +16,7 @@ public class CandidateId : ValueObject
         return new CandidateId(Guid.NewGuid());
     }
         
-    public static CandidateId Create(Guid id)
+    public static CandidateId CreateTrusted(Guid id)
     {
         return new CandidateId(id);
     }
@@ -26,5 +26,6 @@ public class CandidateId : ValueObject
         yield return Value;
     }
 
-    
+
+  
 }
