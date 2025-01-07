@@ -17,6 +17,11 @@ public class CvId : ValueObject
     {
         return new CvId(Guid.NewGuid());
     }
+
+    public static CvId Create(Guid value)
+    {
+        return new CvId(value);
+    }
     
     protected override IEnumerable<object> GetAtomicValues()
     {
