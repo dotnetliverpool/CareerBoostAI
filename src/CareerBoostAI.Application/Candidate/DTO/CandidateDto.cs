@@ -9,6 +9,6 @@ public class CandidateDto
     public string LastName { get; set; }
     public DateOnly DateOfBirth { get; set; }
     public List<string> Emails { get; set; } = new();
-    public List<string> PhoneNumbers { get; set; } = new();
+    public List<PhoneNumberDto> PhoneNumbers { get; set; } = new();
     public List<CvDto> Cvs { get; set; } = new();
 }
