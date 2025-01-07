@@ -2,21 +2,14 @@
 
 namespace CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 
-public class CvSection
+public sealed class CvSection(CvSectionName name, SequenceIndex sequenceIndex)
 {
-    private readonly SequenceIndex _sequenceIndex;
-    private readonly CvSectionName _name;
+    
     private readonly List<CvSectionItem> _items = new();
 
-    public SequenceIndex SequenceIndex => _sequenceIndex;
-    public CvSectionName Name => _name; 
-    public IReadOnlyList<CvSectionItem> Items => _items.AsReadOnly(); 
-
-    public CvSection(CvSectionName name, SequenceIndex sequenceIndex)
-    {
-        _name = name;
-        _sequenceIndex = sequenceIndex;
-    }
+    public SequenceIndex SequenceIndex { get; private set; } = sequenceIndex;
+    public CvSectionName Name { get; private set; } = name;
+    public IReadOnlyList<CvSectionItem> Items => _items.AsReadOnly();
 
     public void AddItem(CvSectionItem item)
     {
