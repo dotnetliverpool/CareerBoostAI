@@ -14,7 +14,7 @@ public class SectionItemLocation : ValueObject
         Country = country;
     }
 
-    public SectionItemLocation Create(string city, string country)
+    public static SectionItemLocation Create(string city, string country)
     {
         if (string.IsNullOrEmpty(city))
         {

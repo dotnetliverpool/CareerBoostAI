@@ -7,16 +7,27 @@ public class CvAbout : ValueObject
 {
     public string Value { get; }
 
-    public CvAbout(string value)
+    private CvAbout(string value)
+    {
+        Value = value;
+    }
+
+    private static void Validate(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
+        {
             throw new EmptyArgumentException(nameof(CvAbout));
-
-        Value = value;
+        }
     }
 
     protected override IEnumerable<object> GetAtomicValues()
     {
         yield return Value;
+    }
+
+    public static CvAbout Create(string value)
+    {
+        Validate(value);
+        return new CvAbout(value);
     }
 }

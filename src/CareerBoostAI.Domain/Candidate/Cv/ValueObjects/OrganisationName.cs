@@ -7,12 +7,12 @@ public class OrganisationName : ValueObject
 {
     public string Value { get; private set; }
 
-    public OrganisationName(string value)
+    private OrganisationName(string value)
     {
         Value = value;
     }
 
-    public OrganisationName Create(string value)
+    public static OrganisationName Create(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {

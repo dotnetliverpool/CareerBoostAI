@@ -9,18 +9,15 @@ public class CvAddress : ValueObject
     public string? Postcode { get; }
     public string? Country { get; }
 
-    public CvAddress(string? houseAddress = null, string? city = null, 
-        string? postcode = null, string? country = null)
+    private CvAddress(string? houseAddress = null, string? city = null, 
+        string? country = null,
+        string? postcode = null)
     {
        
         City = city;
         Postcode = postcode;
         Country = country;
-        HouseAddress = city == null 
-                       && postcode == null 
-                       && country == null 
-                       && houseAddress == null 
-            ? Constants.NoAddressFound : houseAddress;
+        HouseAddress = houseAddress;
     }
 
     protected override IEnumerable<object> GetAtomicValues()
@@ -29,5 +26,18 @@ public class CvAddress : ValueObject
         yield return City;
         yield return Postcode;
         yield return Country;
+    }
+
+    public static CvAddress Create(
+        string? houseAddress, string? city, 
+        string? country, string? postcode)
+    {
+        var addressString = city == null 
+                            && postcode == null 
+                            && country == null 
+                            && houseAddress == null 
+            ? Constants.NoAddressFound : houseAddress;
+        
+        return new CvAddress(addressString, city, country, postcode);
     }
 }

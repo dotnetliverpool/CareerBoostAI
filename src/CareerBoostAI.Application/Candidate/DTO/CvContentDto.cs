@@ -14,6 +14,6 @@ public class CvContentDto
     public string? City { get;  set; } = null;
     public string? Postcode { get;  set; } = null;
     public string? Country { get;  set; } = null;
-    public List<CvSectionDto>? Sections { get; set; } = null;
+    public List<CvSectionDto> Sections { get; set; } = new();
 
 }

@@ -2,27 +2,16 @@
 
 namespace CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 
-public class CvSectionItem
+public class CvSectionItem(
+    OrganisationName organisationName,
+    SectionItemLocation sectionItemLocation,
+    CandidateCvSectionItemTimeRange timeRange,
+    CvSectionItemDescription description,
+    SequenceIndex sequenceIndex)
 {
-
-    private OrganisationName _organisationName;
-    private SectionItemLocation _sectionItemLocation;
-    private CvSectionItemDescription _description;
-    private CandidateCvSectionItemTimeRange _timeRange;
-    private SequenceIndex _sequenceIndex;
-
-    public CvSectionItem(
-        OrganisationName organisationName,
-        SectionItemLocation sectionItemLocation,
-        CandidateCvSectionItemTimeRange timeRange,
-        CvSectionItemDescription description,
-        SequenceIndex sequenceIndex)
-    {
-        _organisationName = organisationName;
-        _sectionItemLocation = sectionItemLocation;
-        _timeRange = timeRange;
-        _description = description;
-        _sequenceIndex = sequenceIndex;
-    }
-
+    public OrganisationName OrganisationName { get; private set; } = organisationName;
+    public SectionItemLocation Location { get; private set; } = sectionItemLocation;
+    public CandidateCvSectionItemTimeRange TimeRange { get; private set; } = timeRange;
+    public CvSectionItemDescription Description { get; private set; } = description;
+    public SequenceIndex SequenceIndex { get; private set; } = sequenceIndex;
 }

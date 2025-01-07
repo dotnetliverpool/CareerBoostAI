@@ -24,11 +24,6 @@ public class DateOfBirth : ValueObject
         }
         return new DateOfBirth(value);
     }
-
-    public static DateOfBirth CreateTrusted(DateOnly value)
-    {
-        return new DateOfBirth(value);
-    }
     
     private static int CalculateAge(DateOnly birthDate)
     {

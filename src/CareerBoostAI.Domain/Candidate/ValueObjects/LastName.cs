@@ -21,11 +21,6 @@ public class LastName : ValueObject
         return new LastName(value);
     }
 
-    public static LastName CreateTrusted(string value)
-    {
-        return new LastName(value);
-    }
-
     public override string ToString()
     {
         return Value;

@@ -8,6 +8,7 @@ using CareerBoostAI.Domain.Candidate.Factories;
 using CareerBoostAI.Domain.Candidate.ValueObjects;
 using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.Enums;
+using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Application.Candidate;
 
@@ -114,6 +115,25 @@ public static class CandidateDtoMappingExtensions
         };
     }
 
+    public static BaseCvContent AsDomain(this CvContentDto contentDto)
+    {
+        var result =  new CvContent(
+            FirstName.Create(contentDto.FirstName), 
+            LastName.Create(contentDto.LastName),
+            Email.Create(contentDto.Email),
+            PhoneNumber.Create(contentDto.PhoneCode, contentDto.PhoneNumber),
+            CvAddress.Create(
+                contentDto.HouseAddress, contentDto.City, 
+                contentDto.Country, contentDto.Postcode),
+            CvAbout.Create(contentDto.About));
+        
+        foreach (var section in contentDto.Sections)
+        {
+            result.AddSection(section.AsDomain());
+        }
+        return result;
+    }
+
     public static CvSectionDto AsDto(this CvSection section)
     {
         return new CvSectionDto
@@ -126,8 +146,41 @@ public static class CandidateDtoMappingExtensions
         };
     }
 
-    public static CvSectionItemDto AsDto(this CvSectionItem sectionItem)
+    public static CvSection AsDomain(this CvSectionDto sectionDto)
     {
-        
+        var section = new CvSection(
+            CvSectionName.Create(sectionDto.SectionName),
+            SequenceIndex.Create(sectionDto.SequenceIndex)
+            );
+        foreach (var item in sectionDto.Items)
+        {
+            section.AddItem(item.AsDomain());
+        }
+        return section;
+    }
+
+    public static CvSectionItemDto AsDto(this CvSectionItem item)
+    {
+        return new CvSectionItemDto
+        {
+            OrganisationName = item.OrganisationName.Value,
+            OrganisationCity = item.Location.City,
+            OrganisationCountry = item.Location.Country,
+            StartDate = item.TimeRange.StartDate,
+            EndDate = item.TimeRange.EndDate,
+            Description = item.Description.Value,
+            SequenceIndex = item.SequenceIndex.Value,
+        };
+    }
+
+    public static CvSectionItem AsDomain(this CvSectionItemDto itemDto)
+    {
+        return new CvSectionItem(
+            OrganisationName.Create(itemDto.OrganisationName),
+            SectionItemLocation.Create(itemDto.OrganisationCity, itemDto.OrganisationCountry),
+            CandidateCvSectionItemTimeRange.Create(itemDto.StartDate, itemDto.EndDate),
+            CvSectionItemDescription.Create(itemDto.Description),
+            SequenceIndex.Create(itemDto.SequenceIndex)
+            );
     }
 }

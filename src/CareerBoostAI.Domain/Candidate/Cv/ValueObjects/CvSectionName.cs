@@ -1,17 +1,28 @@
 ﻿using CareerBoostAI.Domain.Common.Exceptions;
 
-namespace CareerBoostAI.Domain.ValueObjects;
+namespace CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 
 public class CvSectionName
 {
     public string Value { get; }
 
-    public CvSectionName(string value)
+    private CvSectionName(string value)
     {
-        if (string.IsNullOrWhiteSpace(value))
-            throw new EmptyCvSectionName();
         Value = value;
     }
-    
+
+    public static CvSectionName Create(string value)
+    {
+        Validate(value);
+        return new(value);
+    }
+
+    private static void Validate(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new EmptyArgumentException(nameof(CvSectionName));
+        }
+    }
     public override string ToString() => Value;
 }

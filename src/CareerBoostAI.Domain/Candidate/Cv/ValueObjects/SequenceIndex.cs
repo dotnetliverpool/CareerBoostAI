@@ -1,4 +1,6 @@
-﻿namespace CareerBoostAI.Domain.ValueObjects;
+﻿using CareerBoostAI.Domain.ValueObjects;
+
+namespace CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 
 public class SequenceIndex : ValueObject
 {
@@ -9,7 +11,7 @@ public class SequenceIndex : ValueObject
         Value = value;
     }
 
-    public SequenceIndex Create(uint value)
+    public static SequenceIndex Create(uint value)
     {
         return new SequenceIndex(value);
     }

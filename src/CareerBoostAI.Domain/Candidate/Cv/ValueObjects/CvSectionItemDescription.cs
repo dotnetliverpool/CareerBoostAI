@@ -7,12 +7,12 @@ public class CvSectionItemDescription : ValueObject
 {
     public string Value { get; }
 
-    public CvSectionItemDescription(string value)
+    private CvSectionItemDescription(string value)
     {
         Value = value;
     }
 
-    public CvSectionItemDescription Create(string value)
+    public static CvSectionItemDescription Create(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
