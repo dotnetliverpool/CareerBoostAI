@@ -1,5 +1,4 @@
-﻿using CareerBoostAI.Domain.Exceptions;
-using CareerBoostAI.Domain.ValueObjects;
+﻿using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 

@@ -1,4 +1,4 @@
-﻿namespace CareerBoostAI.Domain.Exceptions;
+﻿namespace CareerBoostAI.Domain.Common.Exceptions;
 
 public class NoActiveEmailFoundException : CareerBoostAIDomainException
 {

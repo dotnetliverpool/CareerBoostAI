@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.Contracts;
+using CareerBoostAI.Domain.Common.Exceptions;
 using CareerBoostAI.Domain.Enums;
-using CareerBoostAI.Domain.Exceptions;
 using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.Candidate.Cv.ValueObjects;

@@ -7,35 +7,36 @@ namespace CareerBoostAI.Domain.Candidate.Cv;
 
 public class Cv
 {
-
     public CvId Id { get; private set; }
-    private CvFile _file;
-    private FirstName _firstName;
-    private LastName _lastName;
-    private Email _email;
-    private PhoneNumber _phoneNumber;
-    private CvAddress _address;
-    private CvAbout _about;
+    public CvFile File { get; private set; }
+    public FirstName FirstName { get; private set; }
+    public LastName LastName { get; private set; }
+    public Email Email { get; private set; }
+    public PhoneNumber PhoneNumber { get; private set; }
+    public CvAddress Address { get; private set; }
+    public CvAbout About { get; private set; }
+
     private List<CvSection> _sections = new();
-    
+    public IReadOnlyList<CvSection> Sections => _sections.AsReadOnly();
+
     public Cv(
         FirstName firstName, 
         LastName lastName, 
         Email email, 
         PhoneNumber phoneNumber, 
-        CvAddress address,
+        CvAddress address, 
         CvAbout about, 
         CvId id, 
         CvFile file)
     {
-        _firstName = firstName;
-        _lastName = lastName;
-        _email = email;
-        _phoneNumber = phoneNumber;
-        _about = about;
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+        PhoneNumber = phoneNumber;
+        Address = address;
+        About = about;
         Id = id;
-        _file = file;
-        _address = address;
+        File = file;
     }
     
     public void AddSection(CvSection section)

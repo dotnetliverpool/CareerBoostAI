@@ -1,4 +1,4 @@
-﻿using CareerBoostAI.Domain.Exceptions;
+﻿using CareerBoostAI.Domain.Common.Exceptions;
 
 namespace CareerBoostAI.Domain.ValueObjects;
 

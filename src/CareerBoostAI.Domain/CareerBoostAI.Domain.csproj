@@ -9,7 +9,6 @@
     <ItemGroup>
       <Folder Include="Common\Entities\" />
       <Folder Include="DomainEvents\" />
-      <Folder Include="Exceptions\Candidate\Cv\" />
     </ItemGroup>
 
 </Project>
