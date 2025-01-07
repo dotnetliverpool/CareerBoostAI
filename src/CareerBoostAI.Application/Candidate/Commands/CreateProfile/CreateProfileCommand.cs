@@ -7,7 +7,7 @@ public sealed record CreateProfileCommand(
     string FirstName,
     string LastName,
     string Email,
-    DateTime DateOfBirth,
+    DateOnly DateOfBirth,
     string PhoneCode,
     string PhoneNumber,
     Stream CvFile,
