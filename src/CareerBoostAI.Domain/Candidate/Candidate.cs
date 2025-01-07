@@ -43,6 +43,22 @@ public class Candidate : AggregateRoot<CandidateId>
         }
         Emails.Add(email);
     }
+
+    public void AddEmails(IEnumerable<Email> emails)
+    {
+        foreach (var email in emails)
+        {
+            AddEmail(email);
+        }
+    }
+    
+    public void AddPhoneNumbers(IEnumerable<PhoneNumber> numbers)
+    {
+        foreach (var numner in numbers)
+        {
+            AddPhoneNumber(numner);
+        }
+    }
     
     public void AddPhoneNumber(PhoneNumber phoneNumber)
     {
@@ -66,6 +82,14 @@ public class Candidate : AggregateRoot<CandidateId>
                 nameof(Cv.Cv), cv.Id);
         }
         Cvs.Add(cv);
+    }
+
+    public void AddCvs(IEnumerable<Cv.Cv> cvs)
+    {
+        foreach (var cv in cvs)
+        {
+            AddCv(cv);
+        }
     }
 
     

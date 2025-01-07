@@ -45,27 +45,19 @@ public class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand>
     }
     public async Task Handle(CreateProfileCommand request, CancellationToken cancellationToken)
     {
-        var candidateDto = await _candidateReadService.SearchCandidateByEmailAsync(request.Email, cancellationToken);
-        if (candidateDto != null)
-        {
-            throw new DuplicateCandidateProfileException(request.Email);
-        }
-        
+        await Validate(request, cancellationToken);
         Domain.Candidate.Candidate candidate = _candidateFactory.Create(
-            CandidateId.New(),
             FirstName.Create(request.FirstName),
             LastName.Create(request.LastName),
-            new List<Email>() { Email.Create(request.Email) },
             DateOfBirth.Create(request.DateOfBirth),
-            new List<PhoneNumber>() { PhoneNumber.Create(request.PhoneCode, request.PhoneNumber) });
-        
-        // validate extension before save
-        if (!CvFile.IsSupportedFileType(request.CvFileName))
-        {
-            throw new UnsupportedFileTypeException(request.CvFileName);
-        }
-        var cvFilePath = await _fileStorageService.UploadFileAsync(request.CvFile, request.CvFileName, cancellationToken);
-        var cvFile = CvFile.Create(request.CvFileName, CvStorageMedium.AzureStorageBlob, cvFilePath);
+            Email.Create(request.Email),
+            PhoneNumber.Create(request.PhoneCode, request.PhoneNumber));
+       
+        var cvFilePath = await _fileStorageService.UploadFileAsync(
+            request.CvFile, request.CvFileName, cancellationToken);
+        var cvFile = CvFile.Create(
+            request.CvFileName, 
+            CvStorageMedium.AzureStorageBlob, cvFilePath);
         
         var parsedCv = await _cvParseService.ParseCvAsync(request.CvFile, request.CvFileName, cancellationToken);
         
@@ -77,5 +69,19 @@ public class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand>
         await _emailSender.SendEmailToAdminAsync(subject: "New Candidate Profile Created", body: adminNotificationMessage);
         await _candidateRepository.AddCandidateAsync(candidate);
         await _unitOfWork.SaveChangesAsync(cancellationToken); 
+    }
+
+    private async Task Validate(CreateProfileCommand request, CancellationToken cancellationToken)
+    {
+        var candidateDto = await _candidateReadService.SearchCandidateByEmailAsync(request.Email, cancellationToken);
+        if (candidateDto != null)
+        {
+            throw new DuplicateCandidateProfileException(request.Email);
+        }
+        
+        if (!CvFile.IsSupportedFileType(request.CvFileName))
+        {
+            throw new UnsupportedFileTypeException(request.CvFileName);
+        }
     }
 }

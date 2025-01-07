@@ -37,30 +37,25 @@ public static class CandidateDtoMappingExtensions
         };
     }
 
-    public static Domain.Candidate.Candidate AsDomain(this CandidateDto candidateDto)
+    public static Domain.Candidate.Candidate AsDomain(
+        this CandidateDto candidateDto)
     {
-        // TODO : Use factory to instantiate
         var candidate = new Domain.Candidate.Candidate(
             CandidateId.Create(candidateDto.Id),
             FirstName.Create(candidateDto.FirstName),
             LastName.Create(candidateDto.LastName),
             DateOfBirth.Create(candidateDto.DateOfBirth));
-        foreach (var email in candidateDto.Emails)
-        {
-            candidate.AddEmail(Email.Create(email));
-        }
-
-        foreach (var phoneNumberDto in candidateDto.PhoneNumbers)
-        {
-            candidate.AddPhoneNumber(
-                PhoneNumber.Create(phoneNumberDto.Code, phoneNumberDto.Number));
-        }
-
-        foreach (var cvDto in candidateDto.Cvs)
-        {
-            candidate.AddCv(cvDto.AsDomain());
-        }
-
+        
+        candidate.AddEmails(candidateDto.Emails
+            .Select(em => Email.Create(em))
+            .ToList());
+        candidate.AddPhoneNumbers(candidateDto.PhoneNumbers
+            .Select(pn => PhoneNumber.Create(pn.Code, pn.Number))
+            .ToList());
+        candidate.AddCvs(candidateDto.Cvs
+            .Select(cv => cv.AsDomain())
+            .ToList());
+        
         return candidate;
     }
 

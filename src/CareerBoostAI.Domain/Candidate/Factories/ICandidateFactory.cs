@@ -6,8 +6,13 @@ namespace CareerBoostAI.Domain.Candidate.Factories;
 
 public interface ICandidateFactory
 {
-    public  Domain.Candidate.Candidate Create(CandidateId id, FirstName firstName,
-        LastName lastName, List<Email> emails,
-        DateOfBirth dateOfBirth, List<PhoneNumber> phoneNumbers
+    public  Domain.Candidate.Candidate Create(FirstName firstName,
+        LastName lastName, DateOfBirth dateOfBirth, 
+        Email email, PhoneNumber phoneNumber
         );
+    
+    public  Domain.Candidate.Candidate Create(CandidateId id, FirstName firstName,
+        LastName lastName, DateOfBirth dateOfBirth,
+        List<Email> emails, List<PhoneNumber> phoneNumbers, List<Cv.Cv> cvs
+    );
 }
