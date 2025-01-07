@@ -60,7 +60,7 @@ public class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand>
             $"A new candidate profile has been created for {request.FirstName} {request.LastName}.";
         await _emailSender.SendEmailToAdminAsync(subject: "New Candidate Profile Created", body: adminNotificationMessage);
         
-        await _candidateRepository.AddCandidateAsync(candidate);
+        await _candidateRepository.AddAsync(candidate.AsDto());
         await _unitOfWork.SaveChangesAsync(cancellationToken); 
     }
 
