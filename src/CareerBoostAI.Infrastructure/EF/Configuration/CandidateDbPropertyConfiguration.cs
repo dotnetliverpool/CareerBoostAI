@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CareerBoostAI.Infrastructure.EF.Configuration;
 
-internal class CandidateDbConfiguration : IEntityTypeConfiguration<Candidate>, 
+internal class CandidateDbPropertyConfiguration : IEntityTypeConfiguration<Candidate>, 
     IEntityTypeConfiguration<Cv>, IEntityTypeConfiguration<CvSection>,
     IEntityTypeConfiguration<CvSectionItem>
 {
