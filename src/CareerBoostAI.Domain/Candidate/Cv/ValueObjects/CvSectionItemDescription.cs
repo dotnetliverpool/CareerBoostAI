@@ -1,21 +1,29 @@
-﻿namespace CareerBoostAI.Domain.ValueObjects;
+﻿using CareerBoostAI.Domain.Exceptions;
+using CareerBoostAI.Domain.ValueObjects;
 
-public class CvSectionItemDescription
+namespace CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
+
+public class CvSectionItemDescription : ValueObject
 {
     public string Value { get; }
 
     public CvSectionItemDescription(string value)
     {
-        if (string.IsNullOrWhiteSpace(value))
-            throw new ArgumentException("Description cannot be empty or whitespace.", nameof(value));
-
         Value = value;
     }
 
-    public override bool Equals(object? obj) =>
-        obj is CvSectionItemDescription other && string.Equals(Value, other.Value, StringComparison.OrdinalIgnoreCase);
+    public CvSectionItemDescription Create(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new EmptyArgumentException(nameof(CvSectionItemDescription));
+        }
+        return new CvSectionItemDescription(value);
+    }
+    
+    protected override IEnumerable<object> GetAtomicValues()
+    {
+        yield return Value;
+    }
 
-    public override int GetHashCode() => Value.ToLowerInvariant().GetHashCode();
-
-    public override string ToString() => Value;
 }

@@ -7,9 +7,9 @@ public class CvSectionItem
 
     private OrganisationName _organisationName;
     private SectionItemLocation _sectionItemLocation;
-    private SequenceIndex _sequenceIndex;
     private CvSectionItemDescription _description;
     private CandidateCvSectionItemTimeRange _timeRange;
+    private SequenceIndex _sequenceIndex;
 
     public CvSectionItem(
         OrganisationName organisationName,
