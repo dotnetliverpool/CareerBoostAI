@@ -29,4 +29,9 @@ public class Cv
         }
         Content = content;
     }
+
+    public void AddSection(CvSection section)
+    {
+        Content.AddSection(section);    
+    }
 }
