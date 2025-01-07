@@ -1,4 +1,6 @@
-﻿namespace CareerBoostAI.Domain.ValueObjects;
+﻿using CareerBoostAI.Domain.ValueObjects;
+
+namespace CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 
 public class CvSectionItem
 {
