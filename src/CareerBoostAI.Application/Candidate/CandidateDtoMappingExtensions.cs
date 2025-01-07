@@ -1,4 +1,5 @@
-﻿using CareerBoostAI.Application.Candidate.DTO;
+﻿using System.Collections.Specialized;
+using CareerBoostAI.Application.Candidate.DTO;
 using CareerBoostAI.Application.Common.Extension;
 using CareerBoostAI.Application.DTO;
 using CareerBoostAI.Domain.Candidate.Cv;
@@ -85,5 +86,41 @@ public static class CandidateDtoMappingExtensions
                 cvDto.StorageAddress));
         cv.SetContent(cvDto.Content != null ? cvDto.Content.AsDomain() : NullCvContent.Instance);
         return cv;
+    }
+
+    public static CvContentDto AsDto(this BaseCvContent cvContent)
+    {
+        if (cvContent is not CvContent content)
+        {
+            throw new ApplicationException("Invalid content type.");
+        }
+
+        return new CvContentDto
+        {
+            FirstName = content.FirstName.Value,
+            LastName = content.LastName.Value,
+            Email = content.Email.Value,
+            PhoneCode = content.PhoneNumber.Code,
+            PhoneNumber = content.PhoneNumber.Number,
+            About = content.About.Value,
+            HouseAddress = content.Address.HouseAddress,
+            City = content.Address.City,
+            Country = content.Address.Country,
+            Postcode = content.Address.Postcode,
+            Sections = content.Sections
+                .Select(section => section.AsDto())
+                .ToList(),
+            
+        };
+    }
+
+    public static CvSectionDto AsDto(this CvSection section)
+    {
+        
+    }
+
+    public static CvSectionItem AsDto(this CvSectionItem sectionItem)
+    {
+        
     }
 }

@@ -32,6 +32,8 @@ public sealed class CvContent(
     public CvAbout About { get; private set; } = about;
 
     private List<CvSection> _sections = new();
+    
+    public IReadOnlyCollection<CvSection> Sections => _sections.AsReadOnly();
 
 
     public override void AddSection(CvSection section)
