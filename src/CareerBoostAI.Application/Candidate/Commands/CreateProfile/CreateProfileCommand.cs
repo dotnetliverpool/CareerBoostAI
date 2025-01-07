@@ -1,4 +1,4 @@
-﻿using CareerBoostAI.Application.Abstractions.Mediator;
+﻿using CareerBoostAI.Application.Common.Abstractions.Mediator;
 using MediatR;
 
 namespace CareerBoostAI.Application.Candidate.Commands.CreateProfile;

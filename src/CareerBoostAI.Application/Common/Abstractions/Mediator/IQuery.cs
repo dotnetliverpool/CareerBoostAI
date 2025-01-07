@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace CareerBoostAI.Application.Abstractions.Mediator;
+namespace CareerBoostAI.Application.Common.Abstractions.Mediator;
 
 public interface IQuery : IRequest
 { }

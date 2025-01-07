@@ -1,4 +1,5 @@
 ﻿using CareerBoostAI.Application.Candidate.DTO;
+using CareerBoostAI.Application.Common.Extension;
 using CareerBoostAI.Application.DTO;
 using CareerBoostAI.Domain.Candidate.Cv;
 using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
@@ -67,7 +68,6 @@ public static class CandidateDtoMappingExtensions
         {
             Id = cv.Id.Value,
             FileName = cv.File.Name,
-            FileType = cv.File.FileType,
             Storagemedium = cv.File.StorageMedium.ToString(),
             StorageAddress = cv.File.StorageAddress,
             Content = cv.IsParsed ? cv.Content.AsDto() : null,
@@ -76,10 +76,12 @@ public static class CandidateDtoMappingExtensions
 
     public static Cv AsDomain(this CvDto cvDto)
     {
-        var cv = new Cv(CvId.Create(cvDto.Id), 
+       
+        var cv = new Cv(
+            CvId.Create(cvDto.Id), 
             CvFile.Create(
                 cvDto.FileName, 
-                CvStorageMedium.(cvDto.Storagemedium),
+                cvDto.Storagemedium.ToEnum<CvStorageMedium>(),
                 cvDto.StorageAddress));
         cv.SetContent(cvDto.Content != null ? cvDto.Content.AsDomain() : NullCvContent.Instance);
         return cv;

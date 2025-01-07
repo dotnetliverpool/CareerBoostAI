@@ -1,4 +1,4 @@
-﻿using CareerBoostAI.Application.Abstractions.Mediator;
+﻿using CareerBoostAI.Application.Common.Abstractions.Mediator;
 using CareerBoostAI.Application.Services;
 using CareerBoostAI.Application.Services.CvParseService;
 using CareerBoostAI.Application.Services.EmailService;
