@@ -7,21 +7,22 @@ public class CvSectionItem
 
     private OrganisationName _organisationName;
     private SectionItemLocation _sectionItemLocation;
-    private CvSectionItemSortNumber _sortNumber;
+    private SequenceIndex _sequenceIndex;
     private CvSectionItemDescription _description;
     private CandidateCvSectionItemTimeRange _timeRange;
 
     public CvSectionItem(
         OrganisationName organisationName,
         SectionItemLocation sectionItemLocation,
-        CandidateCvSectionItemTimeRange timeRange, CvSectionItemSortNumber sortNumber,
-        CvSectionItemDescription description)
+        CandidateCvSectionItemTimeRange timeRange,
+        CvSectionItemDescription description,
+        SequenceIndex sequenceIndex)
     {
         _organisationName = organisationName;
         _sectionItemLocation = sectionItemLocation;
         _timeRange = timeRange;
-        _sortNumber = sortNumber;
         _description = description;
+        _sequenceIndex = sequenceIndex;
     }
 
 }
