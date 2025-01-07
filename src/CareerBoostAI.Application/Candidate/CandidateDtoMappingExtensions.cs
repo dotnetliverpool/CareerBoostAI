@@ -15,7 +15,7 @@ public static class CandidateDtoMappingExtensions
             LastName = candidate.LastName.Value,
             DateOfBirth = candidate.DateOfBirth.Value,
             Emails = candidate.Emails.Select(e => e.Value).ToList(),
-            PhoneNumbers = candidate.PhoneNumbers.Select(p => p.Value).ToList(),
+            PhoneNumbers = candidate.PhoneNumbers.Select(p => p.ToString()).ToList(),
             Cvs = candidate.Cvs.Select(cv => cv.AsDto()).ToList()
         };
     }
