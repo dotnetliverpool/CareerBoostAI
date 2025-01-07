@@ -12,11 +12,15 @@ public class CvAddress : ValueObject
     public CvAddress(string? houseAddress = null, string? city = null, 
         string? postcode = null, string? country = null)
     {
-       // TODO: Use a Constant
-        HouseAddress = houseAddress ?? "No House Address";
+       
         City = city;
         Postcode = postcode;
         Country = country;
+        HouseAddress = city == null 
+                       && postcode == null 
+                       && country == null 
+                       && houseAddress == null 
+            ? Constants.NoAddressFound : houseAddress;
     }
 
     protected override IEnumerable<object> GetAtomicValues()
