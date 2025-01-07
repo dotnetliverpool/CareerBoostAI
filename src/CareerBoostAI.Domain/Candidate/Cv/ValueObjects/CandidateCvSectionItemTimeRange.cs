@@ -1,8 +1,9 @@
 ﻿using CareerBoostAI.Domain.Exceptions;
+using CareerBoostAI.Domain.ValueObjects;
 
-namespace CareerBoostAI.Domain.ValueObjects;
+namespace CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 
-public class CandidateCvSectionItemTimeRange
+public class CandidateCvSectionItemTimeRange : ValueObject
 {
     public DateTime StartDate { get; private set; }
     public DateTime? EndDate { get; private set; }
@@ -14,7 +15,7 @@ public class CandidateCvSectionItemTimeRange
         {
             throw new CvSectionItemEndDateEarlierThanStartDateException();
         }
-        
+
         StartDate = startDate;
         EndDate = endDate;
         IsOngoing = !EndDate.HasValue;
@@ -29,16 +30,18 @@ public class CandidateCvSectionItemTimeRange
     public void SetEndDate(DateTime endDate)
     {
         if (endDate < StartDate)
+        {
             throw new CvSectionItemEndDateEarlierThanStartDateException();
+        }
 
         EndDate = endDate;
         IsOngoing = false;
     }
 
-    public override string ToString()
+    protected override IEnumerable<object> GetAtomicValues()
     {
-        return IsOngoing
-            ? $"{StartDate:yyyy-MM-dd} to Present"
-            : $"{StartDate:yyyy-MM-dd} to {EndDate:yyyy-MM-dd}";
+        yield return StartDate;
+        yield return EndDate;
+        yield return IsOngoing;
     }
 }
