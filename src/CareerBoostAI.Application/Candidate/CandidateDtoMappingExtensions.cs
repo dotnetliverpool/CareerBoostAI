@@ -1,9 +1,11 @@
 ﻿using CareerBoostAI.Application.Candidate.DTO;
 using CareerBoostAI.Application.DTO;
 using CareerBoostAI.Domain.Candidate.Cv;
+using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 using CareerBoostAI.Domain.Candidate.Factories;
 using CareerBoostAI.Domain.Candidate.ValueObjects;
 using CareerBoostAI.Domain.Common.ValueObjects;
+using CareerBoostAI.Domain.Enums;
 
 namespace CareerBoostAI.Application.Candidate;
 
@@ -34,6 +36,7 @@ public static class CandidateDtoMappingExtensions
 
     public static Domain.Candidate.Candidate AsDomain(this CandidateDto candidateDto)
     {
+        // TODO : Use factory to instantiate
         var candidate = new Domain.Candidate.Candidate(
             CandidateId.Create(candidateDto.Id),
             FirstName.Create(candidateDto.FirstName),
@@ -60,11 +63,25 @@ public static class CandidateDtoMappingExtensions
 
     public static CvDto AsDto(this Cv cv)
     {
-        throw new NotImplementedException();
+        return new CvDto
+        {
+            Id = cv.Id.Value,
+            FileName = cv.File.Name,
+            FileType = cv.File.FileType,
+            Storagemedium = cv.File.StorageMedium.ToString(),
+            StorageAddress = cv.File.StorageAddress,
+            Content = cv.IsParsed ? cv.Content.AsDto() : null,
+        };
     }
 
     public static Cv AsDomain(this CvDto cvDto)
     {
-        throw new NotImplementedException();
+        var cv = new Cv(CvId.Create(cvDto.Id), 
+            CvFile.Create(
+                cvDto.FileName, 
+                CvStorageMedium.(cvDto.Storagemedium),
+                cvDto.StorageAddress));
+        cv.SetContent(cvDto.Content != null ? cvDto.Content.AsDomain() : NullCvContent.Instance);
+        return cv;
     }
 }

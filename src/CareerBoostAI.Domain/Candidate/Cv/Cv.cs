@@ -6,20 +6,13 @@ using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.Candidate.Cv;
 
-public class Cv
+public class Cv(CvId id, CvFile file, BaseCvContent? content = null)
 {
-    public CvId Id { get; private set; }
-    public CvFile File { get; private set; }
-    public BaseCvContent Content { get; private set; }
+    public CvId Id { get; private set; } = id;
+    public CvFile File { get; private set; } = file;
+    public BaseCvContent Content { get; private set; } = content ?? NullCvContent.Instance;
 
     public bool IsParsed => Content is not NullCvContent;
-
-    public Cv(CvId id, CvFile file, BaseCvContent? content = null)
-    {
-        Id = id;
-        File = file;
-        Content = content ?? NullCvContent.Instance;
-    }
 
     public void SetContent(BaseCvContent content)
     {
