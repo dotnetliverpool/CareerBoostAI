@@ -1,7 +1,6 @@
 ﻿using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 using CareerBoostAI.Domain.Candidate.ValueObjects;
 using CareerBoostAI.Domain.Common.ValueObjects;
-using CareerBoostAI.Domain.Entities;
 using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.Candidate.Cv;

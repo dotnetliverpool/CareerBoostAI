@@ -1,9 +1,11 @@
-﻿using CareerBoostAI.Domain.Enums;
+﻿using System.Diagnostics.Contracts;
+using CareerBoostAI.Domain.Enums;
 using CareerBoostAI.Domain.Exceptions;
+using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 
-public class CvFile
+public class CvFile : ValueObject
 {
     public string Name { get; private set; }
     public string FileType { get; private set; }
@@ -24,7 +26,6 @@ public class CvFile
     
     public static CvFile Create(string name,  CvStorageMedium storageMedium, string storageAddress)
     {
-        
         if (string.IsNullOrEmpty(name))
         {
             throw new EmptyArgumentException("File Name");
@@ -43,6 +44,7 @@ public class CvFile
         return new CvFile(name, ExtractFileTypeFromName(name), storageMedium, storageAddress);
     }
 
+    
     private static string ExtractFileTypeFromName(string fileName)
     {
         var result =  Path.GetExtension(fileName)?.TrimStart('.').ToLower();
@@ -59,11 +61,8 @@ public class CvFile
             ExtractFileTypeFromName(fileName),
             StringComparison.OrdinalIgnoreCase));
     }
-    
-    
 
-    // Get atomic values for equality checks or comparison
-    protected IEnumerable<object> GetAtomicValues()
+    protected override IEnumerable<object> GetAtomicValues()
     {
         yield return Name;
         yield return FileType;

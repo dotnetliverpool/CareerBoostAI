@@ -1,28 +1,26 @@
 ﻿using CareerBoostAI.Domain.Exceptions;
 using CareerBoostAI.Domain.ValueObjects;
 
-namespace CareerBoostAI.Domain.Entities;
+namespace CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 
 public class CvSection
 {
-    private readonly CvSectionSortNumber _sortNumber;
+    private readonly SequenceIndex _sequenceIndex;
     private readonly CvSectionName _name;
     private readonly List<CvSectionItem> _items = new();
 
-    public CvSectionSortNumber SortNumber => _sortNumber;
+    public SequenceIndex SequenceIndex => _sequenceIndex;
     public CvSectionName Name => _name; 
     public IReadOnlyList<CvSectionItem> Items => _items.AsReadOnly(); 
 
-    public CvSection(CvSectionName name, CvSectionSortNumber sortNumber)
+    public CvSection(CvSectionName name, SequenceIndex sequenceIndex)
     {
         _name = name;
-        _sortNumber = sortNumber;
+        _sequenceIndex = sequenceIndex;
     }
 
     public void AddItem(CvSectionItem item)
     {
-        if (_items.Any(existing => existing.Equals(item)))
-            throw new DuplicateSectionItemException();
-        _items.Add(item);
+        throw new NotImplementedException();
     }
 }
