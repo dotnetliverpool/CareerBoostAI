@@ -40,6 +40,11 @@ public class Cv
     
     public void AddSection(CvSection section)
     {
+        if (_sections.Contains(section))
+        {
+            // TODO: Decide Business Logic For Duplicate Content, break or add
+            return;
+        }
         _sections.Add(section);
     }
 }
