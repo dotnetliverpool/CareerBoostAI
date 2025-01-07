@@ -1,6 +1,4 @@
-﻿using CareerBoostAI.Application.Candidate.DTO;
-
-namespace CareerBoostAI.Application.DTO;
+﻿namespace CareerBoostAI.Application.Candidate.DTO;
 
 public class CvDto
 {
