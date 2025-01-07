@@ -116,10 +116,17 @@ public static class CandidateDtoMappingExtensions
 
     public static CvSectionDto AsDto(this CvSection section)
     {
-        
+        return new CvSectionDto
+        {
+            SectionName = section.Name.Value,
+            SequenceIndex = section.SequenceIndex.Value,
+            Items = section.Items.
+                Select(item => item.AsDto())
+                .ToList()
+        };
     }
 
-    public static CvSectionItem AsDto(this CvSectionItem sectionItem)
+    public static CvSectionItemDto AsDto(this CvSectionItem sectionItem)
     {
         
     }
