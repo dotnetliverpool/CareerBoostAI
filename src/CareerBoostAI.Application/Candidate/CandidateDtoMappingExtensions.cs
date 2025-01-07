@@ -52,7 +52,7 @@ public static class CandidateDtoMappingExtensions
 
         foreach (var cvDto in candidateDto.Cvs)
         {
-            candidate.AddCv(new Cv());
+            candidate.AddCv(cvDto.AsDomain());
         }
 
         return candidate;

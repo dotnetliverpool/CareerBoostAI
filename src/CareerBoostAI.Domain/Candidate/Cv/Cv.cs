@@ -1,4 +1,5 @@
-﻿using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
+﻿using System.Data;
+using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 using CareerBoostAI.Domain.Candidate.ValueObjects;
 using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.ValueObjects;
@@ -9,43 +10,23 @@ public class Cv
 {
     public CvId Id { get; private set; }
     public CvFile File { get; private set; }
-    public FirstName FirstName { get; private set; }
-    public LastName LastName { get; private set; }
-    public Email Email { get; private set; }
-    public PhoneNumber PhoneNumber { get; private set; }
-    public CvAddress Address { get; private set; }
-    public CvAbout About { get; private set; }
+    public BaseCvContent Content { get; private set; }
 
-    private List<CvSection> _sections = new();
-    public IReadOnlyList<CvSection> Sections => _sections.AsReadOnly();
+    public bool IsParsed => Content is not NullCvContent;
 
-    public Cv(
-        FirstName firstName, 
-        LastName lastName, 
-        Email email, 
-        PhoneNumber phoneNumber, 
-        CvAddress address, 
-        CvAbout about, 
-        CvId id, 
-        CvFile file)
+    public Cv(CvId id, CvFile file, BaseCvContent? content = null)
     {
-        FirstName = firstName;
-        LastName = lastName;
-        Email = email;
-        PhoneNumber = phoneNumber;
-        Address = address;
-        About = about;
         Id = id;
         File = file;
+        Content = content ?? NullCvContent.Instance;
     }
-    
-    public void AddSection(CvSection section)
+
+    public void SetContent(BaseCvContent content)
     {
-        if (_sections.Contains(section))
+        if (Content is not NullCvContent)
         {
-            // TODO: Decide Business Logic For Duplicate Content, break or add
-            return;
+            throw new InvalidExpressionException("Cv content cannot be changed");
         }
-        _sections.Add(section);
+        Content = content;
     }
 }
