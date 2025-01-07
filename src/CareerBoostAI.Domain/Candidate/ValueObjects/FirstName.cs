@@ -24,11 +24,15 @@ public class FirstName : ValueObject
         return new FirstName(value);
     }
 
-    public static implicit operator string(FirstName firstName)
-        => firstName.Value;
+    public static FirstName CreateTrusted(string value)
+    {
+        return new FirstName(value);
+    }
 
-    public static implicit operator FirstName(string firstName)
-        => new(firstName);
+    public override string ToString()
+    {
+        return Value;
+    }
 
     protected override IEnumerable<object> GetAtomicValues()
     {

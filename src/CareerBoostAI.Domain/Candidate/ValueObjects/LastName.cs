@@ -7,9 +7,8 @@ public class LastName : ValueObject
 {
     public string Value { get; }
     
-    public LastName(string value)
+    private LastName(string value)
     {
-        
         Value = value;
     }
     
@@ -19,8 +18,17 @@ public class LastName : ValueObject
         {
             throw new EmptyArgumentException(nameof(LastName));
         }
-
         return new LastName(value);
+    }
+
+    public static LastName CreateTrusted(string value)
+    {
+        return new LastName(value);
+    }
+
+    public override string ToString()
+    {
+        return Value;
     }
 
 

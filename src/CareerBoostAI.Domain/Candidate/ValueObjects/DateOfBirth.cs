@@ -5,15 +5,15 @@ namespace CareerBoostAI.Domain.Candidate.ValueObjects;
 
 public class DateOfBirth : ValueObject
 {
-    public DateTime Value { get; }
+    public DateOnly Value { get; }
 
     // Constructor to ensure the date of birth is in the past
-    private DateOfBirth(DateTime value)
+    private DateOfBirth(DateOnly value)
     {
         Value = value;
     }
 
-    public static DateOfBirth Create(DateTime value)
+    public static DateOfBirth Create(DateOnly value)
     {
         var age = CalculateAge(value);
 
@@ -24,12 +24,16 @@ public class DateOfBirth : ValueObject
         }
         return new DateOfBirth(value);
     }
+
+    public static DateOfBirth CreateTrusted(DateOnly value)
+    {
+        return new DateOfBirth(value);
+    }
     
-    private static int CalculateAge(DateTime birthDate)
+    private static int CalculateAge(DateOnly birthDate)
     {
         var today = DateTime.Today;
         int age = today.Year - birthDate.Year;
-
         return age;
     }
 

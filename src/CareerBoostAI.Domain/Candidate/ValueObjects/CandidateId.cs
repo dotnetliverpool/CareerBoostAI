@@ -16,14 +16,15 @@ public class CandidateId : ValueObject
         return new CandidateId(Guid.NewGuid());
     }
         
-    public static implicit operator Guid(CandidateId id)
-        => id.Value;
-        
-    public static implicit operator CandidateId(Guid id)
-        => new(id);
+    public static CandidateId Create(Guid id)
+    {
+        return new CandidateId(id);
+    }
 
     protected override IEnumerable<object> GetAtomicValues()
     {
         yield return Value;
     }
+
+    
 }
