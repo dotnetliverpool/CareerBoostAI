@@ -1,8 +1,9 @@
 ﻿using CareerBoostAI.Domain.Abstractions;
+using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
+using CareerBoostAI.Domain.Candidate.Factories;
 using CareerBoostAI.Domain.Candidate.ValueObjects;
 using CareerBoostAI.Domain.Common.Exceptions;
 using CareerBoostAI.Domain.Common.ValueObjects;
-using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.Candidate;
 
@@ -72,8 +73,18 @@ public class Candidate : AggregateRoot<CandidateId>
         PhoneNumbers.Add(phoneNumber);
     }
 
-
+    public void RegisterCv(CvFile file)
+    {
+        var cv = new Cv.Cv(CvId.New(), file);;
+        AddCv(cv);
+    }
     public void AddCv(Cv.Cv cv)
+    {
+        ValidateCv(cv);
+        Cvs.Add(cv);
+    }
+
+    private void ValidateCv(Cv.Cv cv)
     {
         if (Cvs.Any(existingCv => existingCv.Id.Equals(cv.Id)))
         {
@@ -81,7 +92,6 @@ public class Candidate : AggregateRoot<CandidateId>
                 nameof(Candidate),
                 nameof(Cv.Cv), cv.Id);
         }
-        Cvs.Add(cv);
     }
 
     public void AddCvs(IEnumerable<Cv.Cv> cvs)
