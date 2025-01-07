@@ -49,4 +49,9 @@ public class PhoneNumber : ValueObject
         yield return Code;
         yield return Number;
     }
+
+    public override string ToString()
+    {
+        return $"{Code} {Number}";
+    }
 }

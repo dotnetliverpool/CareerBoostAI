@@ -9,28 +9,17 @@ namespace CareerBoostAI.Domain.Candidate;
 public class Candidate : AggregateRoot<CandidateId>
 {
     public CandidateId Id { get; private set; }
-    private FirstName _firstName;
-    private LastName _lastName;
-    private DateOfBirth _dateOfBirth;
-    private  List<Email> _emails = new();
-    private List<PhoneNumber> _phoneNumbers = new();
-    private List<Cv.Cv> _cvs = new();
-
-    public string FullName => _firstName + " " + _lastName;
-    public Email ActiveEmail
-    {
-        get
-        {
-            var activeEmail = _emails.FirstOrDefault(email => email.IsActive);
-
-            if (activeEmail == null)
-            {
-                throw new NoActiveEmailFoundException(FullName);
-            }
-
-            return activeEmail;
-        }
-    }
+    public FirstName FirstName { get; private set; }
+    public LastName LastName { get; private set; }
+    public DateOfBirth DateOfBirth { get; private set; }
+    
+    public List<Email> Emails { get; private set; } = new();
+    public List<PhoneNumber> PhoneNumbers { get; private set; } = new();
+    public List<Cv.Cv> Cvs { get; private set; } = new();
+    
+    public string FullName => $"{FirstName.Value} {LastName.Value}";
+    public Email ActiveEmail => Emails.FirstOrDefault(e => e.IsActive) 
+                                ?? throw new NoActiveEmailFoundException(FullName);
 
     public Candidate(
         CandidateId id,
@@ -39,18 +28,44 @@ public class Candidate : AggregateRoot<CandidateId>
         DateOfBirth dateOfBirth)
     {
         Id = id;
-        _firstName = firstName;
-        _lastName = lastName;
-        _dateOfBirth = dateOfBirth;
+        FirstName = firstName;
+        LastName = lastName;
+        DateOfBirth = dateOfBirth;
     }
+    
+    public void AddEmail(Email email)
+    {
+        if (Emails.Any(e => e.Equals(email)))
+        {
+            throw new DuplicatePropertyException(
+                nameof(Candidate), 
+                nameof(Email), email.Value);
+        }
+        Emails.Add(email);
+    }
+    
+    public void AddPhoneNumber(PhoneNumber phoneNumber)
+    {
+        if (PhoneNumbers.Any(p => p.Equals(phoneNumber)))
+        {
+            throw new DuplicatePropertyException(
+                nameof(Candidate),
+                nameof(PhoneNumber), phoneNumber.ToString());
+        }
+        
+        PhoneNumbers.Add(phoneNumber);
+    }
+
 
     public void AddCv(Cv.Cv cv)
     {
-        if (_cvs.Any(existingCv => existingCv.Id.Equals(cv.Id)))
+        if (Cvs.Any(existingCv => existingCv.Id.Equals(cv.Id)))
         {
-            throw new DuplicateCandidateCvException(ActiveEmail.Value, cv.Id.Value);
+            throw new DuplicatePropertyException(
+                nameof(Candidate),
+                nameof(Cv.Cv), cv.Id);
         }
-        _cvs.Add(cv);
+        Cvs.Add(cv);
     }
 
     
