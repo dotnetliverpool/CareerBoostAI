@@ -77,6 +77,7 @@ public class Candidate : AggregateRoot<CandidateId>
     {
         var cv = new Cv.Cv(CvId.New(), file);;
         AddCv(cv);
+        // TODO : Register Domain Event
     }
     public void AddCv(Cv.Cv cv)
     {
