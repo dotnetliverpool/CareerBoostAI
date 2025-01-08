@@ -1,5 +1,9 @@
-﻿using CareerBoostAI.Infrastructure.EF.Contexts;
+﻿using CareerBoostAI.Application.Candidate;
+using CareerBoostAI.Application.Common.Abstractions;
+using CareerBoostAI.Infrastructure.EF.Contexts;
 using CareerBoostAI.Infrastructure.EF.Options;
+using CareerBoostAI.Infrastructure.EF.Repositories;
+using CareerBoostAI.Infrastructure.EF.Transaction;
 using CareerBoostAI.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,7 +23,8 @@ public static class ServicesDependencyInjectionExtensions
             options.UseMySql(mySqlOptions.ConnectionString, severVersion);
         });
     
-        
+        services.AddScoped<ICandidateRepository, PostgresCandidateRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         
         
        
