@@ -63,8 +63,7 @@ public class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand>
 
     private async Task Validate(CreateProfileCommand request, CancellationToken cancellationToken)
     {
-        var isRegistered = await _candidateReadService.CandidateExistsByEmailAsync(request.Email, cancellationToken);
-        if (isRegistered)
+        if (await _candidateReadService.CandidateExistsByEmailAsync(request.Email, cancellationToken))
         {
             throw new DuplicateCandidateProfileException(request.Email);
         }
