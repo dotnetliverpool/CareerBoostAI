@@ -16,8 +16,6 @@ public class Candidate : AggregateRoot<CandidateId>
     private readonly List<Cv.Cv> _cvs = new();
 
     #region Public Properties
-
-    public CandidateId Id { get; private set; }
     public FirstName FirstName { get; private set; }
     public LastName LastName { get; private set; }
     public DateOfBirth DateOfBirth { get; private set; }
@@ -66,7 +64,7 @@ public class Candidate : AggregateRoot<CandidateId>
         }
         _emails.Add(email);
         
-        AddEvent(new EmailRegisteredEvent(Id.Value, email.Value));
+        AddEvent(DomainEvent.EmailRegistered(Id.Value, email.Value));
     }
 
     private void ValidateEmail(Email email)
@@ -97,7 +95,14 @@ public class Candidate : AggregateRoot<CandidateId>
 
     #region PhoneNumberBehaviour
 
-    public void AddPhoneNumbers(IEnumerable<PhoneNumber> numbers)
+    public void RegisterPhoneNumber(PhoneNumber phoneNumber)
+    {
+        AddPhoneNumber(phoneNumber);
+        AddEvent(DomainEvent.PhoneNumberRegistered(
+            Id.Value, phoneNumber.Code, phoneNumber.Number));
+    }
+
+    internal void AddPhoneNumbers(IEnumerable<PhoneNumber> numbers)
     {
         foreach (var numner in numbers)
         {
@@ -105,7 +110,7 @@ public class Candidate : AggregateRoot<CandidateId>
         }
     }
     
-    public void AddPhoneNumber(PhoneNumber phoneNumber)
+    private void AddPhoneNumber(PhoneNumber phoneNumber)
     {
         if (PhoneNumbers.Any(p => p.Equals(phoneNumber)))
         {

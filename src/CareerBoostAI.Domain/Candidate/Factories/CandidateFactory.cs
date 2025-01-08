@@ -14,7 +14,7 @@ public sealed class CandidateFactory : ICandidateFactory
     {
         var candidate =  new Candidate(CandidateId.New(), firstName, lastName, dateOfBirth);
         candidate.RegisterEmail(email);
-        candidate.AddPhoneNumber(phoneNumber);
+        candidate.RegisterPhoneNumber(phoneNumber);
         return candidate;
     }
 

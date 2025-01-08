@@ -71,7 +71,6 @@ public static class CandidateDtoMappingExtensions
 
     public static Cv AsDomain(this CvDto cvDto)
     {
-       
         var cv = new Cv(
             CvId.Create(cvDto.Id), 
             CvFile.Create(
