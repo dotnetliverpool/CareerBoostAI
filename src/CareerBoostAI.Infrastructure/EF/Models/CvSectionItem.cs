@@ -26,6 +26,6 @@ public class CvSectionItem
     [DataType(DataType.Date)]
     public DateOnly? EndDate { get; set; }
     
-    public int SectionId { get; set; }
+    public Guid SectionId { get; set; }
     public CvSection Section { get; set; }
 }

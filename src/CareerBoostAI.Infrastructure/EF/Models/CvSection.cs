@@ -13,6 +13,6 @@ public class CvSection
     
     public List<CvSectionItem> SectionItems { get; set; }
     
-    public int CvId { get; set; }
+    public Guid CvId { get; set; }
     public Cv Cv { get; set; }
 }

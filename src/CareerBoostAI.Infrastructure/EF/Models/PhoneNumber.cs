@@ -18,6 +18,6 @@ public class PhoneNumber
     public string Number { get; set; }
     
     public bool IsActive { get; set; }
-    public int OwnerId { get; set; } 
+    public Guid OwnerId { get; set; } 
     public string OwnerType { get; set; }
 }

@@ -12,7 +12,7 @@ public class Email
     [Required]
     public bool IsActive { get; set; }
     
-    public int OwnerId { get; set; } 
+    public Guid OwnerId { get; set; } 
     
     [Required]
     public string OwnerType { get; set; }

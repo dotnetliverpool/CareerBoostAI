@@ -56,6 +56,6 @@ public class Cv
     
     public List<CvSection> Sections { get; set; }
     
-    public int CandidateId { get; set; }
+    public Guid CandidateId { get; set; }
     public Candidate Candidate { get; set; }
 }
