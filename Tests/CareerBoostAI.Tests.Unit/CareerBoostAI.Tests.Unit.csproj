@@ -27,7 +27,6 @@
     <ItemGroup>
       <Folder Include="Application\Candidate\" />
       <Folder Include="Application\Services\" />
-      <Folder Include="Domain\Candidate\" />
     </ItemGroup>
 
 </Project>

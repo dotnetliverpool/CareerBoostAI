@@ -2,6 +2,7 @@
 using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 using CareerBoostAI.Domain.Candidate.Factories;
 using CareerBoostAI.Domain.Candidate.ValueObjects;
+using CareerBoostAI.Domain.Common.Events;
 using CareerBoostAI.Domain.Common.Exceptions;
 using CareerBoostAI.Domain.Common.ValueObjects;
 
@@ -9,23 +10,27 @@ namespace CareerBoostAI.Domain.Candidate;
 
 public class Candidate : AggregateRoot<CandidateId>
 {
-    public CandidateId Id { get; private set; }
-    public FirstName FirstName { get; private set; }
-    public LastName LastName { get; private set; }
-    public DateOfBirth DateOfBirth { get; private set; }
     
     private readonly List<Email> _emails = new();
     private readonly List<PhoneNumber> _phoneNumbers = new();
     private readonly List<Cv.Cv> _cvs = new();
 
+    #region Public Properties
+
+    public CandidateId Id { get; private set; }
+    public FirstName FirstName { get; private set; }
+    public LastName LastName { get; private set; }
+    public DateOfBirth DateOfBirth { get; private set; }
     public IReadOnlyCollection<Email> Emails => _emails.AsReadOnly();
     public IReadOnlyCollection<PhoneNumber> PhoneNumbers => _phoneNumbers.AsReadOnly();
     public IReadOnlyCollection<Cv.Cv> Cvs => _cvs.AsReadOnly();
-
-    
     public string FullName => $"{FirstName.Value} {LastName.Value}";
-    public Email ActiveEmail => Emails.FirstOrDefault(e => e.IsActive) 
-                                ?? throw new NoActiveEmailFoundException(FullName);
+    private Email? ActiveEmail 
+        => Emails.FirstOrDefault(e => e.IsActive) 
+           ?? null;
+
+    #endregion
+    
 
     public Candidate(
         CandidateId id,
@@ -38,10 +43,45 @@ public class Candidate : AggregateRoot<CandidateId>
         LastName = lastName;
         DateOfBirth = dateOfBirth;
     }
-    
+
+    #region CandidateEmailBehaviour
+
+    public void RegisterEmail(Email email)
+    {
+        // email is active
+        if (!email.IsActive)
+        {
+            throw new AttemptToRegisterInactiveEmailException(Id.Value, email.Value );
+        }
+        
+        // email is not duplicated
+        ValidateEmail(email);
+        
+        var activeEmail = ActiveEmail;
+        if (activeEmail is not null)
+        {
+            _emails.Remove(activeEmail);
+            var inactiveEmail = Email.Create(activeEmail.Value, isActive: false);
+            _emails.Add(inactiveEmail);
+        }
+        _emails.Add(email);
+        
+        AddEvent(new EmailRegisteredEvent(Id.Value, email.Value));
+    }
+
+    private void ValidateEmail(Email email)
+    {
+        if (_emails.Any(e => e.Equals(email)))
+        {
+            throw new DuplicatePropertyException(
+                nameof(Candidate), 
+                nameof(Email), email.Value);
+        }
+    }
+
     public void AddEmail(Email email)
     {
-        if (Emails.Any(e => e.Equals(email)))
+        if (_emails.Any(e => e.Equals(email)))
         {
             throw new DuplicatePropertyException(
                 nameof(Candidate), 
@@ -57,6 +97,9 @@ public class Candidate : AggregateRoot<CandidateId>
             AddEmail(email);
         }
     }
+
+    #endregion
+    
     
     public void AddPhoneNumbers(IEnumerable<PhoneNumber> numbers)
     {
