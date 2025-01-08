@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CareerBoostAI.Infrastructure.EF.Repositories;
 
-internal sealed class PostgresCandidateRepository(CareerBoostDbContext context) : ICandidateRepository
+internal sealed class MySqlCandidateRepository(CareerBoostDbContext context) : ICandidateRepository
 {
     
     private readonly DbSet<Candidate> _candidates = context.Candidates;

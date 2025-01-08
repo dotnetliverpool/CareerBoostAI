@@ -23,7 +23,7 @@ public static class ServicesDependencyInjectionExtensions
             options.UseMySql(mySqlOptions.ConnectionString, severVersion);
         });
     
-        services.AddScoped<ICandidateRepository, PostgresCandidateRepository>();
+        services.AddScoped<ICandidateRepository, MySqlCandidateRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         
         
