@@ -3,7 +3,6 @@ using CareerBoostAI.Application.Common.Abstractions.Mediator;
 using CareerBoostAI.Application.Services;
 using CareerBoostAI.Application.Services.CvParseService;
 using CareerBoostAI.Application.Services.EmailService;
-using CareerBoostAI.Application.Services.ReadService.CandidateReadService;
 using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 using CareerBoostAI.Domain.Candidate.Factories;
 using CareerBoostAI.Domain.Candidate.ValueObjects;
@@ -64,8 +63,8 @@ public class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand>
 
     private async Task Validate(CreateProfileCommand request, CancellationToken cancellationToken)
     {
-        var candidateDto = await _candidateReadService.SearchCandidateByEmailAsync(request.Email, cancellationToken);
-        if (candidateDto != null)
+        var isRegistered = await _candidateReadService.CandidateExistsByEmailAsync(request.Email, cancellationToken);
+        if (isRegistered)
         {
             throw new DuplicateCandidateProfileException(request.Email);
         }
