@@ -23,7 +23,7 @@ public class Candidate : AggregateRoot<CandidateId>
     public IReadOnlyCollection<PhoneNumber> PhoneNumbers => _phoneNumbers.AsReadOnly();
     public IReadOnlyCollection<Cv.Cv> Cvs => _cvs.AsReadOnly();
     public string FullName => $"{FirstName.Value} {LastName.Value}";
-    private Email? ActiveEmail 
+    public Email? ActiveEmail 
         => Emails.FirstOrDefault(e => e.IsActive) 
            ?? null;
 
@@ -43,6 +43,12 @@ public class Candidate : AggregateRoot<CandidateId>
     }
 
     #region CandidateEmailBehaviour
+
+    public Email? GetEmail(string address)
+    {
+        var email =  _emails.FirstOrDefault(e => e.Value == address);
+        return email is not null ? Email.Create(email.Value, email.IsActive) : null;
+    }
 
     public void RegisterEmail(Email email)
     {

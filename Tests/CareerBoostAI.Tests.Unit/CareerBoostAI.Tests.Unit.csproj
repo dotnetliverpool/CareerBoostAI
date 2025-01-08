@@ -25,8 +25,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Application\Candidate\" />
       <Folder Include="Application\Services\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\CareerBoostAI.Domain\CareerBoostAI.Domain.csproj" />
     </ItemGroup>
 
 </Project>
