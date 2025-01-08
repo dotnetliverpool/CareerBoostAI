@@ -1,4 +1,4 @@
-﻿namespace CareerBoostAI.Domain.Repositories;
+﻿namespace CareerBoostAI.Application.Common.Abstractions;
 
 public interface IUnitOfWork
 {

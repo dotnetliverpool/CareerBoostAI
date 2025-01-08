@@ -1,6 +1,7 @@
-﻿using CareerBoostAI.Infrastructure.EF.Contexts;
-using CareerBoostAI.Infrastructure.EF.Models;
+﻿using CareerBoostAI.Application.Common.Abstractions;
+using CareerBoostAI.Infrastructure.EF.Contexts;
 using CareerBoostAI.Infrastructure.EF.Options;
+using CareerBoostAI.Infrastructure.EF.Transaction;
 using CareerBoostAI.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +20,9 @@ public static class ServicesDependencyInjectionExtensions
         {
             options.UseMySql(mySqlOptions.ConnectionString, severVersion);
         });
+    
+        
+        services.AddSingleton<IUnitOfWork, UnitOfWork>();
         
        
         return services;

@@ -1,16 +1,14 @@
-﻿using CareerBoostAI.Application.Common.Abstractions.Mediator;
+﻿using CareerBoostAI.Application.Common.Abstractions;
+using CareerBoostAI.Application.Common.Abstractions.Mediator;
 using CareerBoostAI.Application.Services;
 using CareerBoostAI.Application.Services.CvParseService;
 using CareerBoostAI.Application.Services.EmailService;
 using CareerBoostAI.Application.Services.ReadService.CandidateReadService;
-using CareerBoostAI.Domain.Candidate;
 using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 using CareerBoostAI.Domain.Candidate.Factories;
 using CareerBoostAI.Domain.Candidate.ValueObjects;
 using CareerBoostAI.Domain.Common.Exceptions;
 using CareerBoostAI.Domain.Common.ValueObjects;
-using CareerBoostAI.Domain.Enums;
-using CareerBoostAI.Domain.Repositories;
 using MediatR;
 
 namespace CareerBoostAI.Application.Candidate.Commands.CreateProfile;
