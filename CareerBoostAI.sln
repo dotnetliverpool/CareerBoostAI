@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Application",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Infrastructure", "src\CareerBoostAI.Infrastructure\CareerBoostAI.Infrastructure.csproj", "{80F8370C-1ED7-423E-9039-10516EC9A9BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.IntegrationTests", "Tests\CareerBoostAI.IntegrationTests\CareerBoostAI.IntegrationTests.csproj", "{C7404FB4-2004-4583-A3FE-691239CA01F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Tests.Unit", "Tests\CareerBoostAI.Tests.Unit\CareerBoostAI.Tests.Unit.csproj", "{C7404FB4-2004-4583-A3FE-691239CA01F8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Contracts", "src\CareerBoostAI.Contracts\CareerBoostAI.Contracts.csproj", "{4D84DA8A-FDBD-4176-9593-1B691B286E6E}"
 EndProject
