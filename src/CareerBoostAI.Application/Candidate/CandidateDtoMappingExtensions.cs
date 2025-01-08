@@ -38,25 +38,23 @@ public static class CandidateDtoMappingExtensions
     }
 
     public static Domain.Candidate.Candidate AsDomain(
-        this CandidateDto candidateDto)
+        this CandidateDto candidateDto, ICandidateFactory candidateFactory)
     {
-        var candidate = new Domain.Candidate.Candidate(
-            CandidateId.Create(candidateDto.Id),
-            FirstName.Create(candidateDto.FirstName),
-            LastName.Create(candidateDto.LastName),
-            DateOfBirth.Create(candidateDto.DateOfBirth));
-        
-        candidate.AddEmails(candidateDto.Emails
-            .Select(em => Email.Create(em))
-            .ToList());
-        candidate.AddPhoneNumbers(candidateDto.PhoneNumbers
-            .Select(pn => PhoneNumber.Create(pn.Code, pn.Number))
-            .ToList());
-        candidate.AddCvs(candidateDto.Cvs
-            .Select(cv => cv.AsDomain())
-            .ToList());
-        
-        return candidate;
+        return candidateFactory.HydrateCreate(
+                CandidateId.Create(candidateDto.Id),
+                FirstName.Create(candidateDto.FirstName),
+                LastName.Create(candidateDto.LastName),
+                DateOfBirth.Create(candidateDto.DateOfBirth),
+                candidateDto.Emails
+                    .Select(em => Email.Create(em))
+                    .ToList(),
+                candidateDto.PhoneNumbers
+                    .Select(pn => PhoneNumber.Create(pn.Code, pn.Number))
+                    .ToList(),
+                candidateDto.Cvs
+                    .Select(cv => cv.AsDomain())
+                    .ToList()
+                );
     }
 
     public static CvDto AsDto(this Cv cv)

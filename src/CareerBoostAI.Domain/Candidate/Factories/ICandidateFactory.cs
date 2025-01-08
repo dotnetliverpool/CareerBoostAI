@@ -11,7 +11,7 @@ public interface ICandidateFactory
         Email email, PhoneNumber phoneNumber
         );
     
-    public  Domain.Candidate.Candidate Create(CandidateId id, FirstName firstName,
+    public  Domain.Candidate.Candidate HydrateCreate(CandidateId id, FirstName firstName,
         LastName lastName, DateOfBirth dateOfBirth,
         List<Email> emails, List<PhoneNumber> phoneNumbers, List<Cv.Cv> cvs
     );

@@ -13,12 +13,12 @@ public sealed class CandidateFactory : ICandidateFactory
         )
     {
         var candidate =  new Candidate(CandidateId.New(), firstName, lastName, dateOfBirth);
-        candidate.AddEmail(email);
+        candidate.RegisterEmail(email);
         candidate.AddPhoneNumber(phoneNumber);
         return candidate;
     }
 
-    public Candidate Create(CandidateId id, FirstName firstName,
+    public Candidate HydrateCreate(CandidateId id, FirstName firstName,
         LastName lastName, DateOfBirth dateOfBirth,
         List<Email> emails, List<PhoneNumber> phoneNumbers, List<Cv.Cv> cvs)
     {

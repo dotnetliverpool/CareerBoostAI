@@ -32,7 +32,7 @@ public class Candidate : AggregateRoot<CandidateId>
     #endregion
     
 
-    public Candidate(
+    internal Candidate(
         CandidateId id,
         FirstName firstName, 
         LastName lastName,
@@ -79,18 +79,13 @@ public class Candidate : AggregateRoot<CandidateId>
         }
     }
 
-    public void AddEmail(Email email)
+    internal void AddEmail(Email email)
     {
-        if (_emails.Any(e => e.Equals(email)))
-        {
-            throw new DuplicatePropertyException(
-                nameof(Candidate), 
-                nameof(Email), email.Value);
-        }
+        ValidateEmail(email);
         _emails.Add(email);
     }
 
-    public void AddEmails(IEnumerable<Email> emails)
+    internal void AddEmails(IEnumerable<Email> emails)
     {
         foreach (var email in emails)
         {
@@ -99,8 +94,9 @@ public class Candidate : AggregateRoot<CandidateId>
     }
 
     #endregion
-    
-    
+
+    #region PhoneNumberBehaviour
+
     public void AddPhoneNumbers(IEnumerable<PhoneNumber> numbers)
     {
         foreach (var numner in numbers)
@@ -120,6 +116,10 @@ public class Candidate : AggregateRoot<CandidateId>
         
         _phoneNumbers.Add(phoneNumber);
     }
+
+    #endregion
+    
+    
 
     public void RegisterCv(CvFile file)
     {
