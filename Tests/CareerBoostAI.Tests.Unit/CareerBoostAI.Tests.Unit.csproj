@@ -7,4 +7,9 @@
         <RootNamespace>CareerBoostAI.IntegrationTests</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Application\" />
+      <Folder Include="Domain\" />
+    </ItemGroup>
+
 </Project>
