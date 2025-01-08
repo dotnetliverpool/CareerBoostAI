@@ -25,8 +25,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Application\" />
-      <Folder Include="Domain\" />
+      <Folder Include="Application\Candidate\" />
+      <Folder Include="Application\Services\" />
+      <Folder Include="Domain\Candidate\" />
     </ItemGroup>
 
 </Project>

@@ -14,9 +14,14 @@ public class Candidate : AggregateRoot<CandidateId>
     public LastName LastName { get; private set; }
     public DateOfBirth DateOfBirth { get; private set; }
     
-    public List<Email> Emails { get; private set; } = new();
-    public List<PhoneNumber> PhoneNumbers { get; private set; } = new();
-    public List<Cv.Cv> Cvs { get; private set; } = new();
+    private readonly List<Email> _emails = new();
+    private readonly List<PhoneNumber> _phoneNumbers = new();
+    private readonly List<Cv.Cv> _cvs = new();
+
+    public IReadOnlyCollection<Email> Emails => _emails.AsReadOnly();
+    public IReadOnlyCollection<PhoneNumber> PhoneNumbers => _phoneNumbers.AsReadOnly();
+    public IReadOnlyCollection<Cv.Cv> Cvs => _cvs.AsReadOnly();
+
     
     public string FullName => $"{FirstName.Value} {LastName.Value}";
     public Email ActiveEmail => Emails.FirstOrDefault(e => e.IsActive) 
@@ -42,7 +47,7 @@ public class Candidate : AggregateRoot<CandidateId>
                 nameof(Candidate), 
                 nameof(Email), email.Value);
         }
-        Emails.Add(email);
+        _emails.Add(email);
     }
 
     public void AddEmails(IEnumerable<Email> emails)
@@ -70,7 +75,7 @@ public class Candidate : AggregateRoot<CandidateId>
                 nameof(PhoneNumber), phoneNumber.ToString());
         }
         
-        PhoneNumbers.Add(phoneNumber);
+        _phoneNumbers.Add(phoneNumber);
     }
 
     public void RegisterCv(CvFile file)
@@ -82,7 +87,7 @@ public class Candidate : AggregateRoot<CandidateId>
     public void AddCv(Cv.Cv cv)
     {
         ValidateCv(cv);
-        Cvs.Add(cv);
+        _cvs.Add(cv);
     }
 
     private void ValidateCv(Cv.Cv cv)
