@@ -8,14 +8,33 @@ public class Cv
     public Guid Id { get; set; }
     
     [Required]
+    [MaxLength(255)]
+    public string FileName { get; set; }
+    
+    [Required]
+    [Column(TypeName = "Varchar(50")]
+    public string StorageMedium { get; set; }
+    
+    [Required]
+    [MaxLength(255)]
+    public string StorageAddress { get; set; }
+    
+    [MaxLength(100)]
+    public string FirstName { get; set; }
+    
+    [MaxLength(100)]
+    public string LastName { get; set; }
+    
     [MaxLength(4)]
     [Column(TypeName = "Varchar(4")]
     public string  PhoneCountryCode { get; set; }
     
-    [Required]
+    
     [MaxLength(14)]
     [Column(TypeName = "Varchar(14")]
-    public int  PhoneNumber { get; set; }
+    public string  PhoneNumber { get; set; }
+    
+    
     
     [MaxLength(255)]
     public string EmailAddress { get; set; }

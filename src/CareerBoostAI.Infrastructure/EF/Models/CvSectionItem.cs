@@ -6,7 +6,7 @@ public class CvSectionItem
 {
     public Guid Id { get; set; }
     
-    public int SequenceIndex { get; set; }
+    public uint SequenceIndex { get; set; }
     
     [MaxLength(255)]
     public string OrganisationName { get; set; }

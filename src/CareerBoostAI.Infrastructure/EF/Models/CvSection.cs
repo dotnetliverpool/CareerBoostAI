@@ -9,7 +9,7 @@ public class CvSection
     [MaxLength(100)]
     public string Name { get; set; }
     
-    public int SequenceIndex { get; set; }
+    public uint SequenceIndex { get; set; }
     
     public List<CvSectionItem> SectionItems { get; set; }
     
