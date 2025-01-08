@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -12,19 +11,14 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "CareerBoostAI");
-
             migrationBuilder.AlterDatabase()
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Candidates",
-                schema: "CareerBoostAI",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     FirstName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     LastName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
@@ -39,14 +33,23 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Cvs",
-                schema: "CareerBoostAI",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    FileName = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    StorageMedium = table.Column<string>(type: "Varchar(50)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    StorageAddress = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    FirstName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    LastName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     PhoneCountryCode = table.Column<string>(type: "Varchar(4)", maxLength: 4, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    PhoneNumber = table.Column<int>(type: "Varchar(14", maxLength: 14, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "Varchar(14)", maxLength: 14, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     EmailAddress = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Country = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
@@ -59,7 +62,7 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     About = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CandidateId = table.Column<int>(type: "int", nullable: false)
+                    CandidateId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
@@ -67,7 +70,6 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
                     table.ForeignKey(
                         name: "FK_Cvs_Candidates_CandidateId",
                         column: x => x.CandidateId,
-                        principalSchema: "CareerBoostAI",
                         principalTable: "Candidates",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -75,72 +77,64 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Email",
-                schema: "CareerBoostAI",
+                name: "Emails",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Address = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    OwnerId = table.Column<int>(type: "int", nullable: false),
+                    OwnerId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     OwnerType = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    CandidateId = table.Column<int>(type: "int", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Email", x => x.Id);
+                    table.PrimaryKey("PK_Emails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Email_Candidates_CandidateId",
-                        column: x => x.CandidateId,
-                        principalSchema: "CareerBoostAI",
+                        name: "FK_Emails_Candidates_OwnerId",
+                        column: x => x.OwnerId,
                         principalTable: "Candidates",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "PhoneNumber",
-                schema: "CareerBoostAI",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     CountryCode = table.Column<string>(type: "Varchar(4)", maxLength: 4, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Number = table.Column<string>(type: "Varchar(14)", maxLength: 14, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    OwnerId = table.Column<int>(type: "int", nullable: false),
+                    OwnerId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     OwnerType = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    CandidateId = table.Column<int>(type: "int", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PhoneNumber", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PhoneNumber_Candidates_CandidateId",
-                        column: x => x.CandidateId,
-                        principalSchema: "CareerBoostAI",
+                        name: "FK_PhoneNumber_Candidates_OwnerId",
+                        column: x => x.OwnerId,
                         principalTable: "Candidates",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "CvSection",
-                schema: "CareerBoostAI",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    SequenceIndex = table.Column<int>(type: "int", nullable: false),
-                    CvId = table.Column<int>(type: "int", nullable: false)
+                    SequenceIndex = table.Column<uint>(type: "int unsigned", nullable: false),
+                    CvId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
@@ -148,7 +142,6 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
                     table.ForeignKey(
                         name: "FK_CvSection_Cvs_CvId",
                         column: x => x.CvId,
-                        principalSchema: "CareerBoostAI",
                         principalTable: "Cvs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -157,12 +150,10 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
 
             migrationBuilder.CreateTable(
                 name: "CvSectionItem",
-                schema: "CareerBoostAI",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    SequenceIndex = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    SequenceIndex = table.Column<uint>(type: "int unsigned", nullable: false),
                     OrganisationName = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Country = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
@@ -173,7 +164,7 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     StartDate = table.Column<DateOnly>(type: "date", nullable: false),
                     EndDate = table.Column<DateOnly>(type: "date", nullable: true),
-                    SectionId = table.Column<int>(type: "int", nullable: false)
+                    SectionId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
@@ -181,7 +172,6 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
                     table.ForeignKey(
                         name: "FK_CvSectionItem_CvSection_SectionId",
                         column: x => x.SectionId,
-                        principalSchema: "CareerBoostAI",
                         principalTable: "CvSection",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -190,61 +180,50 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cvs_CandidateId",
-                schema: "CareerBoostAI",
                 table: "Cvs",
                 column: "CandidateId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CvSection_CvId",
-                schema: "CareerBoostAI",
                 table: "CvSection",
                 column: "CvId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CvSectionItem_SectionId",
-                schema: "CareerBoostAI",
                 table: "CvSectionItem",
                 column: "SectionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Email_CandidateId",
-                schema: "CareerBoostAI",
-                table: "Email",
-                column: "CandidateId");
+                name: "IX_Emails_OwnerId",
+                table: "Emails",
+                column: "OwnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PhoneNumber_CandidateId",
-                schema: "CareerBoostAI",
+                name: "IX_PhoneNumber_OwnerId",
                 table: "PhoneNumber",
-                column: "CandidateId");
+                column: "OwnerId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CvSectionItem",
-                schema: "CareerBoostAI");
+                name: "CvSectionItem");
 
             migrationBuilder.DropTable(
-                name: "Email",
-                schema: "CareerBoostAI");
+                name: "Emails");
 
             migrationBuilder.DropTable(
-                name: "PhoneNumber",
-                schema: "CareerBoostAI");
+                name: "PhoneNumber");
 
             migrationBuilder.DropTable(
-                name: "CvSection",
-                schema: "CareerBoostAI");
+                name: "CvSection");
 
             migrationBuilder.DropTable(
-                name: "Cvs",
-                schema: "CareerBoostAI");
+                name: "Cvs");
 
             migrationBuilder.DropTable(
-                name: "Candidates",
-                schema: "CareerBoostAI");
+                name: "Candidates");
         }
     }
 }

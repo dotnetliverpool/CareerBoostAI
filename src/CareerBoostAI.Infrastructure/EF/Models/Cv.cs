@@ -12,7 +12,7 @@ public class Cv
     public string FileName { get; set; }
     
     [Required]
-    [Column(TypeName = "Varchar(50")]
+    [Column(TypeName = "Varchar(50)")]
     public string StorageMedium { get; set; }
     
     [Required]
@@ -26,12 +26,12 @@ public class Cv
     public string LastName { get; set; }
     
     [MaxLength(4)]
-    [Column(TypeName = "Varchar(4")]
+    [Column(TypeName = "Varchar(4)")]
     public string  PhoneCountryCode { get; set; }
     
     
     [MaxLength(14)]
-    [Column(TypeName = "Varchar(14")]
+    [Column(TypeName = "Varchar(14)")]
     public string  PhoneNumber { get; set; }
     
     

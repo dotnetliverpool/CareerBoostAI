@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CareerBoostAI.Infrastructure.EF.Migrations
 {
     [DbContext(typeof(CareerBoostDbContext))]
-    [Migration("20250105231734_InitialMigration")]
+    [Migration("20250108132820_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -20,7 +20,6 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("CareerBoostAI")
                 .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
@@ -28,11 +27,8 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
 
             modelBuilder.Entity("CareerBoostAI.Infrastructure.EF.Models.Candidate", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("Id")
+                        .HasColumnType("char(36)");
 
                     b.Property<DateOnly>("DateOfBirth")
                         .HasColumnType("date");
@@ -49,16 +45,13 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Candidates", "CareerBoostAI");
+                    b.ToTable("Candidates");
                 });
 
             modelBuilder.Entity("CareerBoostAI.Infrastructure.EF.Models.Cv", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("Id")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("About")
                         .IsRequired()
@@ -70,8 +63,8 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<int>("CandidateId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CandidateId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -88,12 +81,28 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
                     b.Property<string>("PhoneCountryCode")
                         .IsRequired()
                         .HasMaxLength(4)
                         .HasColumnType("Varchar(4");
 
-                    b.Property<int>("PhoneNumber")
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasMaxLength(14)
                         .HasColumnType("Varchar(14");
 
@@ -102,46 +111,51 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
+                    b.Property<string>("StorageAddress")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("StorageMedium")
+                        .IsRequired()
+                        .HasColumnType("Varchar(50");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CandidateId");
 
-                    b.ToTable("Cvs", "CareerBoostAI");
+                    b.ToTable("Cvs");
                 });
 
             modelBuilder.Entity("CareerBoostAI.Infrastructure.EF.Models.CvSection", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("char(36)");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CvId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CvId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<int>("SequenceIndex")
-                        .HasColumnType("int");
+                    b.Property<uint>("SequenceIndex")
+                        .HasColumnType("int unsigned");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CvId");
 
-                    b.ToTable("CvSection", "CareerBoostAI");
+                    b.ToTable("CvSection");
                 });
 
             modelBuilder.Entity("CareerBoostAI.Infrastructure.EF.Models.CvSectionItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -166,11 +180,11 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<int>("SectionId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SectionId")
+                        .HasColumnType("char(36)");
 
-                    b.Property<int>("SequenceIndex")
-                        .HasColumnType("int");
+                    b.Property<uint>("SequenceIndex")
+                        .HasColumnType("int unsigned");
 
                     b.Property<DateOnly>("StartDate")
                         .HasColumnType("date");
@@ -179,30 +193,25 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
 
                     b.HasIndex("SectionId");
 
-                    b.ToTable("CvSectionItem", "CareerBoostAI");
+                    b.ToTable("CvSectionItem");
                 });
 
             modelBuilder.Entity("CareerBoostAI.Infrastructure.EF.Models.Email", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<int?>("CandidateId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int>("OwnerId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("OwnerType")
                         .IsRequired()
@@ -210,21 +219,16 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CandidateId");
+                    b.HasIndex("OwnerId");
 
-                    b.ToTable("Email", "CareerBoostAI");
+                    b.ToTable("Emails");
                 });
 
             modelBuilder.Entity("CareerBoostAI.Infrastructure.EF.Models.PhoneNumber", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("CandidateId")
-                        .HasColumnType("int");
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("CountryCode")
                         .IsRequired()
@@ -239,8 +243,8 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
                         .HasMaxLength(14)
                         .HasColumnType("Varchar(14");
 
-                    b.Property<int>("OwnerId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("OwnerType")
                         .IsRequired()
@@ -248,9 +252,9 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CandidateId");
+                    b.HasIndex("OwnerId");
 
-                    b.ToTable("PhoneNumber", "CareerBoostAI");
+                    b.ToTable("PhoneNumber");
                 });
 
             modelBuilder.Entity("CareerBoostAI.Infrastructure.EF.Models.Cv", b =>
@@ -290,14 +294,18 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
                 {
                     b.HasOne("CareerBoostAI.Infrastructure.EF.Models.Candidate", null)
                         .WithMany("Emails")
-                        .HasForeignKey("CandidateId");
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CareerBoostAI.Infrastructure.EF.Models.PhoneNumber", b =>
                 {
                     b.HasOne("CareerBoostAI.Infrastructure.EF.Models.Candidate", null)
                         .WithMany("PhoneNumbers")
-                        .HasForeignKey("CandidateId");
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CareerBoostAI.Infrastructure.EF.Models.Candidate", b =>
