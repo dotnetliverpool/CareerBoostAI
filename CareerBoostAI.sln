@@ -6,13 +6,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Application",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Infrastructure", "src\CareerBoostAI.Infrastructure\CareerBoostAI.Infrastructure.csproj", "{80F8370C-1ED7-423E-9039-10516EC9A9BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Tests.Unit", "Tests\CareerBoostAI.Tests.Unit\CareerBoostAI.Tests.Unit.csproj", "{C7404FB4-2004-4583-A3FE-691239CA01F8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Contracts", "src\CareerBoostAI.Contracts\CareerBoostAI.Contracts.csproj", "{4D84DA8A-FDBD-4176-9593-1B691B286E6E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Functions", "src\CareerBoostAI.Functions\CareerBoostAI.Functions.csproj", "{955B3645-4C40-4779-88FE-286FE6F97078}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Domain", "src\CareerBoostAI.Domain\CareerBoostAI.Domain.csproj", "{0C0D0F06-F1E9-47EC-B7A9-FFF250AEB027}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Tests.Unit", "Tests\CareerBoostAI.Tests.Unit\CareerBoostAI.Tests.Unit.csproj", "{81D2C1A0-7880-4F05-B0AD-3E45B31AAE77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,10 +32,6 @@ Global
 		{80F8370C-1ED7-423E-9039-10516EC9A9BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80F8370C-1ED7-423E-9039-10516EC9A9BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80F8370C-1ED7-423E-9039-10516EC9A9BD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C7404FB4-2004-4583-A3FE-691239CA01F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C7404FB4-2004-4583-A3FE-691239CA01F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C7404FB4-2004-4583-A3FE-691239CA01F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C7404FB4-2004-4583-A3FE-691239CA01F8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4D84DA8A-FDBD-4176-9593-1B691B286E6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4D84DA8A-FDBD-4176-9593-1B691B286E6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D84DA8A-FDBD-4176-9593-1B691B286E6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -48,5 +44,9 @@ Global
 		{0C0D0F06-F1E9-47EC-B7A9-FFF250AEB027}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C0D0F06-F1E9-47EC-B7A9-FFF250AEB027}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C0D0F06-F1E9-47EC-B7A9-FFF250AEB027}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81D2C1A0-7880-4F05-B0AD-3E45B31AAE77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81D2C1A0-7880-4F05-B0AD-3E45B31AAE77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81D2C1A0-7880-4F05-B0AD-3E45B31AAE77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81D2C1A0-7880-4F05-B0AD-3E45B31AAE77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
