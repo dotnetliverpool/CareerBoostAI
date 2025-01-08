@@ -3,6 +3,7 @@ using CareerBoostAI.Application.Common.Abstractions;
 using CareerBoostAI.Infrastructure.EF.Contexts;
 using CareerBoostAI.Infrastructure.EF.Options;
 using CareerBoostAI.Infrastructure.EF.Repositories;
+using CareerBoostAI.Infrastructure.EF.Services;
 using CareerBoostAI.Infrastructure.EF.Transaction;
 using CareerBoostAI.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ public static class ServicesDependencyInjectionExtensions
         });
     
         services.AddScoped<ICandidateRepository, MySqlCandidateRepository>();
+        services.AddScoped<ICandidateReadService, MySqlCandidateReadService>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         
         

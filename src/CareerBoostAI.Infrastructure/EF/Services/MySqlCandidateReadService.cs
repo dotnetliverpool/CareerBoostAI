@@ -1,10 +1,9 @@
 ﻿using CareerBoostAI.Application.Candidate;
-using CareerBoostAI.Application.Candidate.DTO;
 using CareerBoostAI.Infrastructure.EF.Contexts;
 using CareerBoostAI.Infrastructure.EF.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace CareerBoostAI.Infrastructure.Services;
+namespace CareerBoostAI.Infrastructure.EF.Services;
 
 internal sealed class MySqlCandidateReadService(CareerBoostDbContext context) : ICandidateReadService
 {
