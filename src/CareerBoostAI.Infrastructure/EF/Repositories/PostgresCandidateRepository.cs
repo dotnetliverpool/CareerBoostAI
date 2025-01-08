@@ -1,6 +1,7 @@
 ﻿using CareerBoostAI.Application.Candidate;
 using CareerBoostAI.Application.Candidate.DTO;
 using CareerBoostAI.Infrastructure.EF.Contexts;
+using CareerBoostAI.Infrastructure.EF.MappingExtensions;
 using CareerBoostAI.Infrastructure.EF.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,71 +21,13 @@ internal sealed class PostgresCandidateRepository(CareerBoostDbContext context) 
             .Include(c => c.Cvs)
             .SingleOrDefaultAsync(c => c.Id == id);
 
-        if (candidateModel == null)
-        {
-            return null;
-        }
-
-
-        return new CandidateDto
-        {
-            Id = candidateModel.Id,
-            FirstName = candidateModel.FirstName,
-            LastName = candidateModel.LastName,
-            DateOfBirth = candidateModel.DateOfBirth,
-            Emails = candidateModel.Emails.Select(e => e.Address).ToList(),
-            PhoneNumbers = candidateModel.PhoneNumbers.Select(p => new PhoneNumberDto
-            {
-                Code = p.CountryCode,
-                Number = p.Number,
-                
-            }).ToList(),
-            Cvs = candidateModel.Cvs.Select(cv => new CvDto
-            {
-                Id = cv.Id,
-                FileName = cv.FileName,
-                StorageAddress = cv.StorageAddress,
-                Storagemedium = cv.StorageMedium,
-                Content = new CvContentDto
-                {
-                    FirstName = cv.FirstName,
-                    LastName = cv.LastName,
-                    Email = cv.EmailAddress,
-                    PhoneCode = cv.PhoneCountryCode,
-                    PhoneNumber = cv.PhoneNumber,
-                    HouseAddress = cv.Address,
-                    City = cv.City,
-                    Country = cv.Country,
-                    Postcode = cv.PostalCode,
-                    About = cv.About,
-                    Sections = cv.Sections
-                        .Select(section => new CvSectionDto
-                        {
-                            SectionName = section.Name,
-                            SequenceIndex = section.SequenceIndex,
-                            Items = section.SectionItems
-                                .Select(item => new CvSectionItemDto
-                                {
-                                    OrganisationName = item.OrganisationName,
-                                    OrganisationCity = item.City,
-                                    OrganisationCountry = item.Country,
-                                    Description = item.Description,
-                                    StartDate = item.StartDate,
-                                    EndDate = item.EndDate,
-                                    SequenceIndex = item.SequenceIndex,
-                                })
-                            .ToList()
-                        })
-                    .ToList()
-                }
-            }).ToList()
-        };
-
+        return candidateModel?.AsDto();
     }
 
-    public Task AddAsync(CandidateDto candidate)
+    public async Task AddAsync(CandidateDto candidate)
     {
-        throw new NotImplementedException();
+        var model = candidate.AsModel();
+        await _candidates.AddAsync(model);
     }
 
     public Task UpdateAsync(CandidateDto candidate)
