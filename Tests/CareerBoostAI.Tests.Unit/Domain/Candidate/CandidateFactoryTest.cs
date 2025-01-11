@@ -10,7 +10,7 @@ namespace CareerBoostAI.Tests.Unit.Domain.Candidate;
 public class CandidateFactoryTest : BaseCandidateTest
 {
     [Fact]
-    public void CandidateFactory_CreatesNewCandidate_When_Valid_Data_IsGiven()
+    public void CandidateFactory_CreatesNewCandidate_Without_Cv()
     {
         // Arrange
         var factory = GetCandidateFactory();
@@ -20,19 +20,18 @@ public class CandidateFactoryTest : BaseCandidateTest
         var dateOfBirth = DateOfBirth.Create(new DateOnly(1998, 12, 13));
         var email = Email.Create("john@doe.com");
         var phoneNumber = PhoneNumber.Create("+44", "812345678");
-        var cvs = Enumerable.Empty<Cv>();
             
         // Act   
         var exception = Record.Exception(() =>
         {
             factory.Create(
                 candidateId, firstName, lastName, 
-                dateOfBirth, email, phoneNumber, cvs
+                dateOfBirth, email, phoneNumber
             );
         });
         var candidate = factory.Create(
             candidateId, firstName, lastName, 
-            dateOfBirth, email, phoneNumber, cvs
+            dateOfBirth, email, phoneNumber
         );
         
         // Assert

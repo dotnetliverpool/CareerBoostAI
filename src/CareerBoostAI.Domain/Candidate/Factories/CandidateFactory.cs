@@ -7,14 +7,25 @@ namespace CareerBoostAI.Domain.Candidate.Factories;
 
 public sealed class CandidateFactory : ICandidateFactory
 {
+    public CandidateAggregate Create(
+        CandidateId id, FirstName firstName, LastName lastName, 
+        DateOfBirth dateOfBirth, Email email,
+        PhoneNumber phoneNumber)
+    {
+        var cvsList = Enumerable.Empty<Cv.Cv>().ToList();
+        ValidateInputNotNull(firstName, lastName, dateOfBirth, email, phoneNumber, cvsList);
+        var result =  new CandidateAggregate(
+            id, firstName, lastName, dateOfBirth, email, phoneNumber, cvsList);
+        return result;
+    }
 
     public CandidateAggregate Create(
         CandidateId id,
         FirstName firstName, LastName lastName, 
         DateOfBirth dateOfBirth, Email email,
-        PhoneNumber phoneNumber, IEnumerable<Cv.Cv>? cvs)
+        PhoneNumber phoneNumber, IEnumerable<Cv.Cv> cvs)
     {
-        var cvsList = cvs?.ToList() ?? new List<Cv.Cv>();
+        var cvsList = cvs.ToList();
         ValidateInputNotNull(firstName, lastName, dateOfBirth, email, phoneNumber, cvsList);
         cvsList.ThrowIfContainsDuplicates<CvId>();
         
