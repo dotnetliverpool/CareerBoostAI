@@ -14,18 +14,18 @@ namespace CareerBoostAI.Application.Candidate;
 
 public static class CandidateDtoMappingExtensions
 {
-    public static CandidateDto AsDto(this Domain.Candidate.Candidate candidate)
+    public static CandidateDto AsDto(this Domain.Candidate.CandidateAggregate candidateAggregate)
     {
         return new CandidateDto
         {
-            Id = candidate.Id.Value,
-            FirstName = candidate.FirstName.Value,
-            LastName = candidate.LastName.Value,
-            DateOfBirth = candidate.DateOfBirth.Value,
-            Emails = candidate.Emails
+            Id = candidateAggregate.Id.Value,
+            FirstName = candidateAggregate.FirstName.Value,
+            LastName = candidateAggregate.LastName.Value,
+            DateOfBirth = candidateAggregate.DateOfBirth.Value,
+            Emails = candidateAggregate.Emails
                 .Select(e => e.Value)
                 .ToList(),
-            PhoneNumbers = candidate.PhoneNumbers
+            PhoneNumbers = candidateAggregate.PhoneNumbers
                 .Select(p 
                     => new PhoneNumberDto
                     {
@@ -33,11 +33,11 @@ public static class CandidateDtoMappingExtensions
                         Number = p.Number,
                     })
                 .ToList(),
-            Cvs = candidate.Cvs.Select(cv => cv.AsDto()).ToList()
+            Cvs = candidateAggregate.Cvs.Select(cv => cv.AsDto()).ToList()
         };
     }
 
-    public static Domain.Candidate.Candidate AsDomain(
+    public static Domain.Candidate.CandidateAggregate AsDomain(
         this CandidateDto candidateDto, ICandidateFactory candidateFactory)
     {
         return candidateFactory.HydrateCreate(

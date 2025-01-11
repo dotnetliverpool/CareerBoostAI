@@ -8,7 +8,7 @@ using CareerBoostAI.Domain.Common.ValueObjects;
 
 namespace CareerBoostAI.Domain.Candidate;
 
-public class Candidate : AggregateRoot<CandidateId>
+public class CandidateAggregate : AggregateRoot<CandidateId>
 {
     
     private readonly List<Email> _emails = new();
@@ -30,7 +30,7 @@ public class Candidate : AggregateRoot<CandidateId>
     #endregion
     
 
-    internal Candidate(
+    internal CandidateAggregate(
         CandidateId id,
         FirstName firstName, 
         LastName lastName,
@@ -78,7 +78,7 @@ public class Candidate : AggregateRoot<CandidateId>
         if (_emails.Any(e => e.Equals(email)))
         {
             throw new DuplicatePropertyException(
-                nameof(Candidate), 
+                nameof(CandidateAggregate), 
                 nameof(Email), email.Value);
         }
     }
@@ -121,7 +121,7 @@ public class Candidate : AggregateRoot<CandidateId>
         if (PhoneNumbers.Any(p => p.Equals(phoneNumber)))
         {
             throw new DuplicatePropertyException(
-                nameof(Candidate),
+                nameof(CandidateAggregate),
                 nameof(PhoneNumber), phoneNumber.ToString());
         }
         
@@ -149,7 +149,7 @@ public class Candidate : AggregateRoot<CandidateId>
         if (Cvs.Any(existingCv => existingCv.Id.Equals(cv.Id)))
         {
             throw new DuplicatePropertyException(
-                nameof(Candidate),
+                nameof(CandidateAggregate),
                 nameof(Cv.Cv), cv.Id);
         }
     }

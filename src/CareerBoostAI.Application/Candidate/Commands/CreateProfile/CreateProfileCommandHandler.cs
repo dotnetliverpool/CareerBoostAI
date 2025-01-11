@@ -39,7 +39,7 @@ public class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand>
     {
         await Validate(request, cancellationToken);
         
-        Domain.Candidate.Candidate candidate = _candidateFactory.Create(
+        Domain.Candidate.CandidateAggregate candidateAggregate = _candidateFactory.Create(
             FirstName.Create(request.FirstName),
             LastName.Create(request.LastName),
             DateOfBirth.Create(request.DateOfBirth),
@@ -50,14 +50,14 @@ public class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand>
             request.CvFile, request.CvFileName, cancellationToken);
         var cvFile = CvFile.Create(request.CvFileName, 
             _fileStorageService.GetMedium(), storageAddress);
-        candidate.RegisterCv(cvFile);
+        candidateAggregate.RegisterCv(cvFile);
         
         
         var adminNotificationMessage =
             $"A new candidate profile has been created for {request.FirstName} {request.LastName}.";
         await _emailSender.SendEmailToAdminAsync(subject: "New Candidate Profile Created", body: adminNotificationMessage);
         
-        await _candidateRepository.AddAsync(candidate.AsDto());
+        await _candidateRepository.AddAsync(candidateAggregate.AsDto());
         await _unitOfWork.SaveChangesAsync(cancellationToken); 
     }
 
