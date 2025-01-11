@@ -1,6 +1,6 @@
 ﻿using CareerBoostAI.Domain.Candidate.ValueObjects;
 
-namespace CareerBoostAI.Tests.Unit.Application.Candidate;
+namespace CareerBoostAI.Tests.Unit.Domain.Candidate;
 
 public abstract class BaseCandidateTest
 {

@@ -25,6 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Application\Candidate\" />
       <Folder Include="Application\Services\" />
     </ItemGroup>
 
