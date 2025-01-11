@@ -1,4 +1,5 @@
-﻿using CareerBoostAI.Domain.Candidate.ValueObjects;
+﻿using CareerBoostAI.Domain.Candidate.Factories;
+using CareerBoostAI.Domain.Candidate.ValueObjects;
 
 namespace CareerBoostAI.Tests.Unit.Domain.Candidate;
 
@@ -11,5 +12,10 @@ public abstract class BaseCandidateTest
             CandidateId.New(), FirstName.Create("John"), 
             LastName.Create("Doe"),
             DateOfBirth.Create(dateOfBirth));
+    }
+
+    protected ICandidateFactory GetCandidateFactory()
+    {
+        return new CandidateFactory();
     }
 }
