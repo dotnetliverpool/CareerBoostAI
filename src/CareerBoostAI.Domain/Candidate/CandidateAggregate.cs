@@ -54,12 +54,6 @@ public class CandidateAggregate : AggregateRoot<CandidateId>
 
     private void ValidateCv(CvEntity.Cv cv)
     {
-        if (Cvs.Any(existingCv => existingCv.Id.Equals(cv.Id)))
-        {
-            throw new DuplicatePropertyException(
-                nameof(CandidateAggregate),
-                nameof(CvEntity.Cv), cv.Id);
-        }
     }
     
 }

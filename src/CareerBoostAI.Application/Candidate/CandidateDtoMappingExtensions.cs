@@ -110,7 +110,7 @@ public static class CandidateDtoMappingExtensions
             CvAddress.Create(
                 contentDto.HouseAddress, contentDto.City, 
                 contentDto.Country, contentDto.Postcode),
-            CvAbout.Create(contentDto.About));
+            Summary.Create(contentDto.About));
         
         foreach (var section in contentDto.Sections)
         {
@@ -163,7 +163,7 @@ public static class CandidateDtoMappingExtensions
         return new CvSectionItem(
             OrganisationName.Create(itemDto.OrganisationName),
             SectionItemLocation.Create(itemDto.OrganisationCity, itemDto.OrganisationCountry),
-            CandidateCvSectionItemTimeRange.Create(itemDto.StartDate, itemDto.EndDate),
+            Period.Create(itemDto.StartDate, itemDto.EndDate),
             CvSectionItemDescription.Create(itemDto.Description),
             SequenceIndex.Create(itemDto.SequenceIndex)
             );

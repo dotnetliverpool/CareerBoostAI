@@ -49,9 +49,7 @@ public class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand>
        
         var storageAddress = await _fileStorageService.UploadFileAsync(
             request.CvFile, request.CvFileName, cancellationToken);
-        var cvFile = CvFile.Create(request.CvFileName, 
-            _fileStorageService.GetMedium(), storageAddress);
-        candidateAggregate.RegisterCv(cvFile);
+      
         
         
         var adminNotificationMessage =

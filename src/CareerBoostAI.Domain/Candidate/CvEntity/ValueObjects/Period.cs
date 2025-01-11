@@ -3,7 +3,7 @@ using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 
-public class CandidateCvSectionItemTimeRange : ValueObject
+public class Period : ValueObject
 {
     
     private static  DateOnly NoEndDate => DateOnly.MinValue;
@@ -11,7 +11,7 @@ public class CandidateCvSectionItemTimeRange : ValueObject
     public DateOnly? EndDate { get; private set; }
     public bool IsOngoing { get; private set; } = false;
 
-    private CandidateCvSectionItemTimeRange(DateOnly startDate, DateOnly? endDate = null)
+    private Period(DateOnly startDate, DateOnly? endDate = null)
     {
         StartDate = startDate;
         EndDate = endDate;
@@ -50,9 +50,9 @@ public class CandidateCvSectionItemTimeRange : ValueObject
         yield return IsOngoing;
     }
 
-    public static CandidateCvSectionItemTimeRange Create(DateOnly startDate, DateOnly? endDate)
+    public static Period Create(DateOnly startDate, DateOnly? endDate)
     {
         Validate(startDate, endDate);
-        return new CandidateCvSectionItemTimeRange(startDate, endDate);
+        return new Period(startDate, endDate);
     }
 }

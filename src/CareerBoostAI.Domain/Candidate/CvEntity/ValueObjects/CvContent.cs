@@ -21,7 +21,7 @@ public sealed class CvContent(
     Email email,
     PhoneNumber phoneNumber,
     CvAddress address,
-    CvAbout about)
+    Summary about)
     : BaseCvContent
 {
     public FirstName FirstName { get; private set; } = firstName;
@@ -29,7 +29,7 @@ public sealed class CvContent(
     public Email Email { get; private set; } = email;
     public PhoneNumber PhoneNumber { get; private set; } = phoneNumber;
     public CvAddress Address { get; private set; } = address;
-    public CvAbout About { get; private set; } = about;
+    public Summary About { get; private set; } = about;
 
     private List<CvSection> _sections = new();
     

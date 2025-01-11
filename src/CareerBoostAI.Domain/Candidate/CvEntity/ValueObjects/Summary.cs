@@ -3,11 +3,11 @@ using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 
-public class CvAbout : ValueObject
+public class Summary : ValueObject
 {
     public string Value { get; }
 
-    private CvAbout(string value)
+    private Summary(string value)
     {
         Value = value;
     }
@@ -16,7 +16,7 @@ public class CvAbout : ValueObject
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            throw new EmptyArgumentException(nameof(CvAbout));
+            throw new EmptyArgumentException(nameof(Summary));
         }
     }
 
@@ -25,9 +25,9 @@ public class CvAbout : ValueObject
         yield return Value;
     }
 
-    public static CvAbout Create(string value)
+    public static Summary Create(string value)
     {
         Validate(value);
-        return new CvAbout(value);
+        return new Summary(value);
     }
 }
