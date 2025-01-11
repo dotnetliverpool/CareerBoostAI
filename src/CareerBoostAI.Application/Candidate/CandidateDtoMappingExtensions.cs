@@ -23,17 +23,12 @@ public static class CandidateDtoMappingExtensions
             FirstName = candidateAggregate.FirstName.Value,
             LastName = candidateAggregate.LastName.Value,
             DateOfBirth = candidateAggregate.DateOfBirth.Value,
-            Emails = candidateAggregate.Emails
-                .Select(e => e.Value)
-                .ToList(),
-            PhoneNumbers = candidateAggregate.PhoneNumbers
-                .Select(p 
-                    => new PhoneNumberDto
-                    {
-                        Code = p.Code,
-                        Number = p.Number,
-                    })
-                .ToList(),
+            Email = candidateAggregate.Email.Value,
+            PhoneNumber = new PhoneNumberDto
+            {
+                Number = candidateAggregate.PhoneNumber.Number,
+                Code = candidateAggregate.PhoneNumber.Code
+            },
             Cvs = candidateAggregate.Cvs.Select(cv => cv.AsDto()).ToList()
         };
     }
@@ -46,12 +41,8 @@ public static class CandidateDtoMappingExtensions
                 FirstName.Create(candidateDto.FirstName),
                 LastName.Create(candidateDto.LastName),
                 DateOfBirth.Create(candidateDto.DateOfBirth),
-                candidateDto.Emails
-                    .Select(em => Email.Create(em))
-                    .FirstOrDefault()!,
-                candidateDto.PhoneNumbers
-                    .Select(pn => PhoneNumber.Create(pn.Code, pn.Number))
-                    .FirstOrDefault()!,
+                Email.Create(candidateDto.Email),
+                PhoneNumber.Create(candidateDto.PhoneNumber.Code, candidateDto.PhoneNumber.Number),
                 candidateDto.Cvs
                     .Select(cv => cv.AsDomain())
                     .ToList()

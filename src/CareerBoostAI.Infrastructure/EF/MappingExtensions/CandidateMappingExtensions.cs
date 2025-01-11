@@ -15,20 +15,17 @@ public static class CandidateMappinngExtensions
             FirstName = candidate.FirstName,
             LastName = candidate.LastName,
             DateOfBirth = candidate.DateOfBirth,
-            Emails = candidate.Emails.Select(e => e.Address).ToList(),
-            PhoneNumbers = candidate.PhoneNumbers.Select(p => p.AsDto()).ToList(),
+            Email = candidate.Email,
+            PhoneNumber = new PhoneNumberDto
+            {
+                Code = candidate.PhoneCode,
+                Number = candidate.PhoneNumber,
+            },
             Cvs = candidate.Cvs.Select(cv => cv.AsDto()).ToList()
         };
     }
 
-    public static PhoneNumberDto AsDto(this PhoneNumber phoneNumber)
-    {
-        return new PhoneNumberDto
-        {
-            Code = phoneNumber.CountryCode,
-            Number = phoneNumber.Number
-        };
-    }
+   
 
     public static CvDto AsDto(this Cv cv)
     {
@@ -86,20 +83,13 @@ public static Candidate AsModel(this CandidateDto candidateDto)
             FirstName = candidateDto.FirstName,
             LastName = candidateDto.LastName,
             DateOfBirth = candidateDto.DateOfBirth,
-            Emails = candidateDto.Emails.Select(e => new Email { Address = e }).ToList(),
-            PhoneNumbers = candidateDto.PhoneNumbers.Select(p => p.AsModel()).ToList(),
+            Email = candidateDto.Email,
+            PhoneCode = candidateDto.PhoneNumber.Code,
+            PhoneNumber = candidateDto.PhoneNumber.Number,
             Cvs = candidateDto.Cvs.Select(cv => cv.AsModel()).ToList()
         };
     }
 
-    public static PhoneNumber AsModel(this PhoneNumberDto phoneNumberDto)
-    {
-        return new PhoneNumber
-        {
-            CountryCode = phoneNumberDto.Code,
-            Number = phoneNumberDto.Number
-        };
-    }
 
     public static Cv AsModel(this CvDto cvDto)
     {

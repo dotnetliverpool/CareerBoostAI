@@ -17,8 +17,14 @@ public class Candidate
     [Required]
     [DataType(DataType.Date)]
     public DateOnly DateOfBirth { get; set; }
-    
-    public List<Email> Emails { get; set; }
-    public List<PhoneNumber> PhoneNumbers { get; set; }
+    [Required]
+    [MaxLength(100)]
+    public string Email { get; set; }
+    [Required]
+    [MaxLength(5)]
+    public string PhoneCode { get; set; }
+    [Required]
+    [MaxLength(20)]
+    public string PhoneNumber { get; set; }
     public List<Cv> Cvs { get; set; }
 }

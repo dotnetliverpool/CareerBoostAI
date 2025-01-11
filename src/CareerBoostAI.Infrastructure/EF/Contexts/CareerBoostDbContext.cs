@@ -9,7 +9,6 @@ internal sealed class CareerBoostDbContext: DbContext
     
     public DbSet<Candidate> Candidates { get; set; }
     public DbSet<Cv> Cvs { get; set; }
-    public DbSet<Email> Emails { get; set; }
     public CareerBoostDbContext(DbContextOptions<CareerBoostDbContext> options) : base(options)
     {
     }

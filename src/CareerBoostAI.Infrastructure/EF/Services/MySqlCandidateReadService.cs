@@ -9,9 +9,9 @@ internal sealed class MySqlCandidateReadService(CareerBoostDbContext context) : 
 {
     
     private readonly DbSet<Candidate> _candidates = context.Candidates;
-    private readonly DbSet<Email> _emails = context.Emails;
+    
 
     public Task<bool> CandidateExistsByEmailAsync(string email, CancellationToken cancellationToken)
-        => _emails.AnyAsync(e => e.Address == email, cancellationToken);
+        => _candidates.AnyAsync(e => e.Email == email, cancellationToken);
     
 }

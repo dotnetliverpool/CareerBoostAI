@@ -16,20 +16,6 @@ internal class CandidateDbPropertyConfiguration : IEntityTypeConfiguration<Candi
         builder
             .HasMany(c => c.Cvs)
             .WithOne(cv => cv.Candidate);
-        
-        builder
-            .HasMany(c => c.Emails)
-            .WithOne()
-            .HasForeignKey(email => email.OwnerId)
-            .OnDelete(DeleteBehavior.Cascade);
-        
-        builder
-            .HasMany(c => c.PhoneNumbers)
-            .WithOne()
-            .HasForeignKey(pn => pn.OwnerId)
-            .OnDelete(DeleteBehavior.Cascade);
-        
-        
     }
 
     public void Configure(EntityTypeBuilder<Cv> builder)

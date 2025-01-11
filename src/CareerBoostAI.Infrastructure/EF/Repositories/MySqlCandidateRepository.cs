@@ -16,8 +16,6 @@ internal sealed class MySqlCandidateRepository(CareerBoostDbContext context) : I
     public async Task<CandidateDto?> GetAsync(Guid id)
     {
         var candidateModel = await _candidates
-            .Include(c => c.Emails)
-            .Include(c => c.PhoneNumbers)
             .Include(c => c.Cvs)
             .SingleOrDefaultAsync(c => c.Id == id);
 
