@@ -17,6 +17,6 @@ public abstract class BaseCandidateTest
 
     protected ICandidateFactory GetCandidateFactory()
     {
-        return Substitute.For<ICandidateFactory>();
+        return new CandidateFactory();
     }
 }

@@ -2,6 +2,7 @@
 using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 using CareerBoostAI.Domain.Candidate.Factories;
 using CareerBoostAI.Domain.Candidate.ValueObjects;
+using CareerBoostAI.Domain.Common.Abstractions;
 using CareerBoostAI.Domain.Common.Events;
 using CareerBoostAI.Domain.Common.Exceptions;
 using CareerBoostAI.Domain.Common.ValueObjects;
@@ -19,6 +20,8 @@ public class CandidateAggregate : AggregateRoot<CandidateId>
     public FirstName FirstName { get; private set; }
     public LastName LastName { get; private set; }
     public DateOfBirth DateOfBirth { get; private set; }
+    public Email Email { get; private set; }
+    public PhoneNumber PhoneNumber { get; private set; }
     public IReadOnlyCollection<Email> Emails => _emails.AsReadOnly();
     public IReadOnlyCollection<PhoneNumber> PhoneNumbers => _phoneNumbers.AsReadOnly();
     public IReadOnlyCollection<Cv.Cv> Cvs => _cvs.AsReadOnly();
@@ -41,6 +44,23 @@ public class CandidateAggregate : AggregateRoot<CandidateId>
         LastName = lastName;
         DateOfBirth = dateOfBirth;
     }
+    
+    internal CandidateAggregate(
+        CandidateId id,
+        FirstName firstName, 
+        LastName lastName,
+        DateOfBirth dateOfBirth, 
+        Email email, 
+        PhoneNumber phoneNumber, IEnumerable<Cv.Cv> cvs)
+    {
+        Id = id;
+        FirstName = firstName;
+        LastName = lastName;
+        DateOfBirth = dateOfBirth;
+        Email = email;
+        PhoneNumber = phoneNumber;
+        _cvs = cvs.ToList();
+    }
 
     #region CandidateEmailBehaviour
 
@@ -61,13 +81,7 @@ public class CandidateAggregate : AggregateRoot<CandidateId>
         // email is not duplicated
         ValidateEmail(email);
         
-        var activeEmail = ActiveEmail;
-        if (activeEmail is not null)
-        {
-            _emails.Remove(activeEmail);
-            var inactiveEmail = Email.Create(activeEmail.Value, isActive: false);
-            _emails.Add(inactiveEmail);
-        }
+        
         _emails.Add(email);
         
         AddEvent(DomainEvent.EmailRegistered(Id.Value, email.Value));

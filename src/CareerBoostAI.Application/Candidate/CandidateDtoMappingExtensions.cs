@@ -2,6 +2,7 @@
 using CareerBoostAI.Application.Candidate.DTO;
 using CareerBoostAI.Application.Common.Extension;
 using CareerBoostAI.Application.DTO;
+using CareerBoostAI.Domain.Candidate;
 using CareerBoostAI.Domain.Candidate.Cv;
 using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 using CareerBoostAI.Domain.Candidate.Factories;
@@ -14,7 +15,7 @@ namespace CareerBoostAI.Application.Candidate;
 
 public static class CandidateDtoMappingExtensions
 {
-    public static CandidateDto AsDto(this Domain.Candidate.CandidateAggregate candidateAggregate)
+    public static CandidateDto AsDto(this CandidateAggregate candidateAggregate)
     {
         return new CandidateDto
         {
@@ -37,20 +38,20 @@ public static class CandidateDtoMappingExtensions
         };
     }
 
-    public static Domain.Candidate.CandidateAggregate AsDomain(
+    public static CandidateAggregate AsDomain(
         this CandidateDto candidateDto, ICandidateFactory candidateFactory)
     {
-        return candidateFactory.HydrateCreate(
+        return candidateFactory.Create(
                 CandidateId.Create(candidateDto.Id),
                 FirstName.Create(candidateDto.FirstName),
                 LastName.Create(candidateDto.LastName),
                 DateOfBirth.Create(candidateDto.DateOfBirth),
                 candidateDto.Emails
                     .Select(em => Email.Create(em))
-                    .ToList(),
+                    .FirstOrDefault()!,
                 candidateDto.PhoneNumbers
                     .Select(pn => PhoneNumber.Create(pn.Code, pn.Number))
-                    .ToList(),
+                    .FirstOrDefault()!,
                 candidateDto.Cvs
                     .Select(cv => cv.AsDomain())
                     .ToList()

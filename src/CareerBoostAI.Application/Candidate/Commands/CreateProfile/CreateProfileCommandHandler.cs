@@ -40,6 +40,7 @@ public class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand>
         await Validate(request, cancellationToken);
         
         Domain.Candidate.CandidateAggregate candidateAggregate = _candidateFactory.Create(
+            CandidateId.New(),
             FirstName.Create(request.FirstName),
             LastName.Create(request.LastName),
             DateOfBirth.Create(request.DateOfBirth),

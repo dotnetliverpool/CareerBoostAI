@@ -1,31 +1,41 @@
-﻿
-
+﻿using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 using CareerBoostAI.Domain.Candidate.ValueObjects;
+using CareerBoostAI.Domain.Common.Exceptions;
 using CareerBoostAI.Domain.Common.ValueObjects;
 
 namespace CareerBoostAI.Domain.Candidate.Factories;
 
 public sealed class CandidateFactory : ICandidateFactory
 {
-    public CandidateAggregate Create(FirstName firstName,
-        LastName lastName, DateOfBirth dateOfBirth, 
-        Email email, PhoneNumber phoneNumber
-        )
+
+    public CandidateAggregate Create(
+        CandidateId id,
+        FirstName firstName, LastName lastName, 
+        DateOfBirth dateOfBirth, Email email,
+        PhoneNumber phoneNumber, IEnumerable<Cv.Cv>? cvs)
     {
-        var candidate =  new CandidateAggregate(CandidateId.New(), firstName, lastName, dateOfBirth);
-        candidate.RegisterEmail(email);
-        candidate.RegisterPhoneNumber(phoneNumber);
-        return candidate;
+        var cvsList = cvs?.ToList() ?? new List<Cv.Cv>();
+        ValidateInputNotNull(firstName, lastName, dateOfBirth, email, phoneNumber, cvsList);
+        cvsList.ThrowIfContainsDuplicates<CvId>();
+        
+        var result =  new CandidateAggregate(
+            id, firstName, lastName, dateOfBirth, email, phoneNumber, cvsList);
+        return result;
     }
 
-    public CandidateAggregate HydrateCreate(CandidateId id, FirstName firstName,
-        LastName lastName, DateOfBirth dateOfBirth,
-        List<Email> emails, List<PhoneNumber> phoneNumbers, List<Cv.Cv> cvs)
+    private  void ValidateInputNotNull(FirstName firstName, LastName lastName, DateOfBirth dateOfBirth, Email email,
+        PhoneNumber phoneNumber, IEnumerable<Cv.Cv> cvs)
     {
-        var candidate =  new CandidateAggregate(id, firstName, lastName, dateOfBirth);
-        candidate.AddEmails(emails);
-        candidate.AddPhoneNumbers(phoneNumbers);
-        candidate.AddCvs(cvs);
-        return candidate;
+        firstName.ThrowIfNull();
+        lastName.ThrowIfNull();
+        dateOfBirth.ThrowIfNull();
+        email.ThrowIfNull();
+        phoneNumber.ThrowIfNull();
+        foreach (var cv in cvs)
+        {
+            cv.ThrowIfNull();
+        }
     }
+
+   
 }
