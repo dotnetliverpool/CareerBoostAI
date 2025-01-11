@@ -36,7 +36,7 @@ public class CvAddress : ValueObject
                             && postcode == null 
                             && country == null 
                             && houseAddress == null 
-            ? Constants.NoAddressFound : houseAddress;
+            ? CvEntity.Constants.NoAddressFound : houseAddress;
         
         return new CvAddress(addressString, city, country, postcode);
     }

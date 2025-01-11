@@ -12,7 +12,7 @@ public sealed class CandidateFactory : ICandidateFactory
         DateOfBirth dateOfBirth, Email email,
         PhoneNumber phoneNumber)
     {
-        var cvsList = Enumerable.Empty<Cv.Cv>().ToList();
+        var cvsList = Enumerable.Empty<CvEntity.Cv>().ToList();
         ValidateInputNotNull(firstName, lastName, dateOfBirth, email, phoneNumber, cvsList);
         var result =  new CandidateAggregate(
             id, firstName, lastName, dateOfBirth, email, phoneNumber, cvsList);
@@ -23,7 +23,7 @@ public sealed class CandidateFactory : ICandidateFactory
         CandidateId id,
         FirstName firstName, LastName lastName, 
         DateOfBirth dateOfBirth, Email email,
-        PhoneNumber phoneNumber, IEnumerable<Cv.Cv> cvs)
+        PhoneNumber phoneNumber, IEnumerable<CvEntity.Cv> cvs)
     {
         var cvsList = cvs.ToList();
         ValidateInputNotNull(firstName, lastName, dateOfBirth, email, phoneNumber, cvsList);
@@ -35,7 +35,7 @@ public sealed class CandidateFactory : ICandidateFactory
     }
 
     private  void ValidateInputNotNull(FirstName firstName, LastName lastName, DateOfBirth dateOfBirth, Email email,
-        PhoneNumber phoneNumber, IEnumerable<Cv.Cv> cvs)
+        PhoneNumber phoneNumber, IEnumerable<CvEntity.Cv> cvs)
     {
         firstName.ThrowIfNull();
         lastName.ThrowIfNull();

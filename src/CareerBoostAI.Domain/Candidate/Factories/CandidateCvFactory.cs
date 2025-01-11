@@ -5,9 +5,9 @@ namespace CareerBoostAI.Domain.Candidate.Factories;
 public class CandidateCvFactory : ICandidateCvFactory
 {
 
-    public Cv.Cv Create(CvFile file)
+    public CvEntity.Cv Create(CvFile file)
     {
-        var result = new Cv.Cv(CvId.New(), file);
+        var result = new CvEntity.Cv(CvId.New(), file);
         return result;
     }
 }

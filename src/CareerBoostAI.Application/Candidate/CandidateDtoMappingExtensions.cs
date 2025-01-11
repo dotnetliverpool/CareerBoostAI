@@ -5,6 +5,7 @@ using CareerBoostAI.Application.DTO;
 using CareerBoostAI.Domain.Candidate;
 using CareerBoostAI.Domain.Candidate.Cv;
 using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
+using CareerBoostAI.Domain.Candidate.CvEntity;
 using CareerBoostAI.Domain.Candidate.Factories;
 using CareerBoostAI.Domain.Candidate.ValueObjects;
 using CareerBoostAI.Domain.Common.ValueObjects;

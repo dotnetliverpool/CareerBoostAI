@@ -11,7 +11,7 @@ namespace CareerBoostAI.Domain.Candidate;
 
 public class CandidateAggregate : AggregateRoot<CandidateId>
 {
-    private readonly List<Cv.Cv> _cvs;
+    private readonly List<CvEntity.Cv> _cvs;
 
     #region Public Properties
     public FirstName FirstName { get; private set; }
@@ -19,7 +19,7 @@ public class CandidateAggregate : AggregateRoot<CandidateId>
     public DateOfBirth DateOfBirth { get; private set; }
     public Email Email { get; private set; }
     public PhoneNumber PhoneNumber { get; private set; }
-    public IReadOnlyCollection<Cv.Cv> Cvs => _cvs.AsReadOnly();
+    public IReadOnlyCollection<CvEntity.Cv> Cvs => _cvs.AsReadOnly();
     public string FullName => $"{FirstName.Value} {LastName.Value}";
     
 
@@ -29,7 +29,7 @@ public class CandidateAggregate : AggregateRoot<CandidateId>
         CandidateId id,
         FirstName firstName, LastName lastName,
         DateOfBirth dateOfBirth, Email email, 
-        PhoneNumber phoneNumber, IEnumerable<Cv.Cv> cvs)
+        PhoneNumber phoneNumber, IEnumerable<CvEntity.Cv> cvs)
     {
         Id = id;
         FirstName = firstName;
@@ -42,23 +42,23 @@ public class CandidateAggregate : AggregateRoot<CandidateId>
     
     public void RegisterCv(CvFile file)
     {
-        var cv = new Cv.Cv(CvId.New(), file);;
+        var cv = new CvEntity.Cv(CvId.New(), file);;
         AddCv(cv);
         // TODO : Register Domain Event
     }
-    public void AddCv(Cv.Cv cv)
+    public void AddCv(CvEntity.Cv cv)
     {
         ValidateCv(cv);
         _cvs.Add(cv);
     }
 
-    private void ValidateCv(Cv.Cv cv)
+    private void ValidateCv(CvEntity.Cv cv)
     {
         if (Cvs.Any(existingCv => existingCv.Id.Equals(cv.Id)))
         {
             throw new DuplicatePropertyException(
                 nameof(CandidateAggregate),
-                nameof(Cv.Cv), cv.Id);
+                nameof(CvEntity.Cv), cv.Id);
         }
     }
     

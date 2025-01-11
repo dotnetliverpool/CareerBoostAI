@@ -1,4 +1,4 @@
-﻿namespace CareerBoostAI.Domain.Candidate.Cv;
+﻿namespace CareerBoostAI.Domain.Candidate.CvEntity;
 
 public class Constants
 {

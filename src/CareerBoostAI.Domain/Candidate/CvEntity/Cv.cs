@@ -1,11 +1,8 @@
 ﻿using System.Data;
 using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
-using CareerBoostAI.Domain.Candidate.ValueObjects;
 using CareerBoostAI.Domain.Common.Abstractions;
-using CareerBoostAI.Domain.Common.ValueObjects;
-using CareerBoostAI.Domain.ValueObjects;
 
-namespace CareerBoostAI.Domain.Candidate.Cv;
+namespace CareerBoostAI.Domain.Candidate.CvEntity;
 
 public class Cv(CvId id, CvFile file, BaseCvContent? content = null) : Entity<CvId>
 {
