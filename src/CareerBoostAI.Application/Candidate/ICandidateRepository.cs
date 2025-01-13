@@ -1,10 +1,11 @@
 ﻿using CareerBoostAI.Application.Candidate.DTO;
+using CareerBoostAI.Domain.Candidate;
 
 namespace CareerBoostAI.Application.Candidate;
 
 public interface ICandidateRepository
 {
     Task<CandidateDto?> GetAsync(Guid id);
-    Task AddAsync(CandidateDto candidate);
-    Task UpdateAsync(CandidateDto candidate);
+    Task AddAsync(CandidateAggregate candidate);
+    Task UpdateAsync(CandidateAggregate candidate);
 }
