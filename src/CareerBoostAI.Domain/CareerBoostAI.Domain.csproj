@@ -8,6 +8,8 @@
 
     <ItemGroup>
       <Folder Include="Common\Entities\" />
+      <Folder Include="Cv\" />
+      <Folder Include="Profile\" />
     </ItemGroup>
 
     
