@@ -35,7 +35,7 @@ public class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand>
         
         var candidate = CreateAggregateFromCommand(command);
         
-        await _candidateRepository.AddAsync(candidate.AsDto());
+        await _candidateRepository.AddAsync(candidate);
         await _unitOfWork.SaveChangesAsync(cancellationToken); 
         
         var adminNotificationMessage =
