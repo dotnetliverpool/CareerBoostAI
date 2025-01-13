@@ -1,41 +1,40 @@
 ﻿using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
+using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects;
 
-public class Education : ProfessionalEntry
+public class WorkExperience : ProfessionalEntry
 {
-    public EducationGrade Grade { get; set; }
-    
-    private Education(
+    private WorkExperience(
         OrganisationName organisationName,
         Location location,
         Period timePeriod,
-        EducationGrade educationGrade,
+        Description description,
         SequenceIndex sequenceIndex)
         : base(organisationName, location, timePeriod, sequenceIndex)
     {
-        Grade = educationGrade;
+        Description = description;
     }
+    
+    public Description Description { get; }
 
-    protected override IEnumerable<object> GetAtomicValues()
-    {
-        yield return Grade;
-        yield return base.GetAtomicValues();
-    }
-
-    public static Education Create(
+    public static WorkExperience Create(
         string organisationName,
         string city, string country,
         DateOnly startDate, DateOnly? endDate,
-        string program, string grade, uint index)
+        string description, uint index)
     {
         var orgName = OrganisationName.Create(organisationName);
         var location = ValueObjects.Location.Create(city, country);
         var timePeriod = Period.Create(startDate, endDate);
-        var gradeDomain = EducationGrade.Create(program, grade);
+        var descriptionDomain = ValueObjects.Description.Create(description);
         var sequenceIndex = SequenceIndex.Create(index);
-        return new(orgName, location, timePeriod, gradeDomain, sequenceIndex);
+        return new(orgName, location, timePeriod, descriptionDomain, sequenceIndex);
     }
-
     
+    protected override IEnumerable<object> GetAtomicValues()
+    {
+        yield return base.GetAtomicValues();
+        yield return Description.Value;
+    }
 }

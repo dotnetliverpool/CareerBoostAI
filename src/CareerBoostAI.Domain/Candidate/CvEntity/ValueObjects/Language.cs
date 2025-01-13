@@ -1,6 +1,28 @@
-﻿namespace CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects;
+﻿using System.Collections.Concurrent;
+using CareerBoostAI.Domain.Candidate.ValueObjects;
+using CareerBoostAI.Domain.Common.Exceptions;
+using CareerBoostAI.Domain.ValueObjects;
 
-public class Language
+namespace CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects;
+
+public class Language : ValueObject
 {
-    // use fly weight pattern
+    private static readonly ConcurrentDictionary<string, Language> _flyweightCache = new();
+    public string Value { get; }
+
+    private Language(string value)
+    {
+        Value = value;
+    }
+
+    public static Language Create(string value)
+    {
+        value.ThrowIfNullOrEmpty(nameof(Language));
+        return _flyweightCache.GetOrAdd(value, key => new Language(key));;
+    }
+
+    protected override IEnumerable<object> GetAtomicValues()
+    {
+        yield return Value;
+    }
 }

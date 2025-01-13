@@ -1,4 +1,6 @@
-﻿using CareerBoostAI.Domain.Common.Exceptions;
+﻿using CareerBoostAI.Domain.Candidate.Services;
+using CareerBoostAI.Domain.Common.Exceptions;
+using CareerBoostAI.Domain.Common.Services;
 using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.Candidate.ValueObjects;
@@ -13,24 +15,17 @@ public class DateOfBirth : ValueObject
         Value = value;
     }
 
-    public static DateOfBirth Create(DateOnly value)
+    public static DateOfBirth Create(DateOnly value, IDateTimeProvider dateTimeProvider)
     {
-        var age = CalculateAge(value);
-
-        
-        if (age < 10 || age > 120)
+        // Method Dependence Injection introduces a tight coupling to the dateTimeProvider interface
+        value.ThrowIfNull();
+        if (!AgeValidationService.IsWithinAcceptableAge(value, dateTimeProvider.TodayAsDate))
         {
             throw new AgeNotWithinAcceptedRangeException();
         }
         return new DateOfBirth(value);
     }
     
-    private static int CalculateAge(DateOnly birthDate)
-    {
-        var today = DateTime.Today;
-        int age = today.Year - birthDate.Year;
-        return age;
-    }
 
 
     protected override IEnumerable<object> GetAtomicValues()

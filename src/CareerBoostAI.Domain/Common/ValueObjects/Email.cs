@@ -7,28 +7,22 @@ namespace CareerBoostAI.Domain.Common.ValueObjects;
 public class Email : ValueObject
 {
     public string Value { get; }
-    public bool IsActive { get;  }
 
     // Constructor with validation for email format
-    private Email(string value, bool isActive)
+    private Email(string value)
     {
         Value = value;
-        IsActive = isActive;
     }
 
     public static Email Create(string value, bool isActive = true)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            throw new EmptyArgumentException(nameof(Email));
-        }
+        value.ThrowIfNullOrEmpty(nameof(Email));
 
         if (!IsValidEmail(value))
         {
             throw new InvalidEmailFormatException(value);
         }
-
-        return new Email(value, isActive);
+        return new Email(value);
     }
 
     private static bool IsValidEmail(string email)

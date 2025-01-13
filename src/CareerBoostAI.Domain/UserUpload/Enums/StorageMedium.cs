@@ -1,6 +1,6 @@
 ﻿namespace CareerBoostAI.Domain.Enums;
 
-public enum CvStorageMedium
+public enum StorageMedium
 {
     AzureStorageBlob
 }

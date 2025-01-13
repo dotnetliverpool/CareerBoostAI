@@ -1,7 +1,7 @@
 ﻿using CareerBoostAI.Domain.Common.Exceptions;
 using CareerBoostAI.Domain.ValueObjects;
 
-namespace CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
+namespace CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects;
 
 public class Summary : ValueObject
 {
@@ -14,10 +14,7 @@ public class Summary : ValueObject
 
     private static void Validate(string value)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            throw new EmptyArgumentException(nameof(Summary));
-        }
+        value.ThrowIfNullOrEmpty(value);
     }
 
     protected override IEnumerable<object> GetAtomicValues()

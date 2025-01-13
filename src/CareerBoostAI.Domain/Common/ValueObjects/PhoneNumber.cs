@@ -6,40 +6,30 @@ namespace CareerBoostAI.Domain.Common.ValueObjects;
 
 public class PhoneNumber : ValueObject
 {
-    public string Code { get; private set; }
-    public string Number {get; private set; }
-
-    // Constructor with validation for phone number format
+    public string Code { get;  }
+    public string Number {get;  }
+    
     private PhoneNumber(string code, string number)
     {
         Code = code;
         Number = number;
     }
 
-    public static PhoneNumber Create(string phoneCode, string number)
+    public static PhoneNumber Create(string code, string number)
     {
-        if (string.IsNullOrEmpty(phoneCode))
+        code.ThrowIfNullOrEmpty("PhoneNumber.Code");
+        number.ThrowIfNullOrEmpty("PhoneNumber.Number");
+        
+        if (!IsValidPhoneNumber(code + number))
         {
-            throw new EmptyArgumentException("PhoneCode");
+            throw new InvalidPhoneNumberException(code, number);
         }
-
-        if (string.IsNullOrEmpty(number))
-        {
-            throw new EmptyArgumentException("PhoneNumber");
-        }
-
-        if (!IsValidPhoneNumber(phoneCode + number))
-        {
-            throw new InvalidPhoneNumberException(phoneCode, number);
-        }
-
-        return new PhoneNumber(phoneCode, number);
+        return new PhoneNumber(code, number);
     }
     
 
     private static bool IsValidPhoneNumber(string phoneNumber)
     {
-       
         var phoneRegex = new Regex(@"^\+?[1-9]\d{1,14}$"); 
         return phoneRegex.IsMatch(phoneNumber);
     }

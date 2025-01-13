@@ -1,10 +1,11 @@
-﻿using CareerBoostAI.Domain.ValueObjects;
+﻿using CareerBoostAI.Domain.Common.Exceptions;
+using CareerBoostAI.Domain.ValueObjects;
 
-namespace CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
+namespace CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects;
 
 public class SequenceIndex : ValueObject
 {
-    public uint Value { get; private set; }
+    public uint Value { get;  }
 
     private SequenceIndex(uint value)
     {
@@ -13,6 +14,7 @@ public class SequenceIndex : ValueObject
 
     public static SequenceIndex Create(uint value)
     {
+        value.ThrowIfNull();
         return new SequenceIndex(value);
     }
     protected override IEnumerable<object> GetAtomicValues()

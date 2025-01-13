@@ -7,40 +7,27 @@ public class Period : ValueObject
 {
     
     private static  DateOnly NoEndDate => DateOnly.MinValue;
-    public DateOnly StartDate { get; private set; }
-    public DateOnly? EndDate { get; private set; }
-    public bool IsOngoing { get; private set; } = false;
+    public DateOnly StartDate { get;  }
+    public DateOnly? EndDate { get;  }
+
+    public bool IsOngoing
+    {
+        get => EndDate is null;
+    }
 
     private Period(DateOnly startDate, DateOnly? endDate = null)
     {
         StartDate = startDate;
         EndDate = endDate;
-        IsOngoing = !EndDate.HasValue;
     }
 
     private static void Validate(DateOnly startDate, DateOnly? endDate)
     {
+        startDate.ThrowIfNull();
         if (endDate.HasValue && endDate < startDate)
         {
             throw new CvSectionItemEndDateEarlierThanStartDateException();
         }
-    }
-
-    public void SetOngoing()
-    {
-        EndDate = null;
-        IsOngoing = true;
-    }
-
-    public void SetEndDate(DateOnly endDate)
-    {
-        if (endDate < StartDate)
-        {
-            throw new CvSectionItemEndDateEarlierThanStartDateException();
-        }
-
-        EndDate = endDate;
-        IsOngoing = false;
     }
 
     protected override IEnumerable<object> GetAtomicValues()

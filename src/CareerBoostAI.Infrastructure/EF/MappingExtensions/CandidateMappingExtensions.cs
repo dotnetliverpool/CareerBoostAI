@@ -7,6 +7,7 @@ namespace CareerBoostAI.Infrastructure.EF.MappingExtensions;
 
 public static class CandidateMappinngExtensions
 {
+    // TODO: Entire Mapping is wrong (move back to mapping repository from domain object)
     public static CandidateDto AsDto(this Candidate candidate)
     {
         return new CandidateDto
@@ -21,61 +22,56 @@ public static class CandidateMappinngExtensions
                 Code = candidate.PhoneCode,
                 Number = candidate.PhoneNumber,
             },
-            Cvs = candidate.Cvs.Select(cv => cv.AsDto()).ToList()
+            Cv = candidate.Cv.AsDto()
         };
     }
 
    
 
-    public static CvDto AsDto(this Cv cv)
+    private static CvDto AsDto(this Cv cv)
     {
         return new CvDto
         {
             Id = cv.Id,
-            FileName = cv.FileName,
-            StorageAddress = cv.StorageAddress,
-            Storagemedium = cv.StorageMedium,
-            Content = new CvContentDto
-            {
-                FirstName = cv.FirstName,
-                LastName = cv.LastName,
-                Email = cv.EmailAddress,
-                PhoneCode = cv.PhoneCountryCode,
-                PhoneNumber = cv.PhoneNumber,
-                HouseAddress = cv.Address,
-                City = cv.City,
-                Country = cv.Country,
-                Postcode = cv.PostalCode,
-                About = cv.About,
-                Sections = cv.Sections.Select(section => section.AsDto()).ToList()
-            }
+            Summary = cv.Summary,
+            Skills = cv.CvSkills?.Select(cs => cs.Skill.Name) ?? [],
+            Languages = cv.CvLanguages?.Select(cl => cl.Language.Name) ?? [],
+            Experiences = cv.Experiences.Select(exp => exp.AsDto()),
+            Educations = cv.Educations.Select(exp => exp.AsDto()),
+            
         };
     }
     
-    public static CvSectionDto AsDto(this CvSection section)
+    private static EducationDto AsDto(this Education education)
     {
-        return new CvSectionDto
+        return new EducationDto
         {
-            SectionName = section.Name,
-            SequenceIndex = section.SequenceIndex,
-            Items = section.SectionItems.Select(item => item.AsDto()).ToList()
+            OrganisationName = education.OrganisationName,
+            City = education.City,
+            Country = education.Country,
+            StartDate = education.StartDate,
+            EndDate = education.EndDate,
+            Index = education.Index,
+            Program = education.Program,
+            Grade = education.Grade
         };
     }
 
-    public static CvSectionItemDto AsDto(this CvSectionItem item)
+    private static ExperienceDto AsDto(this Experience experience)
     {
-        return new CvSectionItemDto
+        return new ExperienceDto
         {
-            OrganisationName = item.OrganisationName,
-            OrganisationCity = item.City,
-            OrganisationCountry = item.Country,
-            Description = item.Description,
-            StartDate = item.StartDate,
-            EndDate = item.EndDate,
-            SequenceIndex = item.SequenceIndex
+            OrganisationName = experience.OrganisationName,
+            City = experience.City,
+            Country = experience.Country,
+            StartDate = experience.StartDate,
+            EndDate = experience.EndDate,
+            Index = experience.Index,
+            Description = experience.Description,
         };
     }
-public static Candidate AsModel(this CandidateDto candidateDto)
+    
+    public static Candidate AsModel(this CandidateDto candidateDto)
     {
         return new Candidate
         {
@@ -86,55 +82,55 @@ public static Candidate AsModel(this CandidateDto candidateDto)
             Email = candidateDto.Email,
             PhoneCode = candidateDto.PhoneNumber.Code,
             PhoneNumber = candidateDto.PhoneNumber.Number,
-            Cvs = candidateDto.Cvs.Select(cv => cv.AsModel()).ToList()
+            Cv = candidateDto.Cv.AsModel()
         };
     }
 
-
-    public static Cv AsModel(this CvDto cvDto)
+    private static Cv AsModel(this CvDto cvDto)
     {
-        var content = cvDto.Content ?? new CvContentDto();
         return new Cv
         {
             Id = cvDto.Id,
-            FileName = cvDto.FileName,
-            StorageAddress = cvDto.StorageAddress,
-            StorageMedium = cvDto.Storagemedium,
-            FirstName = content.FirstName,
-            LastName = content.LastName,
-            EmailAddress = content.Email,
-            PhoneCountryCode = content.PhoneCode,
-            PhoneNumber = content.PhoneNumber,
-            Address = content.HouseAddress!,
-            City = content.City!,
-            Country = content.Country!,
-            PostalCode = content.Postcode!,
-            About = content.About,
-            Sections = content.Sections.Select(section => section.AsModel()).ToList()
+            Summary = cvDto.Summary,
+            CvSkills = cvDto.Skills.Select(skill => new CvSkill
+            {
+                Skill = new Skill { Name = skill }
+            }).ToList(),
+            CvLanguages = cvDto.Languages.Select(language => new CvLanguage
+            {
+                Language = new Language { Name = language }
+            }).ToList(),
+            Experiences = cvDto.Experiences.Select(exp => exp.AsModel()).ToList(),
+            Educations = cvDto.Educations.Select(edu => edu.AsModel()).ToList(),
         };
     }
 
-    public static CvSection AsModel(this CvSectionDto sectionDto)
+    private static Education AsModel(this EducationDto educationDto)
     {
-        return new CvSection
+        return new Education
         {
-            Name = sectionDto.SectionName,
-            SequenceIndex = sectionDto.SequenceIndex,
-            SectionItems = sectionDto.Items.Select(item => item.AsModel()).ToList()
+            OrganisationName = educationDto.OrganisationName,
+            City = educationDto.City,
+            Country = educationDto.Country,
+            StartDate = educationDto.StartDate,
+            EndDate = educationDto.EndDate,
+            Index = educationDto.Index,
+            Program = educationDto.Program,
+            Grade = educationDto.Grade,
         };
     }
 
-    public static CvSectionItem AsModel(this CvSectionItemDto itemDto)
+    private static Experience AsModel(this ExperienceDto experienceDto)
     {
-        return new CvSectionItem
+        return new Experience
         {
-            OrganisationName = itemDto.OrganisationName,
-            City = itemDto.OrganisationCity,
-            Country = itemDto.OrganisationCountry,
-            Description = itemDto.Description,
-            StartDate = itemDto.StartDate,
-            EndDate = itemDto.EndDate,
-            SequenceIndex = itemDto.SequenceIndex
+            OrganisationName = experienceDto.OrganisationName,
+            City = experienceDto.City,
+            Country = experienceDto.Country,
+            StartDate = experienceDto.StartDate,
+            EndDate = experienceDto.EndDate,
+            Index = experienceDto.Index,
+            Description = experienceDto.Description,
         };
     }
 }

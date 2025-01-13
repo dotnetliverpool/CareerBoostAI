@@ -4,11 +4,11 @@ namespace CareerBoostAI.Application.Candidate.DTO;
 
 public class CandidateDto
 {
-    public Guid Id { get; set; }
-    public required string FirstName { get; set; }
-    public required string LastName { get; set; }
-    public required DateOnly DateOfBirth { get; set; }
-    public required string Email { get; set; }
-    public required PhoneNumberDto PhoneNumber { get; set; }
-    public List<CvDto> Cvs { get; set; } = new();
+    public Guid Id { get; init; }
+    public required string FirstName { get; init; }
+    public required string LastName { get; init; }
+    public required DateOnly DateOfBirth { get; init; }
+    public required string Email { get; init; }
+    public required PhoneNumberDto PhoneNumber { get; init; }
+    public required CvDto Cv { get; init; }
 }

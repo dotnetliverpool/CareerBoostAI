@@ -1,52 +1,74 @@
 ﻿using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
+using CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects;
+using CareerBoostAI.Domain.Candidate.Services;
 using CareerBoostAI.Domain.Candidate.ValueObjects;
 using CareerBoostAI.Domain.Common.Exceptions;
+using CareerBoostAI.Domain.Common.Services;
 using CareerBoostAI.Domain.Common.ValueObjects;
 
 namespace CareerBoostAI.Domain.Candidate.Factories;
 
-public sealed class CandidateFactory : ICandidateFactory
+public sealed class CandidateFactory(IDateTimeProvider dateTimeProvider) : ICandidateFactory
 {
-    public CandidateAggregate Create(
-        CandidateId id, FirstName firstName, LastName lastName, 
-        DateOfBirth dateOfBirth, Email email,
-        PhoneNumber phoneNumber)
-    {
-        var cvsList = Enumerable.Empty<CvEntity.Cv>().ToList();
-        ValidateInputNotNull(firstName, lastName, dateOfBirth, email, phoneNumber, cvsList);
-        var result =  new CandidateAggregate(
-            id, firstName, lastName, dateOfBirth, email, phoneNumber, cvsList);
-        return result;
-    }
+    private readonly IDateTimeProvider _dateTimeProvider = dateTimeProvider;
+    
+   
 
-    public CandidateAggregate Create(
-        CandidateId id,
-        FirstName firstName, LastName lastName, 
-        DateOfBirth dateOfBirth, Email email,
-        PhoneNumber phoneNumber, IEnumerable<CvEntity.Cv> cvs)
+    public CandidateAggregate Create(Guid id, string firstName, string lastName, DateOnly dateOfBirth, string email,
+        string phoneCode, string phoneNumber,  CvEntity.Cv cv)
     {
-        var cvsList = cvs.ToList();
-        ValidateInputNotNull(firstName, lastName, dateOfBirth, email, phoneNumber, cvsList);
-        cvsList.ThrowIfContainsDuplicates<CvId>();
         
-        var result =  new CandidateAggregate(
-            id, firstName, lastName, dateOfBirth, email, phoneNumber, cvsList);
-        return result;
+        var candidateId = CandidateId.Create(id);
+        var domainFirstName = FirstName.Create(firstName);
+        var domainLastName = LastName.Create(lastName);
+        var domainEmail = Email.Create(email);
+        var domainDateOfBirth = DateOfBirth.Create(dateOfBirth, _dateTimeProvider);
+        var domainPhone = PhoneNumber.Create(phoneCode, phoneNumber);
+        cv.ThrowIfNull();
+        
+        return new(
+            candidateId, domainFirstName, 
+            domainLastName, domainDateOfBirth,
+            domainEmail, domainPhone, cv);
     }
 
-    private  void ValidateInputNotNull(FirstName firstName, LastName lastName, DateOfBirth dateOfBirth, Email email,
-        PhoneNumber phoneNumber, IEnumerable<CvEntity.Cv> cvs)
+    public CvEntity.Cv CreateCv(
+        Guid id, string summary, 
+        IEnumerable<(string orgName, string city, string country, DateOnly startDate, 
+            DateOnly? endDate, string description, uint index)> experiences, 
+        IEnumerable<(string orgName, string city, string country, DateOnly startDate, DateOnly? endDate, 
+            string program, string grade, uint index)> educations, 
+        IEnumerable<string> languages,
+        IEnumerable<string> skills)
     {
-        firstName.ThrowIfNull();
-        lastName.ThrowIfNull();
-        dateOfBirth.ThrowIfNull();
-        email.ThrowIfNull();
-        phoneNumber.ThrowIfNull();
-        foreach (var cv in cvs)
-        {
-            cv.ThrowIfNull();
-        }
+        var cvId = CvId.Create(id);
+        var domainSummary = Summary.Create(summary);
+        var domainExperiences = experiences
+            .Select(exp => WorkExperience.Create(
+                exp.orgName, 
+                exp.city, 
+                exp.country, 
+                exp.startDate, 
+                exp.endDate, exp.description,
+                exp.index));
+        var domainEducations = educations
+            .Select(edu =>
+                Education.Create(edu.orgName,
+                    edu.city,
+                    edu.country,
+                    edu.startDate,
+                    edu.endDate,
+                    edu.program,
+                    edu.grade,
+                    edu.index
+                    ));
+        var domainSkills = skills
+            .Select(sk => Skill.Create(sk));
+        var domainLanguages = languages
+            .Select(lng => Language.Create(lng));
+        
+        return new(cvId, domainSummary, domainExperiences, 
+            domainEducations, domainSkills, domainLanguages);
     }
-
    
 }

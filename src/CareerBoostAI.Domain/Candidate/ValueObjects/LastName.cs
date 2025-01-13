@@ -14,10 +14,7 @@ public class LastName : ValueObject
     
     public static LastName Create(string value)
     {
-        if (string.IsNullOrEmpty(value))
-        {
-            throw new EmptyArgumentException(nameof(LastName));
-        }
+        value.ThrowIfNullOrEmpty(nameof(LastName));
         return new LastName(value);
     }
 

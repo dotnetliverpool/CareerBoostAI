@@ -1,4 +1,5 @@
-﻿using CareerBoostAI.Domain.ValueObjects;
+﻿using CareerBoostAI.Domain.Common.Exceptions;
+using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.Candidate.ValueObjects;
 
@@ -18,6 +19,7 @@ public class CandidateId : ValueObject
         
     public static CandidateId Create(Guid id)
     {
+        id.ThrowIfNull();
         return new CandidateId(id);
     }
 

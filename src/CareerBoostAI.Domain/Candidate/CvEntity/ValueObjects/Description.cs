@@ -3,22 +3,24 @@ using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects;
 
-public class OrganisationName : ValueObject
+public class Description : ValueObject
 {
-    public string Value { get; private set; }
+    public string Value { get; }
 
-    private OrganisationName(string value)
+    private Description(string value)
     {
         Value = value;
     }
 
-    public static OrganisationName Create(string value)
+    public static Description Create(string value)
     {
-        value.ThrowIfNull();
-        return new OrganisationName(value);
+        value.ThrowIfNullOrEmpty(nameof(Description));
+        return new Description(value);
     }
+    
     protected override IEnumerable<object> GetAtomicValues()
     {
         yield return Value;
     }
+
 }

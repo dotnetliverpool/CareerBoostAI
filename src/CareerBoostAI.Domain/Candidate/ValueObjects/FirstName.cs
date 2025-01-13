@@ -9,18 +9,12 @@ public class FirstName : ValueObject
 
     private FirstName(string value)
     {
-        
-
         Value = value;
     }
 
     public static FirstName Create(string value)
     {
-        if (string.IsNullOrEmpty(value))
-        {
-            throw new EmptyArgumentException(nameof(FirstName));
-        }
-
+        value.ThrowIfNullOrEmpty(nameof(FirstName));
         return new FirstName(value);
     }
 

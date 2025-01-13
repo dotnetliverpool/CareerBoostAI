@@ -6,6 +6,7 @@ using CareerBoostAI.Domain.Candidate;
 using CareerBoostAI.Domain.Candidate.Cv;
 using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 using CareerBoostAI.Domain.Candidate.CvEntity;
+using CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects;
 using CareerBoostAI.Domain.Candidate.Factories;
 using CareerBoostAI.Domain.Candidate.ValueObjects;
 using CareerBoostAI.Domain.Common.ValueObjects;
@@ -30,142 +31,82 @@ public static class CandidateDtoMappingExtensions
                 Number = candidateAggregate.PhoneNumber.Number,
                 Code = candidateAggregate.PhoneNumber.Code
             },
-            Cvs = candidateAggregate.Cvs.Select(cv => cv.AsDto()).ToList()
+            Cv = candidateAggregate.Cv.AsDto(),
         };
     }
-
     public static CandidateAggregate AsDomain(
         this CandidateDto candidateDto, ICandidateFactory candidateFactory)
     {
+        var cv = candidateDto.Cv.AsDomain(candidateFactory);
         return candidateFactory.Create(
-                CandidateId.Create(candidateDto.Id),
-                FirstName.Create(candidateDto.FirstName),
-                LastName.Create(candidateDto.LastName),
-                DateOfBirth.Create(candidateDto.DateOfBirth),
-                Email.Create(candidateDto.Email),
-                PhoneNumber.Create(candidateDto.PhoneNumber.Code, candidateDto.PhoneNumber.Number),
-                candidateDto.Cvs
-                    .Select(cv => cv.AsDomain())
-                    .ToList()
-                );
+            candidateDto.Id, candidateDto.FirstName, candidateDto.LastName, 
+            candidateDto.DateOfBirth, candidateDto.Email, 
+            candidateDto.PhoneNumber.Code, candidateDto.PhoneNumber.Number,
+             cv
+        );
     }
-
-    public static CvDto AsDto(this Cv cv)
+    
+    private static CvDto AsDto(this Cv cv)
     {
         return new CvDto
         {
             Id = cv.Id.Value,
-            FileName = cv.File.Name,
-            Storagemedium = cv.File.StorageMedium.ToString(),
-            StorageAddress = cv.File.StorageAddress,
-            Content = cv.IsParsed ? cv.Content.AsDto() : null,
+            Summary = cv.Summary.Value,
+            Educations = cv.Educations.Select(edu => edu.AsDto()),
+            Experiences = cv.Experiences.Select(exp => exp.AsDto()),
+            Skills = cv.Skills.Select(sk => sk.Value),
+            Languages = cv.Languages.Select(l => l.Value)
         };
     }
 
-    public static Cv AsDomain(this CvDto cvDto)
+    private static EducationDto AsDto(this Education edu)
     {
-        var cv = new Cv(
-            CvId.Create(cvDto.Id), 
-            CvFile.Create(
-                cvDto.FileName, 
-                cvDto.Storagemedium.ToEnum<CvStorageMedium>(),
-                cvDto.StorageAddress));
-        cv.SetContent(cvDto.Content != null ? cvDto.Content.AsDomain() : NullCvContent.Instance);
-        return cv;
+        return new EducationDto
+        {
+            OrganisationName = edu.OrganisationName.Value,
+            City = edu.Location.City,
+            Country = edu.Location.Country,
+            StartDate = edu.TimePeriod.StartDate,
+            EndDate = edu.TimePeriod.EndDate,
+            Program = edu.Grade.Program,
+            Grade = edu.Grade.Grade,
+            Index = edu.SequenceIndex.Value,
+
+        };
     }
-
-    public static CvContentDto AsDto(this BaseCvContent cvContent)
+    
+    private static ExperienceDto AsDto(this WorkExperience experience)
     {
-        if (cvContent is not CvContent content)
+        return new ExperienceDto
         {
-            throw new ApplicationException("Invalid content type.");
-        }
+            OrganisationName = experience.OrganisationName.Value,
+            City = experience.Location.City,
+            Country = experience.Location.Country,
+            StartDate = experience.TimePeriod.StartDate,
+            EndDate = experience.TimePeriod.EndDate,
+            Description = experience.Description.Value,    
+            Index = experience.SequenceIndex.Value,
 
-        return new CvContentDto
-        {
-            FirstName = content.FirstName.Value,
-            LastName = content.LastName.Value,
-            Email = content.Email.Value,
-            PhoneCode = content.PhoneNumber.Code,
-            PhoneNumber = content.PhoneNumber.Number,
-            About = content.About.Value,
-            HouseAddress = content.Address.HouseAddress,
-            City = content.Address.City,
-            Country = content.Address.Country,
-            Postcode = content.Address.Postcode,
-            Sections = content.Sections
-                .Select(section => section.AsDto())
-                .ToList(),
-            
         };
     }
 
-    public static BaseCvContent AsDomain(this CvContentDto contentDto)
+   
+    
+    private static Cv AsDomain(this CvDto cvDto, ICandidateFactory candidateFactory)
     {
-        var result =  new CvContent(
-            FirstName.Create(contentDto.FirstName), 
-            LastName.Create(contentDto.LastName),
-            Email.Create(contentDto.Email),
-            PhoneNumber.Create(contentDto.PhoneCode, contentDto.PhoneNumber),
-            CvAddress.Create(
-                contentDto.HouseAddress, contentDto.City, 
-                contentDto.Country, contentDto.Postcode),
-            Summary.Create(contentDto.About));
-        
-        foreach (var section in contentDto.Sections)
-        {
-            result.AddSection(section.AsDomain());
-        }
-        return result;
-    }
-
-    public static CvSectionDto AsDto(this CvSection section)
-    {
-        return new CvSectionDto
-        {
-            SectionName = section.Name.Value,
-            SequenceIndex = section.SequenceIndex.Value,
-            Items = section.Items.
-                Select(item => item.AsDto())
-                .ToList()
-        };
-    }
-
-    public static CvSection AsDomain(this CvSectionDto sectionDto)
-    {
-        var section = new CvSection(
-            CvSectionName.Create(sectionDto.SectionName),
-            SequenceIndex.Create(sectionDto.SequenceIndex)
-            );
-        foreach (var item in sectionDto.Items)
-        {
-            section.AddItem(item.AsDomain());
-        }
-        return section;
-    }
-
-    public static CvSectionItemDto AsDto(this CvSectionItem item)
-    {
-        return new CvSectionItemDto
-        {
-            OrganisationName = item.OrganisationName.Value,
-            OrganisationCity = item.Location.City,
-            OrganisationCountry = item.Location.Country,
-            StartDate = item.TimeRange.StartDate,
-            EndDate = item.TimeRange.EndDate,
-            Description = item.Description.Value,
-            SequenceIndex = item.SequenceIndex.Value,
-        };
-    }
-
-    public static CvSectionItem AsDomain(this CvSectionItemDto itemDto)
-    {
-        return new CvSectionItem(
-            OrganisationName.Create(itemDto.OrganisationName),
-            SectionItemLocation.Create(itemDto.OrganisationCity, itemDto.OrganisationCountry),
-            Period.Create(itemDto.StartDate, itemDto.EndDate),
-            CvSectionItemDescription.Create(itemDto.Description),
-            SequenceIndex.Create(itemDto.SequenceIndex)
+        return candidateFactory.CreateCv(
+            cvDto.Id, cvDto.Summary,
+            cvDto.Experiences
+                .Select(exp => (
+                    exp.OrganisationName, exp.City, exp.Country, exp.StartDate, exp.EndDate,
+                    exp.Description, exp.Index)),
+            cvDto.Educations
+                .Select(edu => (
+                edu.OrganisationName, edu.City, edu.Country, edu.StartDate, edu.EndDate,
+                edu.Program, edu.Grade, edu.Index)),
+            skills: cvDto.Skills,
+            languages: cvDto.Languages
             );
     }
+    
 }

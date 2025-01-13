@@ -12,7 +12,6 @@ public static class ServicesDependencyInjection
             config.RegisterServicesFromAssembly(AssemblyReference.Assembly));
 
         services.AddSingleton<ICandidateFactory, CandidateFactory>();
-        services.AddSingleton<ICandidateCvFactory, CandidateCvFactory>();
         return services;
     }
 }

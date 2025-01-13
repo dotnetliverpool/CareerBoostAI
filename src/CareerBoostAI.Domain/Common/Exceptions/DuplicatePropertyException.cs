@@ -6,4 +6,9 @@ public class DuplicatePropertyException : CareerBoostAIDomainException
         : base($"{parent} Already has {property} property of value [{value}].")
     {
     }
+    
+    public DuplicatePropertyException(object value) 
+        : base($"duplicate value found for [{value}].")
+    {
+    }
 }

@@ -26,5 +26,8 @@ public class Candidate
     [Required]
     [MaxLength(20)]
     public string PhoneNumber { get; set; }
-    public List<Cv> Cvs { get; set; }
+    public ICollection<Upload> Uploads { get; set; }
+    
+    public Guid CVId { get; set; }
+    public Cv Cv { get; set; }
 }
