@@ -19,7 +19,12 @@ public static class ServicesDependencyInjectionExtensions
         var mySqlOptions = configuration.GetOptions<MySqlOptions>("MySql");
         var severVersion = new MySqlServerVersion(new Version(mySqlOptions.ServerVersion));
         
-        services.AddDbContext<CareerBoostDbContext>(options =>
+        services.AddDbContext<CareerBoostReadDbContext>(options =>
+        {
+            options.UseMySql(mySqlOptions.ConnectionString, severVersion);
+        });
+        
+        services.AddDbContext<CareerBoostWriteDbContext>(options =>
         {
             options.UseMySql(mySqlOptions.ConnectionString, severVersion);
         });

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CareerBoostAI.Infrastructure.EF.Services;
 
-internal sealed class MySqlCandidateReadService(CareerBoostDbContext context) : ICandidateReadService
+internal sealed class MySqlCandidateReadService(CareerBoostReadDbContext context) : ICandidateReadService
 {
     
     private readonly DbSet<Candidate> _candidates = context.Candidates;

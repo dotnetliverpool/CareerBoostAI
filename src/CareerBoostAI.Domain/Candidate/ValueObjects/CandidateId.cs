@@ -12,15 +12,15 @@ public class CandidateId : ValueObject
         Value = value;
     }
     
-    public static CandidateId New()
-    {
-        return new CandidateId(Guid.NewGuid());
-    }
-        
     public static CandidateId Create(Guid id)
     {
         id.ThrowIfNull();
         return new CandidateId(id);
+    }
+    
+    public static CandidateId New()
+    {
+        return new CandidateId(Guid.NewGuid());
     }
 
     protected override IEnumerable<object> GetAtomicValues()

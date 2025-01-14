@@ -50,7 +50,7 @@ public static class CandidateMappinngExtensions
             Country = education.Country,
             StartDate = education.StartDate,
             EndDate = education.EndDate,
-            Index = education.Index,
+            Index = education.SequenceIndex,
             Program = education.Program,
             Grade = education.Grade
         };
@@ -66,7 +66,7 @@ public static class CandidateMappinngExtensions
             Country = experience.Country,
             StartDate = experience.StartDate,
             EndDate = experience.EndDate,
-            Index = experience.Index,
+            Index = experience.SequenceIndex,
             Description = experience.Description,
         };
     }

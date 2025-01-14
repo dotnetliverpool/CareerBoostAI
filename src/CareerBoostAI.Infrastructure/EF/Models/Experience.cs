@@ -4,21 +4,28 @@ namespace CareerBoostAI.Infrastructure.EF.Models;
 
 public class Experience
 {
-    public Guid Id;
+    public Guid Id { get; set; }
+    
     [Required]
-    public string OrganisationName;
+    public string OrganisationName { get; set; }
+    
     [Required]
-    public string City;
+    public string City { get; set; }
+    
     [Required]
-    public string Country;
+    public string Country { get; set; }
+    
     [Required]
-    public DateOnly StartDate;
-    public DateOnly? EndDate;
+    public DateOnly StartDate { get; set; }
+    
+    public DateOnly? EndDate { get; set; }
+    
     [Required]
-    public string Description;
+    public uint SequenceIndex { get; set; }
+    
     [Required]
-    public uint Index;
+    public string Description { get; set; }
 
-    public Guid CvId;
-    public Cv Cv;
+    public Guid CvId { get; set; }
+    public Cv Cv { get; set; }
 }

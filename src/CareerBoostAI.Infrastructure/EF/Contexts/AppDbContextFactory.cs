@@ -6,12 +6,12 @@ using Microsoft.Extensions.Configuration;
 
 namespace CareerBoostAI.Infrastructure.EF.Contexts;
 
-internal class AppDbContextFactory : IDesignTimeDbContextFactory<CareerBoostDbContext>
+internal class AppDbContextFactory : IDesignTimeDbContextFactory<CareerBoostReadDbContext>
 {
     
     
     
-    public CareerBoostDbContext CreateDbContext(string[] args)
+    public CareerBoostReadDbContext CreateDbContext(string[] args)
     {
         var configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
@@ -23,11 +23,11 @@ internal class AppDbContextFactory : IDesignTimeDbContextFactory<CareerBoostDbCo
         var mySqlOptions = configuration.GetOptions<MySqlOptions>("MySql");  
         var serverVersion = new MySqlServerVersion(new Version(mySqlOptions.ServerVersion));
 
-        var optionsBuilder = new DbContextOptionsBuilder<CareerBoostDbContext>();
+        var optionsBuilder = new DbContextOptionsBuilder<CareerBoostReadDbContext>();
         optionsBuilder.UseMySql(
             connectionString: mySqlOptions.ConnectionString,
             serverVersion: serverVersion);
 
-        return new CareerBoostDbContext(optionsBuilder.Options);
+        return new CareerBoostReadDbContext(optionsBuilder.Options);
     }
 }
