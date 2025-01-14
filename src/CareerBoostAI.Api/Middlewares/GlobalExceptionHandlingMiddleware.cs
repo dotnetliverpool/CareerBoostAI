@@ -1,16 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Net;
-using System.Runtime.ExceptionServices;
+﻿using System.Net;
 using System.Text.Json;
-using System.Threading.Tasks;
-using CareerBoostAI.Domain.Common.Exceptions;
 using CareerBoostAI.Shared.Abstractions.Exceptions;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Azure.Functions.Worker.Middleware;
 
-namespace CareerBoostAI.Functions.Middlewares;
+namespace CareerBoostAI.Api.Middlewares;
 
 public class GlobalExceptionHandlingMiddleware : IFunctionsWorkerMiddleware
 {
@@ -31,7 +26,7 @@ public class GlobalExceptionHandlingMiddleware : IFunctionsWorkerMiddleware
             await response.WriteStringAsync(json);
             context.GetInvocationResult().Value = response;
         }
-        catch (Exception _)
+        catch (Exception exc)
         {
             var request = await context.GetHttpRequestDataAsync();
             var response = request!.CreateResponse();

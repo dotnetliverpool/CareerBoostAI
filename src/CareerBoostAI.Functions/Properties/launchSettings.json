@@ -1,9 +1,0 @@
-{
-  "profiles": {
-    "CareerBoostAI.Functions": {
-      "commandName": "Project",
-      "commandLineArgs": "--port 7182",
-      "launchBrowser": true
-    }
-  }
-}

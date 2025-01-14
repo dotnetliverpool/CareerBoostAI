@@ -1,20 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.API", "src\CareerBoostAI.API\CareerBoostAI.API.csproj", "{229BD5B1-23E5-4611-9490-D244D2471D67}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Application", "src\CareerBoostAI.Application\CareerBoostAI.Application.csproj", "{52425E7F-3272-4BD2-9F27-6671F78F7478}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Infrastructure", "src\CareerBoostAI.Infrastructure\CareerBoostAI.Infrastructure.csproj", "{80F8370C-1ED7-423E-9039-10516EC9A9BD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Contracts", "src\CareerBoostAI.Contracts\CareerBoostAI.Contracts.csproj", "{4D84DA8A-FDBD-4176-9593-1B691B286E6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Functions", "src\CareerBoostAI.Functions\CareerBoostAI.Functions.csproj", "{955B3645-4C40-4779-88FE-286FE6F97078}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Domain", "src\CareerBoostAI.Domain\CareerBoostAI.Domain.csproj", "{0C0D0F06-F1E9-47EC-B7A9-FFF250AEB027}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Tests.Unit", "Tests\CareerBoostAI.Tests.Unit\CareerBoostAI.Tests.Unit.csproj", "{81D2C1A0-7880-4F05-B0AD-3E45B31AAE77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Shared.Abstractions", "CareerBoostAI.Shared.Abstractions\CareerBoostAI.Shared.Abstractions.csproj", "{D52220E2-CF4D-4BFF-8D67-2BBC2CF9BE3A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Shared.Abstractions", "src\CareerBoostAI.Shared.Abstractions\CareerBoostAI.Shared.Abstractions.csproj", "{D52220E2-CF4D-4BFF-8D67-2BBC2CF9BE3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Api", "src\CareerBoostAI.Api\CareerBoostAI.Api.csproj", "{F70830ED-860F-4FD2-A4DE-C8764A33B090}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,10 +20,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{229BD5B1-23E5-4611-9490-D244D2471D67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{229BD5B1-23E5-4611-9490-D244D2471D67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{229BD5B1-23E5-4611-9490-D244D2471D67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{229BD5B1-23E5-4611-9490-D244D2471D67}.Release|Any CPU.Build.0 = Release|Any CPU
 		{52425E7F-3272-4BD2-9F27-6671F78F7478}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{52425E7F-3272-4BD2-9F27-6671F78F7478}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52425E7F-3272-4BD2-9F27-6671F78F7478}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -38,10 +32,6 @@ Global
 		{4D84DA8A-FDBD-4176-9593-1B691B286E6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D84DA8A-FDBD-4176-9593-1B691B286E6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D84DA8A-FDBD-4176-9593-1B691B286E6E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{955B3645-4C40-4779-88FE-286FE6F97078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{955B3645-4C40-4779-88FE-286FE6F97078}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{955B3645-4C40-4779-88FE-286FE6F97078}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{955B3645-4C40-4779-88FE-286FE6F97078}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0C0D0F06-F1E9-47EC-B7A9-FFF250AEB027}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0C0D0F06-F1E9-47EC-B7A9-FFF250AEB027}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C0D0F06-F1E9-47EC-B7A9-FFF250AEB027}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -54,5 +44,9 @@ Global
 		{D52220E2-CF4D-4BFF-8D67-2BBC2CF9BE3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D52220E2-CF4D-4BFF-8D67-2BBC2CF9BE3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D52220E2-CF4D-4BFF-8D67-2BBC2CF9BE3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F70830ED-860F-4FD2-A4DE-C8764A33B090}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F70830ED-860F-4FD2-A4DE-C8764A33B090}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F70830ED-860F-4FD2-A4DE-C8764A33B090}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F70830ED-860F-4FD2-A4DE-C8764A33B090}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
