@@ -17,7 +17,7 @@ public class CandidateAggregate : AggregateRoot<CandidateId>
     public DateOfBirth DateOfBirth { get; private set; }
     public Email Email { get; private set; }
     public PhoneNumber PhoneNumber { get; private set; }
-    public CvEntity.Cv Cv { get; private set; }
+    public CvEntity.CandidateCv CandidateCv { get; private set; }
     public string FullName => $"{FirstName.Value} {LastName.Value}";
     
 
@@ -27,7 +27,7 @@ public class CandidateAggregate : AggregateRoot<CandidateId>
         CandidateId id,
         FirstName firstName, LastName lastName,
         DateOfBirth dateOfBirth, Email email, 
-        PhoneNumber phoneNumber,  CvEntity.Cv cv)
+        PhoneNumber phoneNumber,  CvEntity.CandidateCv candidateCv)
     {
         Id = id;
         FirstName = firstName;
@@ -35,7 +35,7 @@ public class CandidateAggregate : AggregateRoot<CandidateId>
         DateOfBirth = dateOfBirth;
         Email = email;
         PhoneNumber = phoneNumber;
-        Cv = cv;
+        CandidateCv = candidateCv;
     }
     
     

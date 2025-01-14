@@ -5,7 +5,7 @@ using CareerBoostAI.Domain.Common.Abstractions;
 
 namespace CareerBoostAI.Domain.Candidate.CvEntity;
 
-public sealed class Cv : Entity<CvId>
+public sealed class CandidateCv : Entity<CvId>
 {
     private List<WorkExperience> _experiences;
     private List<Education> _educations;
@@ -19,7 +19,7 @@ public sealed class Cv : Entity<CvId>
     public IReadOnlyCollection<Skill> Skills => _skills.AsReadOnly();
     public IReadOnlyCollection<Language> Languages => _languages.AsReadOnly();
 
-    internal Cv(CvId id,
+    internal CandidateCv(CvId id,
         Summary summary,
         IEnumerable<WorkExperience> experiences, 
         IEnumerable<Education> educations, 

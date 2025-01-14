@@ -1,7 +1,5 @@
 ﻿using CareerBoostAI.Application.Candidate.DTO;
 using CareerBoostAI.Infrastructure.EF.Models;
-using CvSection = CareerBoostAI.Infrastructure.EF.Models.CvSection;
-using CvSectionItem = CareerBoostAI.Infrastructure.EF.Models.CvSectionItem;
 
 namespace CareerBoostAI.Infrastructure.EF.MappingExtensions;
 
@@ -19,8 +17,8 @@ public static class CandidateMappinngExtensions
             Email = candidate.Email,
             PhoneNumber = new PhoneNumberDto
             {
-                Code = candidate.PhoneCode,
-                Number = candidate.PhoneNumber,
+                Code = candidate.PhoneNumber.Split(" ")[0],
+                Number = candidate.PhoneNumber.Split(" ")[1],
             },
             Cv = candidate.Cv.AsDto()
         };
@@ -34,8 +32,8 @@ public static class CandidateMappinngExtensions
         {
             Id = cv.Id,
             Summary = cv.Summary,
-            Skills = cv.CvSkills?.Select(cs => cs.Skill.Name) ?? [],
-            Languages = cv.CvLanguages?.Select(cl => cl.Language.Name) ?? [],
+            Skills = cv.Skills?.Select(cs => cs.Name) ?? [],
+            Languages = cv.Languages?.Select(cl => cl.Name) ?? [],
             Experiences = cv.Experiences.Select(exp => exp.AsDto()),
             Educations = cv.Educations.Select(exp => exp.AsDto()),
             
@@ -46,6 +44,7 @@ public static class CandidateMappinngExtensions
     {
         return new EducationDto
         {
+            Id = education.Id,
             OrganisationName = education.OrganisationName,
             City = education.City,
             Country = education.Country,
@@ -61,6 +60,7 @@ public static class CandidateMappinngExtensions
     {
         return new ExperienceDto
         {
+            Id = experience.Id,
             OrganisationName = experience.OrganisationName,
             City = experience.City,
             Country = experience.Country,

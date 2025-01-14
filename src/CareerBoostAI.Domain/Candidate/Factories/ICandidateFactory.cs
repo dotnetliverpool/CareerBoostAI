@@ -11,9 +11,9 @@ public interface ICandidateFactory
     public CandidateAggregate Create(Guid id, string firstName,
         string lastName, DateOnly dateOfBirth,
         string email, string phoneCode, string phoneNumber, 
-         CvEntity.Cv cv);
+         CvEntity.CandidateCv candidateCv);
     
-    public CvEntity.Cv CreateCv(
+    public CvEntity.CandidateCv CreateCv(
         Guid id,  string summary,
         IEnumerable<(Guid id, string orgName, string city, string country, 
             DateOnly startDate, DateOnly? endDate, string description, uint index)> experiences, 

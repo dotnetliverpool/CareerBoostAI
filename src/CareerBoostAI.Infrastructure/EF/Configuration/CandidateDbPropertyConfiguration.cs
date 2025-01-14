@@ -87,7 +87,7 @@ internal class CandidateDbPropertyConfiguration : IEntityTypeConfiguration<Candi
             .OnDelete(DeleteBehavior.Cascade);
         
         builder.Metadata
-            .FindNavigation(nameof(Cv.Experiences))!
+            .FindNavigation(nameof(CandidateCv.Experiences))!
             .SetPropertyAccessMode(PropertyAccessMode.Field);
         
         builder
@@ -97,7 +97,7 @@ internal class CandidateDbPropertyConfiguration : IEntityTypeConfiguration<Candi
             .OnDelete(DeleteBehavior.Cascade);
         
         builder.Metadata
-            .FindNavigation(nameof(Cv.Educations))!
+            .FindNavigation(nameof(CandidateCv.Educations))!
             .SetPropertyAccessMode(PropertyAccessMode.Field);
         
         builder
@@ -108,9 +108,6 @@ internal class CandidateDbPropertyConfiguration : IEntityTypeConfiguration<Candi
                 j => j.HasOne<Skill>().WithMany().HasForeignKey("SkillId"),
                 j => j.HasOne<Cv>().WithMany().HasForeignKey("CvId")
             );
-        builder
-            .Property(c => c.Skills)
-            .Metadata.SetPropertyAccessMode(PropertyAccessMode.Field);
         
         
         builder
@@ -122,9 +119,7 @@ internal class CandidateDbPropertyConfiguration : IEntityTypeConfiguration<Candi
                 j => j.HasOne<Cv>().WithMany().HasForeignKey("CvId")
             );
         
-        builder
-            .Property(c => c.Languages)
-            .Metadata.SetPropertyAccessMode(PropertyAccessMode.Field);
+       
         
     }
     
@@ -225,6 +220,10 @@ internal class CandidateDbPropertyConfiguration : IEntityTypeConfiguration<Candi
             .HasConversion(
                 value => CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects.Skill.Create(value),
                 skName => skName.Value);
+        
+        builder.Metadata
+            .FindNavigation(nameof(CandidateCv.Skills))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 
     public void Configure(EntityTypeBuilder<Language> builder)
@@ -237,6 +236,10 @@ internal class CandidateDbPropertyConfiguration : IEntityTypeConfiguration<Candi
             .HasConversion(
                 value => CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects.Language.Create(value),
                 lng => lng.Value);
+        
+        builder.Metadata
+            .FindNavigation(nameof(CandidateCv.Languages))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 
     

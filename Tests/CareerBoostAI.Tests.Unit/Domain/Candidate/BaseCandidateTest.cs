@@ -20,7 +20,7 @@ public abstract class BaseCandidateTest
     protected CareerBoostAI.Domain.Candidate.CandidateAggregate GetNewCandidateWithCv()
     {
         IDateTimeProvider dateTimeProvider = new TestDateTimeProvider();
-        Cv cv = CreateCandidateCv();
+        CandidateCv candidateCv = CreateCandidateCv();
         
         DateOnly dateOfBirth = new DateOnly(1998, 12, 13);
         return new (
@@ -29,11 +29,11 @@ public abstract class BaseCandidateTest
             DateOfBirth.Create(dateOfBirth, dateTimeProvider), 
             Email.Create("john.doe@gmail.com"), 
             PhoneNumber.Create("+44", "88436287893"), 
-            cv
+            candidateCv
              );
     }
 
-    protected Cv CreateCandidateCv()
+    protected CandidateCv CreateCandidateCv()
     {
         CvId cvId = CvId.Create(Guid.NewGuid()); 
         Summary summary = Summary.Create(
@@ -43,11 +43,13 @@ public abstract class BaseCandidateTest
         var experiences = new List<WorkExperience>
         {
             WorkExperience.Create(
+                Guid.NewGuid(),
                 "TechCorp", "New York", "USA", 
                 new DateOnly(2018, 5, 1), 
                 new DateOnly(2020, 12, 31), 
                 "Backend developer, responsible for building APIs", 1),
             WorkExperience.Create(
+                Guid.NewGuid(),
                 "CodeWorks", "London", "UK", 
                 new DateOnly(2021, 1, 1), 
                 null, 
@@ -58,6 +60,7 @@ public abstract class BaseCandidateTest
         var educations = new List<Education>
         {
             Education.Create(
+                Guid.NewGuid(),
                 "University of Tech", 
                 "San Francisco", 
                 "USA", 
@@ -81,7 +84,7 @@ public abstract class BaseCandidateTest
             Language.Create("Spanish")
         };
         
-        return new Cv(cvId, summary, experiences, educations, skills, languages);
+        return new CandidateCv(cvId, summary, experiences, educations, skills, languages);
     }
 
     protected ICandidateFactory GetCandidateFactory()

@@ -40,11 +40,11 @@ public class CandidateFactoryTest : BaseCandidateTest
         var email = "john.doe@example.com";
         var phoneCode = "+1";
         var phoneNumber = "1234567890";
-        Cv cv = null!; // Passing null to test exception
+        CandidateCv candidateCv = null!; // Passing null to test exception
 
         // Act
         var candidate = GetCandidateFactory().Create(
-            id, firstName, lastName, dateOfBirth, email, phoneCode, phoneNumber,  cv);
+            id, firstName, lastName, dateOfBirth, email, phoneCode, phoneNumber,  candidateCv);
         
         // Assert
         
@@ -56,13 +56,13 @@ public class CandidateFactoryTest : BaseCandidateTest
         // Arrange
         var id = Guid.NewGuid();
         var summary = "A summary of the candidate's experiences.";
-        var experiences = new List<(string orgName, string city, string country, DateOnly startDate, DateOnly? endDate, string description, uint index)>
+        var experiences = new List<(Guid id, string orgName, string city, string country, DateOnly startDate, DateOnly? endDate, string description, uint index)>
         {
-            ("Company A", "City A", "Country A", new DateOnly(2015, 5, 1), null, "Software Developer", 1),
+            (Guid.NewGuid(), "Company A", "City A", "Country A", new DateOnly(2015, 5, 1), null, "Software Developer", 1),
         };
-        var educations = new List<(string orgName, string city, string country, DateOnly startDate, DateOnly? endDate, string program, string grade, uint index)>
+        var educations = new List<(Guid id, string orgName, string city, string country, DateOnly startDate, DateOnly? endDate, string program, string grade, uint index)>
         {
-            ("University A", "City B", "Country B", new DateOnly(2012, 9, 1), new DateOnly(2016, 6, 1), "Engineering", "B", 1),
+            (Guid.NewGuid(), "University A", "City B", "Country B", new DateOnly(2012, 9, 1), new DateOnly(2016, 6, 1), "Engineering", "B", 1),
         };
         var languages = new List<string> { "English", "French" };
         var skills = new List<string> { "C#", "JavaScript" };
@@ -98,16 +98,16 @@ public class CandidateFactoryTest : BaseCandidateTest
         // Arrange
         var invalidExperiences = new List<WorkExperience>
         {
-            WorkExperience.Create("Company A", "City A", "Country A", new DateOnly(2015, 1, 1), null, "Description A", 1),
-            WorkExperience.Create("Company B", "City B", "Country B", new DateOnly(2016, 1, 1), null, "Description B", 3), // Invalid index (should be 2)
+            WorkExperience.Create(Guid.NewGuid(), "Company A", "City A", "Country A", new DateOnly(2015, 1, 1), null, "Description A", 1),
+            WorkExperience.Create(Guid.NewGuid(), "Company B", "City B", "Country B", new DateOnly(2016, 1, 1), null, "Description B", 3), // Invalid index (should be 2)
         };
         var validExperiences = new List<WorkExperience>
         {
-            WorkExperience.Create("Company A", "City A", "Country A", new DateOnly(2015, 1, 1), null, "Description A", 1),
-            WorkExperience.Create("Company B", "City B", "Country B", new DateOnly(2016, 1, 1), null, "Description B", 2),
+            WorkExperience.Create(Guid.NewGuid(), "Company A", "City A", "Country A", new DateOnly(2015, 1, 1), null, "Description A", 1),
+            WorkExperience.Create(Guid.NewGuid(), "Company B", "City B", "Country B", new DateOnly(2016, 1, 1), null, "Description B", 2),
         };
 
-        var cv = new Cv(
+        var cv = new CandidateCv(
             CvId.New(), 
             Summary.Create("Summary"), 
             invalidExperiences, 
@@ -125,11 +125,11 @@ public class CandidateFactoryTest : BaseCandidateTest
         // Arrange
         var experiences = new List<WorkExperience>
         {
-            WorkExperience.Create("Company A", "City A", "Country A", new DateOnly(2015, 1, 1), null, "Description A", 1),
-            WorkExperience.Create("Company B", "City B", "Country B", new DateOnly(2016, 1, 1), null, "Description B", 2),
+            WorkExperience.Create(Guid.NewGuid(), "Company A", "City A", "Country A", new DateOnly(2015, 1, 1), null, "Description A", 1),
+            WorkExperience.Create(Guid.NewGuid(), "Company B", "City B", "Country B", new DateOnly(2016, 1, 1), null, "Description B", 2),
         };
 
-        var cv = new Cv(
+        var cv = new CandidateCv(
             CvId.New(),
             Summary.Create("Summary"),
             experiences,

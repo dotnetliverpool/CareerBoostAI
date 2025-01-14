@@ -16,17 +16,19 @@ internal sealed class MySqlCandidateRepository(CareerBoostDbContext context) : I
 
     public async Task<CandidateAggregate?> GetAsync(Guid id)
     {
-        return await _candidates
-            .Include(c => c.Uploads)
-            .Include(c => c.Cv)
-            .SingleOrDefaultAsync(c => c.Id == id);
+        // return await _candidates
+        //     .Include(c => c.Uploads)
+        //     .Include(c => c.Cv)
+        //     .SingleOrDefaultAsync(c => c.Id == id);
+        throw new NotImplementedException();
 
-        
+
     }
 
     public async Task CreateNewAsync(CandidateAggregate candidate)
     {
-        await _candidates.AddAsync(candidate);
+        throw new NotImplementedException();
+        // await _candidates.AddAsync(candidate);
     }
     
 }

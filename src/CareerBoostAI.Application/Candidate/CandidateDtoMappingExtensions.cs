@@ -31,20 +31,20 @@ public static class CandidateDtoMappingExtensions
                 Number = candidateAggregate.PhoneNumber.Number,
                 Code = candidateAggregate.PhoneNumber.Code
             },
-            Cv = candidateAggregate.Cv.AsDto(),
+            Cv = candidateAggregate.CandidateCv.AsDto(),
         };
     }
     
-    private static CvDto AsDto(this Cv cv)
+    private static CvDto AsDto(this CandidateCv candidateCv)
     {
         return new CvDto
         {
-            Id = cv.Id.Value,
-            Summary = cv.Summary.Value,
-            Educations = cv.Educations.Select(edu => edu.AsDto()),
-            Experiences = cv.Experiences.Select(exp => exp.AsDto()),
-            Skills = cv.Skills.Select(sk => sk.Value),
-            Languages = cv.Languages.Select(l => l.Value)
+            Id = candidateCv.Id.Value,
+            Summary = candidateCv.Summary.Value,
+            Educations = candidateCv.Educations.Select(edu => edu.AsDto()),
+            Experiences = candidateCv.Experiences.Select(exp => exp.AsDto()),
+            Skills = candidateCv.Skills.Select(sk => sk.Value),
+            Languages = candidateCv.Languages.Select(l => l.Value)
         };
     }
 
@@ -83,7 +83,7 @@ public static class CandidateDtoMappingExtensions
 
    
     
-    private static Cv AsDomain(this CvDto cvDto, ICandidateFactory candidateFactory)
+    private static CandidateCv AsDomain(this CvDto cvDto, ICandidateFactory candidateFactory)
     {
         return candidateFactory.CreateCv(
             cvDto.Id, cvDto.Summary,
