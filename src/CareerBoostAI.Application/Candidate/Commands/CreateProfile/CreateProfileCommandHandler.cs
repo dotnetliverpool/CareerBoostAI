@@ -39,39 +39,39 @@ public class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand>
         await _unitOfWork.SaveChangesAsync(cancellationToken); 
         
         var adminNotificationMessage =
-            $"A new candidate profile has been created for {command.FirstName} {command.LastName}.";
+            $"A new candidate profile has been created for {candidate.FirstName.Value} {candidate.LastName.Value}.";
         await _emailSender.SendEmailToAdminAsync(subject: "New Candidate Profile Created", body: adminNotificationMessage);
     }
 
     private CandidateAggregate CreateAggregateFromCommand(CreateProfileCommand request)
     {
         var cv = _candidateFactory.CreateCv(
-            Guid.NewGuid(), request.CvData.Summary,
-            request.CvData.Experiences
+            request.Id, request.Data.CvData.Summary,
+            request.Data.CvData.Experiences
                 .Select(exp => ( Guid.NewGuid(),
                     exp.OrganisationName, exp.City, exp.Country,
                     exp.StartDate, exp.EndDate, exp.Description,
                     exp.SequenceIndex)),
-            request.CvData.Educations
+            request.Data.CvData.Educations
                 .Select(edu => (Guid.NewGuid(), edu.OrganisationName, edu.City, edu.Country,
                     edu.StartDate, edu.EndDate, edu.Program, edu.Grade,
                     edu.SequenceIndex)),
-            request.CvData.Languages,
-            request.CvData.Skills);
+            request.Data.CvData.Languages,
+            request.Data.CvData.Skills);
 
         CandidateAggregate candidate = _candidateFactory
-            .Create(Guid.NewGuid(), request.FirstName, 
-                request.LastName, request.DateOfBirth, 
-                request.Email, request.PhoneCode, request.PhoneNumber, 
+            .Create(Guid.NewGuid(), request.Data.FirstName, 
+                request.Data.LastName, request.Data.DateOfBirth, 
+                request.Data.Email, request.Data.PhoneCode, request.Data.PhoneNumber, 
                 cv);
         return candidate;
     }
 
     private async Task Validate(CreateProfileCommand request, CancellationToken cancellationToken)
     {
-        if (await _candidateReadService.CandidateExistsByEmailAsync(request.Email, cancellationToken))
+        if (await _candidateReadService.CandidateExistsByEmailAsync(request.Data.Email, cancellationToken))
         {
-            throw new DuplicateCandidateProfileException(request.Email);
+            throw new DuplicateCandidateProfileException(request.Data.Email);
         }
     }
 }
