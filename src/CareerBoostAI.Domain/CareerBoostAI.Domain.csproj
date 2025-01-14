@@ -13,7 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\CareerBoostAI.Shared.Abstractions\CareerBoostAI.Shared.Abstractions.csproj" />
+      <ProjectReference Include="..\CareerBoostAI.Shared.Abstractions\CareerBoostAI.Shared.Abstractions.csproj" />
     </ItemGroup>
 
     

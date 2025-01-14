@@ -41,7 +41,7 @@
         <Using Include="System.Threading.ExecutionContext" Alias="ExecutionContext"/>
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\..\CareerBoostAI.Shared.Abstractions\CareerBoostAI.Shared.Abstractions.csproj" />
+      <ProjectReference Include="..\CareerBoostAI.Shared.Abstractions\CareerBoostAI.Shared.Abstractions.csproj" />
       <ProjectReference Include="..\CareerBoostAI.Application\CareerBoostAI.Application.csproj" />
       <ProjectReference Include="..\CareerBoostAI.Infrastructure\CareerBoostAI.Infrastructure.csproj" />
     </ItemGroup>
