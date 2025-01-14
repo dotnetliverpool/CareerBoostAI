@@ -12,6 +12,10 @@
       <Folder Include="Profile\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\CareerBoostAI.Shared.Abstractions\CareerBoostAI.Shared.Abstractions.csproj" />
+    </ItemGroup>
+
     
 
 </Project>

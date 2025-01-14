@@ -5,6 +5,7 @@ using System.Runtime.ExceptionServices;
 using System.Text.Json;
 using System.Threading.Tasks;
 using CareerBoostAI.Domain.Common.Exceptions;
+using CareerBoostAI.Shared.Abstractions.Exceptions;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Azure.Functions.Worker.Middleware;
@@ -19,7 +20,7 @@ public class GlobalExceptionHandlingMiddleware : IFunctionsWorkerMiddleware
         {
             await next(context);
         }
-        catch (CareerBoostAIDomainException ex)
+        catch (CareerBoostAIException ex)
         {
             var request = await context.GetHttpRequestDataAsync();
             var response = request!.CreateResponse();

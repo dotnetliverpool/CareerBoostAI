@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Domain", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Tests.Unit", "Tests\CareerBoostAI.Tests.Unit\CareerBoostAI.Tests.Unit.csproj", "{81D2C1A0-7880-4F05-B0AD-3E45B31AAE77}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerBoostAI.Shared.Abstractions", "CareerBoostAI.Shared.Abstractions\CareerBoostAI.Shared.Abstractions.csproj", "{D52220E2-CF4D-4BFF-8D67-2BBC2CF9BE3A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +50,9 @@ Global
 		{81D2C1A0-7880-4F05-B0AD-3E45B31AAE77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81D2C1A0-7880-4F05-B0AD-3E45B31AAE77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81D2C1A0-7880-4F05-B0AD-3E45B31AAE77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D52220E2-CF4D-4BFF-8D67-2BBC2CF9BE3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D52220E2-CF4D-4BFF-8D67-2BBC2CF9BE3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D52220E2-CF4D-4BFF-8D67-2BBC2CF9BE3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D52220E2-CF4D-4BFF-8D67-2BBC2CF9BE3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

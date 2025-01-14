@@ -1,6 +1,8 @@
-﻿namespace CareerBoostAI.Domain.Common.Exceptions;
+﻿using CareerBoostAI.Shared.Abstractions.Exceptions;
 
-public class CareerBoostAIDomainException : Exception
+namespace CareerBoostAI.Domain.Common.Exceptions;
+
+public class CareerBoostAIDomainException : CareerBoostAIException
 {
     protected CareerBoostAIDomainException(string message) : base(message)
     {}
