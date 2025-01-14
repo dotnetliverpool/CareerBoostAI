@@ -5,7 +5,6 @@ namespace CareerBoostAI.Application.Candidate;
 
 public interface ICandidateRepository
 {
-    Task<CandidateDto?> GetAsync(Guid id);
-    Task AddAsync(CandidateAggregate candidate);
-    Task UpdateAsync(CandidateAggregate candidate);
+    Task<CandidateAggregate?> GetAsync(Guid id);
+    Task CreateNewAsync(CandidateAggregate candidate);
 }

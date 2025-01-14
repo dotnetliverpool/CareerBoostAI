@@ -1,4 +1,5 @@
 ﻿using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
+using CareerBoostAI.Domain.Candidate.CvEntity;
 using CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects;
 using CareerBoostAI.Domain.Candidate.Services;
 using CareerBoostAI.Domain.Candidate.ValueObjects;
@@ -34,9 +35,9 @@ public sealed class CandidateFactory(IDateTimeProvider dateTimeProvider) : ICand
 
     public CvEntity.Cv CreateCv(
         Guid id, string summary, 
-        IEnumerable<(string orgName, string city, string country, DateOnly startDate, 
+        IEnumerable<(Guid id, string orgName, string city, string country, DateOnly startDate, 
             DateOnly? endDate, string description, uint index)> experiences, 
-        IEnumerable<(string orgName, string city, string country, DateOnly startDate, DateOnly? endDate, 
+        IEnumerable<(Guid id, string orgName, string city, string country, DateOnly startDate, DateOnly? endDate, 
             string program, string grade, uint index)> educations, 
         IEnumerable<string> languages,
         IEnumerable<string> skills)
@@ -45,6 +46,7 @@ public sealed class CandidateFactory(IDateTimeProvider dateTimeProvider) : ICand
         var domainSummary = Summary.Create(summary);
         var domainExperiences = experiences
             .Select(exp => WorkExperience.Create(
+                exp.id,
                 exp.orgName, 
                 exp.city, 
                 exp.country, 
@@ -53,7 +55,7 @@ public sealed class CandidateFactory(IDateTimeProvider dateTimeProvider) : ICand
                 exp.index));
         var domainEducations = educations
             .Select(edu =>
-                Education.Create(edu.orgName,
+                Education.Create(edu.id, edu.orgName,
                     edu.city,
                     edu.country,
                     edu.startDate,

@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using CareerBoostAI.Domain.Common.Exceptions;
+using CareerBoostAI.Domain.Common.Services;
 using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.Common.ValueObjects;
@@ -14,7 +15,7 @@ public class Email : ValueObject
         Value = value;
     }
 
-    public static Email Create(string value, bool isActive = true)
+    public static Email Create(string value)
     {
         value.ThrowIfNullOrEmpty(nameof(Email));
 

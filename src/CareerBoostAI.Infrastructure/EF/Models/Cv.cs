@@ -12,8 +12,8 @@ public class Cv
     
     public ICollection<Experience> Experiences { get; set; }
     public ICollection<Education> Educations { get; set; }
-    public ICollection<CvSkill> CvSkills { get; set; }
-    public ICollection<CvLanguage> CvLanguages { get; set; }
+    public ICollection<Skill> Skills { get; set; }
+    public ICollection<Language> Languages { get; set; }
     
     public Guid CandidateId { get; set; }
     public Candidate Candidate { get; set; }

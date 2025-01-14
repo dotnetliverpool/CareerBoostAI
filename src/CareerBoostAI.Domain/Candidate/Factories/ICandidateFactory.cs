@@ -15,9 +15,9 @@ public interface ICandidateFactory
     
     public CvEntity.Cv CreateCv(
         Guid id,  string summary,
-        IEnumerable<(string orgName, string city, string country, 
+        IEnumerable<(Guid id, string orgName, string city, string country, 
             DateOnly startDate, DateOnly? endDate, string description, uint index)> experiences, 
-        IEnumerable<(string orgName, string city, string country, 
+        IEnumerable<(Guid id, string orgName, string city, string country, 
             DateOnly startDate, DateOnly? endDate, string program, string grade, uint index)> educations,
         IEnumerable<string> languages, IEnumerable<string> skills);
 

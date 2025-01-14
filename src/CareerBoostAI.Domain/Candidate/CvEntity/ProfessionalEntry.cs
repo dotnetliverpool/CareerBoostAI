@@ -1,16 +1,19 @@
 ﻿using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
-using CareerBoostAI.Domain.ValueObjects;
+using CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects;
+using CareerBoostAI.Domain.Common.Abstractions;
 
-namespace CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects;
+namespace CareerBoostAI.Domain.Candidate.CvEntity;
 
-public abstract class ProfessionalEntry : ValueObject
+public abstract class ProfessionalEntry : Entity<ProfessionalEntryId>
 {
     protected ProfessionalEntry(
+        ProfessionalEntryId id,
         OrganisationName organisationName,
         Location location,
         Period timePeriod,
         SequenceIndex sequenceIndex)
     {
+        Id = id;
         OrganisationName = organisationName;
         Location = location;
         TimePeriod = timePeriod;
@@ -22,13 +25,6 @@ public abstract class ProfessionalEntry : ValueObject
     public Period TimePeriod { get; }
     public SequenceIndex SequenceIndex { get; }
     
-    protected override IEnumerable<object> GetAtomicValues()
-    {
-        yield return OrganisationName.Value;
-        yield return Location;
-        yield return TimePeriod;
-        yield return SequenceIndex.Value;
-    }
 }
 
 

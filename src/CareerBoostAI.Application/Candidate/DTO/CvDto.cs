@@ -12,6 +12,7 @@ public class CvDto
 
 public abstract class ProfessionalEntryDto
 {
+    public required Guid Id { get; init; } 
     public required string OrganisationName { get; init; }
     public required string City { get; init; }
     public required string Country { get; init; }

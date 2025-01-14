@@ -34,17 +34,6 @@ public static class CandidateDtoMappingExtensions
             Cv = candidateAggregate.Cv.AsDto(),
         };
     }
-    public static CandidateAggregate AsDomain(
-        this CandidateDto candidateDto, ICandidateFactory candidateFactory)
-    {
-        var cv = candidateDto.Cv.AsDomain(candidateFactory);
-        return candidateFactory.Create(
-            candidateDto.Id, candidateDto.FirstName, candidateDto.LastName, 
-            candidateDto.DateOfBirth, candidateDto.Email, 
-            candidateDto.PhoneNumber.Code, candidateDto.PhoneNumber.Number,
-             cv
-        );
-    }
     
     private static CvDto AsDto(this Cv cv)
     {
@@ -63,6 +52,7 @@ public static class CandidateDtoMappingExtensions
     {
         return new EducationDto
         {
+            Id = edu.Id.Value,
             OrganisationName = edu.OrganisationName.Value,
             City = edu.Location.City,
             Country = edu.Location.Country,
@@ -79,6 +69,7 @@ public static class CandidateDtoMappingExtensions
     {
         return new ExperienceDto
         {
+            Id = experience.Id.Value,
             OrganisationName = experience.OrganisationName.Value,
             City = experience.Location.City,
             Country = experience.Location.Country,
@@ -97,11 +88,11 @@ public static class CandidateDtoMappingExtensions
         return candidateFactory.CreateCv(
             cvDto.Id, cvDto.Summary,
             cvDto.Experiences
-                .Select(exp => (
+                .Select(exp => (exp.Id,
                     exp.OrganisationName, exp.City, exp.Country, exp.StartDate, exp.EndDate,
                     exp.Description, exp.Index)),
             cvDto.Educations
-                .Select(edu => (
+                .Select(edu => (edu.Id,
                 edu.OrganisationName, edu.City, edu.Country, edu.StartDate, edu.EndDate,
                 edu.Program, edu.Grade, edu.Index)),
             skills: cvDto.Skills,

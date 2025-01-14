@@ -40,8 +40,13 @@ public class PhoneNumber : ValueObject
         yield return Number;
     }
 
-    public override string ToString()
+    public override string ToString() 
+        =>  $"{Code} {Number}";
+    
+    public static PhoneNumber Parse(string combined)
     {
-        return $"{Code} {Number}";
+        var parts = combined.Split(' ');
+        return new PhoneNumber(parts[0], parts[1]);
     }
+    
 }

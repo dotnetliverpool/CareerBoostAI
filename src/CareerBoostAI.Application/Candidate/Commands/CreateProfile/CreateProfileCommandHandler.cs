@@ -35,7 +35,7 @@ public class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand>
         
         var candidate = CreateAggregateFromCommand(command);
         
-        await _candidateRepository.AddAsync(candidate);
+        await _candidateRepository.CreateNewAsync(candidate);
         await _unitOfWork.SaveChangesAsync(cancellationToken); 
         
         var adminNotificationMessage =
@@ -48,12 +48,12 @@ public class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand>
         var cv = _candidateFactory.CreateCv(
             Guid.NewGuid(), request.CvData.Summary,
             request.CvData.Experiences
-                .Select(exp => (
+                .Select(exp => ( Guid.NewGuid(),
                     exp.OrganisationName, exp.City, exp.Country,
                     exp.StartDate, exp.EndDate, exp.Description,
                     exp.SequenceIndex)),
             request.CvData.Educations
-                .Select(edu => (edu.OrganisationName, edu.City, edu.Country,
+                .Select(edu => (Guid.NewGuid(), edu.OrganisationName, edu.City, edu.Country,
                     edu.StartDate, edu.EndDate, edu.Program, edu.Grade,
                     edu.SequenceIndex)),
             request.CvData.Languages,

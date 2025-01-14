@@ -1,5 +1,6 @@
 ﻿using CareerBoostAI.Application.Candidate;
 using CareerBoostAI.Application.Candidate.DTO;
+using CareerBoostAI.Domain.Candidate;
 using CareerBoostAI.Infrastructure.EF.Contexts;
 using CareerBoostAI.Infrastructure.EF.MappingExtensions;
 using CareerBoostAI.Infrastructure.EF.Models;
@@ -13,24 +14,19 @@ internal sealed class MySqlCandidateRepository(CareerBoostDbContext context) : I
     private readonly DbSet<Candidate> _candidates = context.Candidates;
     private readonly CareerBoostDbContext _context = context;
 
-    public async Task<CandidateDto?> GetAsync(Guid id)
+    public async Task<CandidateAggregate?> GetAsync(Guid id)
     {
-        var candidateModel = await _candidates
+        return await _candidates
             .Include(c => c.Uploads)
             .Include(c => c.Cv)
             .SingleOrDefaultAsync(c => c.Id == id);
 
-        return candidateModel?.AsDto();
+        
     }
 
-    public async Task AddAsync(CandidateDto candidate)
+    public async Task CreateNewAsync(CandidateAggregate candidate)
     {
-        var model = candidate.AsModel();
-        await _candidates.AddAsync(model);
+        await _candidates.AddAsync(candidate);
     }
-
-    public Task UpdateAsync(CandidateDto candidate)
-    {
-        throw new NotImplementedException();
-    }
+    
 }

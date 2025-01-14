@@ -20,11 +20,9 @@ public class Candidate
     [Required]
     [MaxLength(100)]
     public string Email { get; set; }
+    
     [Required]
-    [MaxLength(5)]
-    public string PhoneCode { get; set; }
-    [Required]
-    [MaxLength(20)]
+    [MaxLength(30)]
     public string PhoneNumber { get; set; }
     public ICollection<Upload> Uploads { get; set; }
     

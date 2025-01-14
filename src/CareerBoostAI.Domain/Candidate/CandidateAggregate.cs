@@ -12,8 +12,8 @@ public class CandidateAggregate : AggregateRoot<CandidateId>
 
     #region  Properties
     
-    public FirstName FirstName { get; private set; }
-    public LastName LastName { get; private set; }
+    public FirstName FirstName { get; }
+    public LastName LastName { get;  }
     public DateOfBirth DateOfBirth { get; private set; }
     public Email Email { get; private set; }
     public PhoneNumber PhoneNumber { get; private set; }
