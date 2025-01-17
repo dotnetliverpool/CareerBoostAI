@@ -16,7 +16,7 @@ public sealed class CandidateFactory(IDateTimeProvider dateTimeProvider) : ICand
    
 
     public CandidateAggregate Create(Guid id, string firstName, string lastName, DateOnly dateOfBirth, string email,
-        string phoneCode, string phoneNumber,  CvEntity.CandidateCv candidateCv)
+        string phoneCode, string phoneNumber,  CandidateCv candidateCv)
     {
         
         var candidateId = CandidateId.Create(id);
@@ -33,7 +33,7 @@ public sealed class CandidateFactory(IDateTimeProvider dateTimeProvider) : ICand
             domainEmail, domainPhone, candidateCv);
     }
 
-    public CvEntity.CandidateCv CreateCv(
+    public CandidateCv CreateCv(
         Guid id, string summary, 
         IEnumerable<(Guid id, string orgName, string city, string country, DateOnly startDate, 
             DateOnly? endDate, string description, uint index)> experiences, 
