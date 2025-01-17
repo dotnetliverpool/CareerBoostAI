@@ -2,7 +2,7 @@
 
 namespace CareerBoostAI.Infrastructure.EF.Models;
 
-public class Candidate
+public class CandidateReadModel
 {
     public Guid Id { get; set; }
     
@@ -27,5 +27,5 @@ public class Candidate
     public ICollection<Upload> Uploads { get; set; }
     
     public Guid CVId { get; set; }
-    public Cv Cv { get; set; }
+    public CvReadModel CvReadModel { get; set; }
 }

@@ -10,5 +10,5 @@ public class Upload
     public string StorageMedium { get; set; }
     public string StorageAddress { get; set; }
     public Guid CandidateId { get; set; }
-    public Candidate Candidate { get; set; }
+    public CandidateReadModel CandidateReadModel { get; set; }
 }

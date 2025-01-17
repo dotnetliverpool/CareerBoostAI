@@ -7,14 +7,15 @@ using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.UserUpload;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CareerBoostAI.Infrastructure.EF.Configuration;
 
 
 internal class WriteDbConfiguration : IEntityTypeConfiguration<CandidateAggregate>, 
-    IEntityTypeConfiguration<CandidateCv>, IEntityTypeConfiguration<Skill>,
-    IEntityTypeConfiguration<WorkExperience>, IEntityTypeConfiguration<Education>,
-    IEntityTypeConfiguration<Language>, IEntityTypeConfiguration<Upload>
+    IEntityTypeConfiguration<CandidateCv>, IEntityTypeConfiguration<Upload>,
+    IEntityTypeConfiguration<WorkExperience>, IEntityTypeConfiguration<Education>
+     
 {
     public void Configure(EntityTypeBuilder<CandidateAggregate> builder)
     {
@@ -38,6 +39,12 @@ internal class WriteDbConfiguration : IEntityTypeConfiguration<CandidateAggregat
                 ln => ln.Value,
                 value => LastName.Create(value)
             );
+        
+        builder
+            .Property(c => c.DateOfBirth)
+            .HasConversion(
+                dob => dob.Value,
+                value => DateOfBirth.Create(value))
         
         builder
             .Property(c => c.Email)
@@ -86,6 +93,14 @@ internal class WriteDbConfiguration : IEntityTypeConfiguration<CandidateAggregat
         
         builder.Metadata
             .FindNavigation(nameof(CandidateCv.Educations))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
+        
+        builder.Metadata
+            .FindNavigation(nameof(CandidateCv.Skills))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
+        
+        builder.Metadata
+            .FindNavigation(nameof(CandidateCv.Languages))!
             .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
     
@@ -171,19 +186,15 @@ internal class WriteDbConfiguration : IEntityTypeConfiguration<CandidateAggregat
         });
     }
     
-    public void Configure(EntityTypeBuilder<Skill> builder)
-    {
-        builder.Metadata
-            .FindNavigation(nameof(CandidateCv.Skills))!
-            .SetPropertyAccessMode(PropertyAccessMode.Field);
-    }
-
-    public void Configure(EntityTypeBuilder<Language> builder)
-    {
-        builder.Metadata
-            .FindNavigation(nameof(CandidateCv.Languages))!
-            .SetPropertyAccessMode(PropertyAccessMode.Field);
-    }
+    // public void Configure(EntityTypeBuilder<Skill> builder)
+    // {
+    //     
+    // }
+    //
+    // public void Configure(EntityTypeBuilder<Language> builder)
+    // {
+    //     
+    // }
 
     public void Configure(EntityTypeBuilder<Upload> builder)
     {

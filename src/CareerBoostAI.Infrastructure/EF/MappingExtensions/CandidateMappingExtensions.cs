@@ -6,68 +6,68 @@ namespace CareerBoostAI.Infrastructure.EF.MappingExtensions;
 public static class CandidateMappinngExtensions
 {
     // TODO: Entire Mapping is wrong (move back to mapping repository from domain object)
-    public static CandidateDto AsDto(this Candidate candidate)
+    public static CandidateDto AsDto(this CandidateReadModel candidateReadModel)
     {
         return new CandidateDto
         {
-            Id = candidate.Id,
-            FirstName = candidate.FirstName,
-            LastName = candidate.LastName,
-            DateOfBirth = candidate.DateOfBirth,
-            Email = candidate.Email,
+            Id = candidateReadModel.Id,
+            FirstName = candidateReadModel.FirstName,
+            LastName = candidateReadModel.LastName,
+            DateOfBirth = candidateReadModel.DateOfBirth,
+            Email = candidateReadModel.Email,
             PhoneNumber = new PhoneNumberDto
             {
-                Code = candidate.PhoneNumber.Split(" ")[0],
-                Number = candidate.PhoneNumber.Split(" ")[1],
+                Code = candidateReadModel.PhoneNumber.Split(" ")[0],
+                Number = candidateReadModel.PhoneNumber.Split(" ")[1],
             },
-            Cv = candidate.Cv.AsDto()
+            Cv = candidateReadModel.CvReadModel.AsDto()
         };
     }
 
    
 
-    private static CvDto AsDto(this Cv cv)
+    private static CvDto AsDto(this CvReadModel cvReadModel)
     {
         return new CvDto
         {
-            Id = cv.Id,
-            Summary = cv.Summary,
-            Skills = cv.Skills?.Select(cs => cs.Name) ?? [],
-            Languages = cv.Languages?.Select(cl => cl.Name) ?? [],
-            Experiences = cv.Experiences.Select(exp => exp.AsDto()),
-            Educations = cv.Educations.Select(exp => exp.AsDto()),
+            Id = cvReadModel.Id,
+            Summary = cvReadModel.Summary,
+            Skills = cvReadModel.Skills?.Select(cs => cs.Name) ?? [],
+            Languages = cvReadModel.Languages?.Select(cl => cl.Name) ?? [],
+            Experiences = cvReadModel.Experiences.Select(exp => exp.AsDto()),
+            Educations = cvReadModel.Educations.Select(exp => exp.AsDto()),
             
         };
     }
     
-    private static EducationDto AsDto(this Education education)
+    private static EducationDto AsDto(this EducationReadModel educationReadModel)
     {
         return new EducationDto
         {
-            Id = education.Id,
-            OrganisationName = education.OrganisationName,
-            City = education.City,
-            Country = education.Country,
-            StartDate = education.StartDate,
-            EndDate = education.EndDate,
-            Index = education.SequenceIndex,
-            Program = education.Program,
-            Grade = education.Grade
+            Id = educationReadModel.Id,
+            OrganisationName = educationReadModel.OrganisationName,
+            City = educationReadModel.City,
+            Country = educationReadModel.Country,
+            StartDate = educationReadModel.StartDate,
+            EndDate = educationReadModel.EndDate,
+            Index = educationReadModel.SequenceIndex,
+            Program = educationReadModel.Program,
+            Grade = educationReadModel.Grade
         };
     }
 
-    private static ExperienceDto AsDto(this Experience experience)
+    private static ExperienceDto AsDto(this ExperienceReadModel experienceReadModel)
     {
         return new ExperienceDto
         {
-            Id = experience.Id,
-            OrganisationName = experience.OrganisationName,
-            City = experience.City,
-            Country = experience.Country,
-            StartDate = experience.StartDate,
-            EndDate = experience.EndDate,
-            Index = experience.SequenceIndex,
-            Description = experience.Description,
+            Id = experienceReadModel.Id,
+            OrganisationName = experienceReadModel.OrganisationName,
+            City = experienceReadModel.City,
+            Country = experienceReadModel.Country,
+            StartDate = experienceReadModel.StartDate,
+            EndDate = experienceReadModel.EndDate,
+            Index = experienceReadModel.SequenceIndex,
+            Description = experienceReadModel.Description,
         };
     }
     

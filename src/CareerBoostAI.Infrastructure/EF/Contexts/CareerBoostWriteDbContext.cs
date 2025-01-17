@@ -10,6 +10,7 @@ namespace CareerBoostAI.Infrastructure.EF.Contexts;
 public class CareerBoostWriteDbContext(DbContextOptions<CareerBoostWriteDbContext> options) : DbContext(options)
 {
     public DbSet<CandidateAggregate> Candidates { get; set; }
+    public DbSet<Skill> Skills { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -20,8 +21,6 @@ public class CareerBoostWriteDbContext(DbContextOptions<CareerBoostWriteDbContex
         modelBuilder.ApplyConfiguration<CandidateCv>(configuration);
         modelBuilder.ApplyConfiguration<WorkExperience>(configuration);
         modelBuilder.ApplyConfiguration<Education>(configuration);
-        modelBuilder.ApplyConfiguration<Skill>(configuration);
-        modelBuilder.ApplyConfiguration<Language>(configuration);
         modelBuilder.ApplyConfiguration<Upload>(configuration);
         
         base.OnModelCreating(modelBuilder);

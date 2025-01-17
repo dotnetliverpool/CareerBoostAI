@@ -3,8 +3,8 @@
 public class CvSkill
 {
     public Guid CvId { get; set; }
-    public Cv Cv { get; set; }
+    public CvReadModel CvReadModel { get; set; }
 
     public Guid SkillId { get; set; }
-    public Skill Skill { get; set; }
+    public SkillReadModel SkillReadModel { get; set; }
 }

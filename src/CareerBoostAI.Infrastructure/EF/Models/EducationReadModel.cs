@@ -2,7 +2,7 @@
 
 namespace CareerBoostAI.Infrastructure.EF.Models;
 
-public class Experience
+public class EducationReadModel
 {
     public Guid Id { get; set; }
     
@@ -21,11 +21,14 @@ public class Experience
     public DateOnly? EndDate { get; set; }
     
     [Required]
-    public uint SequenceIndex { get; set; }
+    public string Program { get; set; }
     
     [Required]
-    public string Description { get; set; }
+    public string Grade { get; set; }
+    
+    [Required]
+    public uint SequenceIndex { get; set; }
 
     public Guid CvId { get; set; }
-    public Cv Cv { get; set; }
+    public CvReadModel CvReadModel { get; set; }
 }

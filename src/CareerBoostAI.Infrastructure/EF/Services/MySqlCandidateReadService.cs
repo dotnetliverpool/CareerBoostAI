@@ -8,7 +8,7 @@ namespace CareerBoostAI.Infrastructure.EF.Services;
 internal sealed class MySqlCandidateReadService(CareerBoostReadDbContext context) : ICandidateReadService
 {
     
-    private readonly DbSet<Candidate> _candidates = context.Candidates;
+    private readonly DbSet<CandidateReadModel> _candidates = context.Candidates;
     
 
     public Task<bool> CandidateExistsByEmailAsync(string email, CancellationToken cancellationToken)
