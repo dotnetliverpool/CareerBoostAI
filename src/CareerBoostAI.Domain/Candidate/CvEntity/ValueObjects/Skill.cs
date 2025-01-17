@@ -11,11 +11,14 @@ public class Skill : ValueObject
     {
         Value = value;
     }
+    
+    public Skill() {}
 
     public static Skill Create(string value)
     {
         value.ThrowIfNullOrEmpty(nameof(Skill));
-        return new(value);
+        var result = value.Trim().ToLower();
+        return new(result);
     }
 
     protected override IEnumerable<object> GetAtomicValues()

@@ -4,7 +4,7 @@ namespace CareerBoostAI.Domain.Common.Abstractions;
 
 public abstract class AggregateRoot<T> : Entity<T>
 {
-    public int Version { get; protected set; }
+    public int Version;
     public IEnumerable<IDomainEvent> Events => _events;
     
     private readonly List<IDomainEvent> _events = new(); 

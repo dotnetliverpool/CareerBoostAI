@@ -36,11 +36,13 @@ namespace CareerBoostAI.Application.Candidate.Commands.CreateProfile;
             var candidate = CreateAggregateFromCommand(command);
             
             await _candidateRepository.CreateNewAsync(candidate);
-            await _unitOfWork.SaveChangesAsync(cancellationToken); 
             
             var adminNotificationMessage =
                 $"A new candidate profile has been created for {candidate.FirstName.Value} {candidate.LastName.Value}.";
             await _emailSender.SendEmailToAdminAsync(subject: "New Candidate Profile Created", body: adminNotificationMessage);
+            
+            
+            await _unitOfWork.SaveChangesAsync(cancellationToken); 
         }
 
     private CandidateAggregate CreateAggregateFromCommand(CreateProfileCommand request)

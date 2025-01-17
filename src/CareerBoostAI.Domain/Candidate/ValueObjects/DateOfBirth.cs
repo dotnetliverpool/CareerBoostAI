@@ -15,6 +15,12 @@ public class DateOfBirth : ValueObject
         Value = value;
     }
 
+    public static DateOfBirth Create(DateOnly value)
+    {
+        value.ThrowIfNull();
+        return new DateOfBirth(value);
+    }
+
     public static DateOfBirth Create(DateOnly value, IDateTimeProvider dateTimeProvider)
     {
         // Method Dependence Injection introduces a tight coupling to the dateTimeProvider interface

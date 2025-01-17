@@ -24,8 +24,7 @@ public class CandidateReadModel
     [Required]
     [MaxLength(30)]
     public string PhoneNumber { get; set; }
-    public ICollection<Upload> Uploads { get; set; }
+    public ICollection<UploadReadModel> Uploads { get; set; }
     
-    public Guid CVId { get; set; }
     public CvReadModel CvReadModel { get; set; }
 }

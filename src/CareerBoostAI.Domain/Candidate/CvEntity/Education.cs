@@ -18,6 +18,8 @@ public class Education : ProfessionalEntry
     {
         Grade = educationGrade;
     }
+    
+    public Education() {}
 
    
 

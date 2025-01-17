@@ -19,6 +19,8 @@ public abstract class ProfessionalEntry : Entity<ProfessionalEntryId>
         TimePeriod = timePeriod;
         SequenceIndex = sequenceIndex;
     }
+    
+    public ProfessionalEntry() {}
 
     public OrganisationName OrganisationName { get; }
     public Location Location { get; }

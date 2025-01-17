@@ -19,6 +19,7 @@ public class CandidateAggregate : AggregateRoot<CandidateId>
     public CandidateCv CandidateCv { get; private set; }
     public string FullName => $"{FirstName.Value} {LastName.Value}";
     
+    
 
     #endregion
     
@@ -37,5 +38,6 @@ public class CandidateAggregate : AggregateRoot<CandidateId>
         CandidateCv = candidateCv;
     }
     
+    public CandidateAggregate() {}
     
 }

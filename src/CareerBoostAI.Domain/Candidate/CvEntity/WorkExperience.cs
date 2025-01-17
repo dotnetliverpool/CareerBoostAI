@@ -17,6 +17,8 @@ public class WorkExperience : ProfessionalEntry
         Description = description;
     }
     
+    public WorkExperience() {}
+    
     public Description Description { get; }
 
     public static WorkExperience Create(
@@ -34,6 +36,8 @@ public class WorkExperience : ProfessionalEntry
         var sequenceIndex = SequenceIndex.Create(index);
         return new(expId, orgName, location, timePeriod, descriptionDomain, sequenceIndex);
     }
+    
+    
     
     
 }

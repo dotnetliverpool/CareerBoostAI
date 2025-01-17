@@ -14,11 +14,14 @@ public class Language : ValueObject
     {
         Value = value;
     }
+    
+    public Language() {}
 
     public static Language Create(string value)
     {
         value.ThrowIfNullOrEmpty(nameof(Language));
-        return _flyweightCache.GetOrAdd(value, key => new Language(key));;
+        var result = value.Trim().ToLower();
+        return _flyweightCache.GetOrAdd(result, key => new Language(key));;
     }
 
     protected override IEnumerable<object> GetAtomicValues()

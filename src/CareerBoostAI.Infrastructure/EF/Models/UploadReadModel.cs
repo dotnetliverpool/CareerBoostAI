@@ -2,7 +2,7 @@
 
 namespace CareerBoostAI.Infrastructure.EF.Models;
 
-public class Upload
+public class UploadReadModel
 {
     public Guid Id { get; set; }
     public string FileName { get; set; }

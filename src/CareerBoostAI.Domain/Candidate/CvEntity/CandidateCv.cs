@@ -34,4 +34,6 @@ public sealed class CandidateCv : Entity<CvId>
         _languages = languages.ToList();
     }
     
+    
+    public CandidateCv() {}
 }

@@ -4,6 +4,7 @@ using CareerBoostAI.Infrastructure.EF.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CareerBoostAI.Infrastructure.EF.Migrations
 {
     [DbContext(typeof(CareerBoostReadDbContext))]
-    partial class CareerBoostReadDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250117133831_DowngradeLanguageAndSkillMtMmigration")]
+    partial class DowngradeLanguageAndSkillMtMmigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,6 +28,9 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
             modelBuilder.Entity("CareerBoostAI.Infrastructure.EF.Models.CandidateReadModel", b =>
                 {
                     b.Property<Guid>("Id")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("CVId")
                         .HasColumnType("char(36)");
 
                     b.Property<DateOnly>("DateOfBirth")

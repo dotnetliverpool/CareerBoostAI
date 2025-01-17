@@ -8,7 +8,7 @@ internal class ReadDbConfiguration : IEntityTypeConfiguration<CandidateReadModel
     IEntityTypeConfiguration<CvReadModel>, IEntityTypeConfiguration<SkillReadModel>,
     IEntityTypeConfiguration<ExperienceReadModel>, IEntityTypeConfiguration<EducationReadModel>,
     IEntityTypeConfiguration<CvLanguage>, IEntityTypeConfiguration<CvSkill>,
-    IEntityTypeConfiguration<LanguageReadModel>, IEntityTypeConfiguration<Upload>
+    IEntityTypeConfiguration<LanguageReadModel>, IEntityTypeConfiguration<UploadReadModel>
 {
     public void Configure(EntityTypeBuilder<CandidateReadModel> builder)
     {
@@ -50,28 +50,17 @@ internal class ReadDbConfiguration : IEntityTypeConfiguration<CandidateReadModel
             .OnDelete(DeleteBehavior.Cascade);
         
         builder
-            .HasMany(c => c.Skills)
-            .WithMany(s => s.Cvs)
-            .UsingEntity<CvSkill>(
-                j => j.HasOne(cs => cs.SkillReadModel)
-                    .WithMany()
-                    .HasForeignKey(cs => cs.SkillId),
-                j => j.HasOne(cs => cs.CvReadModel)
-                    .WithMany()
-                    .HasForeignKey(cs => cs.CvId)
-            );
+            .HasMany(cv => cv.Skills)
+            .WithOne(skill => skill.Cv)
+            .HasForeignKey(skill => skill.CvId)
+            .OnDelete(DeleteBehavior.Cascade);
         
         builder
-            .HasMany(c => c.Languages)
-            .WithMany(s => s.Cvs)
-            .UsingEntity<CvLanguage>(
-                j => j.HasOne(cl => cl.LanguageReadModel)
-                    .WithMany()
-                    .HasForeignKey(cl => cl.LanguageId),
-                j => j.HasOne(cl => cl.CvReadModel)
-                    .WithMany()
-                    .HasForeignKey(cl => cl.CvId)
-            );
+            .HasMany(cv => cv.Languages)
+            .WithOne(lng => lng.Cv)
+            .HasForeignKey(lng => lng.CvId)
+            .OnDelete(DeleteBehavior.Cascade);
+       
     }
     
     public void Configure(EntityTypeBuilder<ExperienceReadModel> builder)
@@ -90,13 +79,13 @@ internal class ReadDbConfiguration : IEntityTypeConfiguration<CandidateReadModel
     public void Configure(EntityTypeBuilder<SkillReadModel> builder)
     {
         builder
-            .HasKey(sk => sk.Id);
+            .HasKey(sk => sk.Name);
     }
 
     public void Configure(EntityTypeBuilder<LanguageReadModel> builder)
     {
         builder
-            .HasKey(lng => lng.Id);
+            .HasKey(lng => lng.Name);
     }
 
 
@@ -113,7 +102,7 @@ internal class ReadDbConfiguration : IEntityTypeConfiguration<CandidateReadModel
             .HasKey(cl => new { cl.CvId, cl.SkillId });
     }
 
-    public void Configure(EntityTypeBuilder<Upload> builder)
+    public void Configure(EntityTypeBuilder<UploadReadModel> builder)
     {
         builder.HasKey(up => up.Id);
         builder

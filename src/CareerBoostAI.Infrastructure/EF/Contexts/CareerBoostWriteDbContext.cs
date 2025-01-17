@@ -18,11 +18,11 @@ public class CareerBoostWriteDbContext(DbContextOptions<CareerBoostWriteDbContex
         
         var configuration = new WriteDbConfiguration();
         modelBuilder.ApplyConfiguration<CandidateAggregate>(configuration);
-        modelBuilder.ApplyConfiguration<CandidateCv>(configuration);
-        modelBuilder.ApplyConfiguration<WorkExperience>(configuration);
-        modelBuilder.ApplyConfiguration<Education>(configuration);
-        modelBuilder.ApplyConfiguration<Upload>(configuration);
-        
+        // modelBuilder.ApplyConfiguration<CandidateCv>(configuration);
+        // modelBuilder.ApplyConfiguration<WorkExperience>(configuration);
+        // modelBuilder.ApplyConfiguration<Education>(configuration);
+        // modelBuilder.ApplyConfiguration<Skill>(configuration);
+        // modelBuilder.ApplyConfiguration<Language>(configuration);
         base.OnModelCreating(modelBuilder);
     }
 }

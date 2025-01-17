@@ -28,9 +28,9 @@ internal sealed class CareerBoostReadDbContext: DbContext
         modelBuilder.ApplyConfiguration<EducationReadModel>(configuration);
         modelBuilder.ApplyConfiguration<SkillReadModel>(configuration);
         modelBuilder.ApplyConfiguration<LanguageReadModel>(configuration);
-        modelBuilder.ApplyConfiguration<CvSkill>(configuration);
-        modelBuilder.ApplyConfiguration<CvLanguage>(configuration);
-        modelBuilder.ApplyConfiguration<Upload>(configuration);
+        // modelBuilder.ApplyConfiguration<CvSkill>(configuration);
+        // modelBuilder.ApplyConfiguration<CvLanguage>(configuration);
+        modelBuilder.ApplyConfiguration<UploadReadModel>(configuration);
         
         base.OnModelCreating(modelBuilder);
     }
