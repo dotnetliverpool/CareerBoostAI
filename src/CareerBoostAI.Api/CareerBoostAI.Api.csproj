@@ -8,6 +8,7 @@
     </PropertyGroup>
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.12" />
         <PackageReference Include="Microsoft.Azure.Core.NewtonsoftJson" Version="2.0.0" />
         <!-- Application Insights isn't enabled by default. See https://aka.ms/AAt8mw4. -->
         <!-- <PackageReference Include="Microsoft.ApplicationInsights.WorkerService" Version="2.22.0" /> -->
@@ -23,6 +24,7 @@
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="System.Text.Json" Version="8.0.5" />
     </ItemGroup>
     <ItemGroup>
         <None Update="host.json">

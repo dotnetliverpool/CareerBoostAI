@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using CareerBoostAI.Api.JsonConverters;
+﻿using CareerBoostAI.Api.JsonService;
 using CareerBoostAI.Api.Middlewares;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Builder;
@@ -18,14 +17,9 @@ public static class ApplicationBuilder
     }
     
     
-    public static IServiceCollection ConfigureJsonSerialiser(this IServiceCollection services)
+    public static IServiceCollection RegisterApiServices(this IServiceCollection services)
     {
-        services.Configure<JsonSerializerOptions>(options =>
-            {
-                options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-                options.Converters.Add(new DateOnlyConverter());
-            }
-        );
+        services.AddSingleton<IJsonSerializerService, JsonSerializerService>();
         return services;
     }
     public static FunctionsApplicationBuilder ConfigureApplication(

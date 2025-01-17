@@ -3,7 +3,7 @@
 namespace CareerBoostAI.Application.Common.Abstractions.Mediator;
 
 
-public interface ICommandHandler<TCommand> : IRequestHandler<TCommand>
+public interface ICommandHandler<in TCommand> : IRequestHandler<TCommand>
     where TCommand : ICommand
 { }
 
