@@ -7,8 +7,15 @@ public static class OptionsExtensions
     public static TOptions GetOptions<TOptions>(this IConfiguration configuration, string sectionName)
         where TOptions: new()
     {
+        var section = configuration.GetSection(sectionName);
+
+        if (!section.Exists())
+        {
+            throw new ConfigurationSectionNotFoundException(sectionName);
+        }
+
         var options = new TOptions();
-        configuration.GetSection(sectionName).Bind(options);
+        section.Bind(options);
         return options;
     }
 }

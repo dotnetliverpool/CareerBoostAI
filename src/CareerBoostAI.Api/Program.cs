@@ -15,7 +15,7 @@ builder
     .ConfigureFunctionsWebApplication()
     .ConfigureAppConfiguration(app =>
     {
-        app.Configuration.AddJsonFile("dev.settings.json", optional:true, reloadOnChange: true);
+        app.Configuration.AddJsonFile("local.settings.json", optional:true, reloadOnChange: true);
     });
 
 builder.Services
