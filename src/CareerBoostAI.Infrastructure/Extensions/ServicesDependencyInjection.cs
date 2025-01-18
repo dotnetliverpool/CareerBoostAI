@@ -17,7 +17,6 @@ public static class ServicesDependencyInjection
         services.AddScoped<IEmailSender, DummyEmailSender>();
         services.AddScoped<ICvParseService, DummyCvParseService>();
         
-        
         return services;
     }
 }

@@ -1,4 +1,4 @@
-﻿#### CAREER BOOST AI - [DOTNETLIVERPOOL](https://dotnetliverpool.org.uj)
+﻿#### CAREER BOOST AI - [DOTNETLIVERPOOL](https://dotnetliverpool.org.uk)
 
 
 ## REQUIREMENTS
