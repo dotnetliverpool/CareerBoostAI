@@ -10,6 +10,11 @@ public class EntityId
     }
 
     public Guid Value { get; }
+
+    public static EntityId NewId()
+    {
+        return new(Guid.NewGuid());
+    }
     public static EntityId Create(Guid value)
     {
         value.ThrowIfNull();
