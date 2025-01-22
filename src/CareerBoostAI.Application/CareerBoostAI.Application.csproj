@@ -15,8 +15,4 @@
       <ProjectReference Include="..\CareerBoostAI.Domain\CareerBoostAI.Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Candidate\Commands\ParseCV\" />
-    </ItemGroup>
-
 </Project>

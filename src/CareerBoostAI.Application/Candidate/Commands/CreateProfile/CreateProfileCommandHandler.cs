@@ -47,18 +47,18 @@ namespace CareerBoostAI.Application.Candidate.Commands.CreateProfile;
     private CandidateProfile CreateAggregateFromCommand(CreateProfileCommand request)
     {
         var cv = _candidateFactory.CreateCv(
-            request.Id, request.CvData.Summary,
-            request.CvData.Experiences
+            Guid.NewGuid(), request.CreateCvCommand.Summary,
+            request.CreateCvCommand.Experiences
                 .Select(exp => ( Guid.NewGuid(),
                     exp.OrganisationName, exp.City, exp.Country,
                     exp.StartDate, exp.EndDate, exp.Description,
                     exp.SequenceIndex)),
-            request.CvData.Educations
+            request.CreateCvCommand.Educations
                 .Select(edu => (Guid.NewGuid(), edu.OrganisationName, edu.City, edu.Country,
                     edu.StartDate, edu.EndDate, edu.Program, edu.Grade,
                     edu.SequenceIndex)),
-            request.CvData.Languages,
-            request.CvData.Skills);
+            request.CreateCvCommand.Languages,
+            request.CreateCvCommand.Skills);
 
         CandidateProfile candidate = _candidateFactory
             .Create(Guid.NewGuid(), request.FirstName, 

@@ -2,14 +2,13 @@
 
 public interface ICvFactory
 {
-    Cv CreateFromData(CvData data);
+    Cv CreateFromData(Guid id, CvData data);
 }
 
 
 // TODO : Unnecessary repitition (Refactor)
 public class CvData
 {
-    public required  Guid Id { get; init; }
     public required IEnumerable<ExperienceData> Experiences { get; init; }
     public required IEnumerable<EducationData> Educations { get; init; }
     public required IEnumerable<string> Skills { get; init; }
@@ -20,7 +19,6 @@ public class CvData
 
 public abstract class ProfessionalEntryData
 {
-    public required Guid Id { get; init; } 
     public required string OrganisationName { get; init; }
     public required string City { get; init; }
     public required string Country { get; init; }

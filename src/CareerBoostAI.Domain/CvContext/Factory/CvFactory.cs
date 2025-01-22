@@ -6,14 +6,14 @@ namespace CareerBoostAI.Domain.CvContext.Factory;
 
 public class CvFactory : ICvFactory
 {
-    public Cv CreateFromData(CvData data)
+    public Cv CreateFromData(Guid id, CvData data)
     {
-        var cvId = EntityId.NewId();
+        var cvId = EntityId.Create(id);
         var domainSummary = Summary.Create(data.Summary);
         var domainCandidateEmail = Email.Create(data.CandidateEmail);
         var domainExperiences = data.Experiences
             .Select(exp => Experience.Create(
-                exp.Id,
+                Guid.NewGuid(),
                 exp.OrganisationName, 
                 exp.City, 
                 exp.Country, 
@@ -22,7 +22,7 @@ public class CvFactory : ICvFactory
                 exp.Index));
         var domainEducations = data.Educations
             .Select(edu =>
-                Education.Create(edu.Id, edu.OrganisationName,
+                Education.Create(Guid.NewGuid(), edu.OrganisationName,
                     edu.City,
                     edu.Country,
                     edu.StartDate,

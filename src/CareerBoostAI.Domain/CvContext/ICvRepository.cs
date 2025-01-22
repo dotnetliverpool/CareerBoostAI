@@ -2,8 +2,11 @@
 
 public interface ICvRepository
 {
-    Cv GetByEmailAsync();
-    Cv GetByIdAsync();
-    void SaveAsync(Cv cv);
-    void UpdateAsync(Cv cv);
+    Task<Cv?> GetByEmailAsync(string email);
+    Task<Cv?> GetByIdAsync();
+
+    Task CreateNewAsync(Cv cv);
+
+    Task DeleteAsync(Cv cv);
+
 }

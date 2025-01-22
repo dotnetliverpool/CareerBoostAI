@@ -1,18 +1,23 @@
-﻿using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
-using CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects;
+﻿using CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects;
+using CareerBoostAI.Domain.Common.Abstractions;
+using CareerBoostAI.Domain.Common.ValueObjects;
+using CareerBoostAI.Domain.CvContext.ValueObjects;
+using Location = CareerBoostAI.Domain.CvContext.ValueObjects.Location;
+using OrganisationName = CareerBoostAI.Domain.CvContext.ValueObjects.OrganisationName;
+using SequenceIndex = CareerBoostAI.Domain.CvContext.ValueObjects.SequenceIndex;
 
 namespace CareerBoostAI.Domain.CvContext.Entities;
 
-public class Education : Candidate.CvEntity.ProfessionalEntry
+public class Education : ProfessionalEntry
 {
-    public EducationGrade Grade { get;  }
+    public ProgramResult Grade { get;  }
     
     private Education(
-        ProfessionalEntryId id,
+        EntityId id,
         OrganisationName organisationName,
         Location location,
         Period timePeriod,
-        EducationGrade educationGrade,
+        ProgramResult educationGrade,
         SequenceIndex sequenceIndex)
         : base(id, organisationName, location, timePeriod, sequenceIndex)
     {
@@ -28,11 +33,11 @@ public class Education : Candidate.CvEntity.ProfessionalEntry
         DateOnly startDate, DateOnly? endDate,
         string program, string grade, uint index)
     {
-        var edId = ProfessionalEntryId.Create(id);
+        var edId = EntityId.Create(id);
         var orgName = OrganisationName.Create(organisationName);
-        var location = Candidate.CvEntity.ValueObjects.Location.Create(city, country);
+        var location = Location.Create(city, country);
         var timePeriod = Period.Create(startDate, endDate);
-        var gradeDomain = EducationGrade.Create(program, grade);
+        var gradeDomain = ProgramResult.Create(program, grade);
         var sequenceIndex = SequenceIndex.Create(index);
         return new(edId, orgName, location, timePeriod, gradeDomain, sequenceIndex);
     }

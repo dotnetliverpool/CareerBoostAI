@@ -6,7 +6,7 @@ using Education = CareerBoostAI.Domain.CvContext.Entities.Education;
 
 namespace CareerBoostAI.Domain.CvContext;
 
-public class Cv : Entity<EntityId>
+public class Cv : AggregateRoot<EntityId>
 {
     private List<Experience> _experiences;
     private List<Education> _educations;

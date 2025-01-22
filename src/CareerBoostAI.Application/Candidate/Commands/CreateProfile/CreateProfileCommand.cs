@@ -3,18 +3,17 @@
 namespace CareerBoostAI.Application.Candidate.Commands.CreateProfile;
 
 public sealed record CreateProfileCommand(
-    Guid Id,
     string FirstName,
     string LastName,
     string Email,
     DateOnly DateOfBirth,
     string PhoneCode,
     string PhoneNumber,
-    CvData CvData
+    CreateCvCommand CreateCvCommand
 ) : ICommand;
 
 
-public sealed record CvData(
+public sealed record CreateCvCommand(
     string Summary,
     IEnumerable<Experience> Experiences,
     IEnumerable<Education> Educations,
