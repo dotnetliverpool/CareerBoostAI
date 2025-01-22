@@ -2,27 +2,18 @@
 
 public abstract class Entity<TId> :  IEquatable<Entity<TId>>
 {
-    public TId Id { get; protected set; }
-
-    // Equality check based on Id
+    public TId Id { get; protected init; }
+    
     public bool Equals(Entity<TId>? other)
     {
-        if (other == null)
-            return false;
-
-        return EqualityComparer<TId>.Default.Equals(Id, other.Id);
+        return other is not null 
+               && EqualityComparer<TId>.Default.Equals(Id, other.Id);
     }
 
     public override bool Equals(object? obj)
     {
-        if (obj is not Entity<TId> other)
-        {
-            return false;
-        }
-
-        return Equals(other);
+        return obj is Entity<TId> other && Equals(other);
     }
-
     
     public override int GetHashCode()
     {
