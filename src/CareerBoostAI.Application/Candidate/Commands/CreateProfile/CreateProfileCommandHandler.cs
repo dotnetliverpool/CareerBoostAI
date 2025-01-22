@@ -72,7 +72,7 @@ namespace CareerBoostAI.Application.Candidate.Commands.CreateProfile;
     {
         if (await _candidateReadService.CandidateExistsByEmailAsync(request.Email, cancellationToken))
         {
-            throw new DuplicateCandidateProfileException(request.Email);
+            throw new CandidateProfileNotFoundException(request.Email);
         }
     }
 }
