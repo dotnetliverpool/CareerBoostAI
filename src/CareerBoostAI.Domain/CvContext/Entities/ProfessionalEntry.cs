@@ -3,7 +3,7 @@ using CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects;
 using CareerBoostAI.Domain.Common.Abstractions;
 using CareerBoostAI.Domain.Common.ValueObjects;
 
-namespace CareerBoostAI.Domain.Cv.Entities;
+namespace CareerBoostAI.Domain.CvContext.Entities;
 
 public abstract class ProfessionalEntry : Entity<EntityId>
 {

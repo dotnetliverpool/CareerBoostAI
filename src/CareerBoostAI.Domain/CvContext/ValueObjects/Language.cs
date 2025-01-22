@@ -2,7 +2,7 @@
 using CareerBoostAI.Domain.Common.Exceptions;
 using CareerBoostAI.Domain.ValueObjects;
 
-namespace CareerBoostAI.Domain.Cv.ValueObjects;
+namespace CareerBoostAI.Domain.CvContext.ValueObjects;
 
 public class Language : ValueObject
 {

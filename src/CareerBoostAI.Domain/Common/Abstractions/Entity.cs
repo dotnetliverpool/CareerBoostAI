@@ -4,6 +4,8 @@ public abstract class Entity<TId> :  IEquatable<Entity<TId>>
 {
     public TId Id { get; protected init; }
     
+    public Entity() {}
+    
     public bool Equals(Entity<TId>? other)
     {
         return other is not null 
@@ -19,6 +21,5 @@ public abstract class Entity<TId> :  IEquatable<Entity<TId>>
     {
         return EqualityComparer<TId>.Default.GetHashCode(Id);
     }
-    
 }
 

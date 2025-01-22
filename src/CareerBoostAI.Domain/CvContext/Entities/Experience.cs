@@ -1,11 +1,11 @@
 ﻿using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 using CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects;
 
-namespace CareerBoostAI.Domain.Cv.Entities;
+namespace CareerBoostAI.Domain.CvContext.Entities;
 
-public class WorkExperience : Candidate.CvEntity.ProfessionalEntry
+public class Experience : Candidate.CvEntity.ProfessionalEntry
 {
-    private WorkExperience(
+    private Experience(
         ProfessionalEntryId id,
         OrganisationName organisationName,
         Location location,
@@ -17,11 +17,9 @@ public class WorkExperience : Candidate.CvEntity.ProfessionalEntry
         Description = description;
     }
     
-    public WorkExperience() {}
-    
     public Description Description { get; }
 
-    public static WorkExperience Create(
+    public static Experience Create(
         Guid id,
         string organisationName,
         string city, string country,

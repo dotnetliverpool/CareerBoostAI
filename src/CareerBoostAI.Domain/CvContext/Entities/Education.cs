@@ -1,7 +1,7 @@
 ﻿using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 using CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects;
 
-namespace CareerBoostAI.Domain.Cv.Entities;
+namespace CareerBoostAI.Domain.CvContext.Entities;
 
 public class Education : Candidate.CvEntity.ProfessionalEntry
 {
@@ -18,8 +18,6 @@ public class Education : Candidate.CvEntity.ProfessionalEntry
     {
         Grade = educationGrade;
     }
-    
-    public Education() {}
 
    
 
