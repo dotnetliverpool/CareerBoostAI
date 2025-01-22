@@ -7,8 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Folder Include="Candidate\Entites\" />
       <Folder Include="Common\Entities\" />
-      <Folder Include="Cv\" />
+      <Folder Include="Cv\ValueObjects\" />
       <Folder Include="Profile\" />
     </ItemGroup>
 
