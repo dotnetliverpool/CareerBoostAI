@@ -1,13 +1,14 @@
 ﻿using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
 using CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects;
 using CareerBoostAI.Domain.Common.Abstractions;
+using CareerBoostAI.Domain.Common.ValueObjects;
 
 namespace CareerBoostAI.Domain.Cv.Entities;
 
-public abstract class ProfessionalEntry : Entity<ProfessionalEntryId>
+public abstract class ProfessionalEntry : Entity<EntityId>
 {
     protected ProfessionalEntry(
-        ProfessionalEntryId id,
+        EntityId id,
         OrganisationName organisationName,
         Location location,
         Period timePeriod,
