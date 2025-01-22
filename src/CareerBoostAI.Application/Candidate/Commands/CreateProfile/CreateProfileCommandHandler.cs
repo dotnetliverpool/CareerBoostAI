@@ -5,7 +5,6 @@ using CareerBoostAI.Application.Services.EmailService;
 using CareerBoostAI.Domain.Candidate;
 using CareerBoostAI.Domain.Candidate.Factories;
 using CareerBoostAI.Domain.Common.Exceptions;
-using MediatR;
 
 namespace CareerBoostAI.Application.Candidate.Commands.CreateProfile;
 
@@ -18,7 +17,7 @@ namespace CareerBoostAI.Application.Candidate.Commands.CreateProfile;
         private readonly ICandidateFactory _candidateFactory;
         private readonly IUnitOfWork _unitOfWork;
         public CreateProfileCommandHandler(
-            IFileStorageService fileStorageService, IMediator mediator, 
+            IFileStorageService fileStorageService, 
             IEmailSender emailSender, ICandidateRepository candidateRepository, 
             ICandidateReadService candidateReadService,
             ICandidateFactory candidateFactory, IUnitOfWork unitOfWork)
