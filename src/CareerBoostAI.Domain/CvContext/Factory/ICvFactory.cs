@@ -1,4 +1,4 @@
-﻿namespace CareerBoostAI.Domain.CvContext;
+﻿namespace CareerBoostAI.Domain.CvContext.Factory;
 
 public interface ICvFactory
 {
