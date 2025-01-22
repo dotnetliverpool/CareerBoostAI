@@ -8,7 +8,7 @@ namespace CareerBoostAI.Domain.Candidate.Factories;
 
 public interface ICandidateFactory
 {
-    public CandidateAggregate Create(Guid id, string firstName,
+    public CandidateProfile Create(Guid id, string firstName,
         string lastName, DateOnly dateOfBirth,
         string email, string phoneCode, string phoneNumber, 
          CvEntity.CandidateCv candidateCv);

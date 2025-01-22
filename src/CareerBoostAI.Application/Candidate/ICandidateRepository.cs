@@ -6,6 +6,6 @@ namespace CareerBoostAI.Application.Candidate;
 
 public interface ICandidateRepository
 {
-    Task<CandidateAggregate?> GetAsync(CandidateId id);
-    Task CreateNewAsync(CandidateAggregate candidate);
+    Task<CandidateProfile?> GetAsync(CandidateId id);
+    Task CreateNewAsync(CandidateProfile candidate);
 }

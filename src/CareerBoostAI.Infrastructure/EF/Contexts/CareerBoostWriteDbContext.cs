@@ -9,7 +9,7 @@ namespace CareerBoostAI.Infrastructure.EF.Contexts;
 
 public class CareerBoostWriteDbContext(DbContextOptions<CareerBoostWriteDbContext> options) : DbContext(options)
 {
-    public DbSet<CandidateAggregate> Candidates { get; set; }
+    public DbSet<CandidateProfile> Candidates { get; set; }
     public DbSet<Skill> Skills { get; set; }
 
 
@@ -17,7 +17,7 @@ public class CareerBoostWriteDbContext(DbContextOptions<CareerBoostWriteDbContex
     {
         
         var configuration = new WriteDbConfiguration();
-        modelBuilder.ApplyConfiguration<CandidateAggregate>(configuration);
+        modelBuilder.ApplyConfiguration<CandidateProfile>(configuration);
         // modelBuilder.ApplyConfiguration<CandidateCv>(configuration);
         // modelBuilder.ApplyConfiguration<WorkExperience>(configuration);
         // modelBuilder.ApplyConfiguration<Education>(configuration);

@@ -13,18 +13,18 @@ namespace CareerBoostAI.Infrastructure.EF.Repositories;
 internal sealed class MySqlCandidateRepository(CareerBoostWriteDbContext context) : ICandidateRepository
 {
     
-    private readonly DbSet<CandidateAggregate> _candidates = context.Candidates;
+    private readonly DbSet<CandidateProfile> _candidates = context.Candidates;
     private readonly DbSet<Skill> _skills = context.Skills;
     private readonly CareerBoostWriteDbContext _context = context;
 
-    public async Task<CandidateAggregate?> GetAsync(CandidateId id)
+    public async Task<CandidateProfile?> GetAsync(CandidateId id)
     {
         return await _candidates
             .Include(c => c.CandidateCv)
             .SingleOrDefaultAsync(c => c.Id == id);
     }
 
-    public async Task CreateNewAsync(CandidateAggregate candidate)
+    public async Task CreateNewAsync(CandidateProfile candidate)
     {
         var existing = FindNonExistingSkills(candidate.CandidateCv.Skills);
         await _candidates.AddAsync(candidate);

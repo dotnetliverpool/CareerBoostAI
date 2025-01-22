@@ -12,10 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage;
 namespace CareerBoostAI.Infrastructure.EF.Configuration;
 
 
-internal class WriteDbConfiguration : IEntityTypeConfiguration<CandidateAggregate>
+internal class WriteDbConfiguration : IEntityTypeConfiguration<CandidateProfile>
 
 {
-    public void Configure(EntityTypeBuilder<CandidateAggregate> builder)
+    public void Configure(EntityTypeBuilder<CandidateProfile> builder)
     {
         builder.ToTable("candidates");
         builder.HasKey(c => c.Id);
@@ -65,7 +65,7 @@ internal class WriteDbConfiguration : IEntityTypeConfiguration<CandidateAggregat
             .OwnsOne(candidate => candidate.CandidateCv, CongigureCandidateCv);
     }
 
-    private static void CongigureCandidateCv(OwnedNavigationBuilder<CandidateAggregate, CandidateCv> cvb)
+    private static void CongigureCandidateCv(OwnedNavigationBuilder<CandidateProfile, CandidateCv> cvb)
     {
         cvb.ToTable("cvs");
         cvb.WithOwner().HasForeignKey("CandidateId");

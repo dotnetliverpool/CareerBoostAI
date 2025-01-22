@@ -15,7 +15,7 @@ public sealed class CandidateFactory(IDateTimeProvider dateTimeProvider) : ICand
     
    
 
-    public CandidateAggregate Create(Guid id, string firstName, string lastName, DateOnly dateOfBirth, string email,
+    public CandidateProfile Create(Guid id, string firstName, string lastName, DateOnly dateOfBirth, string email,
         string phoneCode, string phoneNumber,  CandidateCv candidateCv)
     {
         

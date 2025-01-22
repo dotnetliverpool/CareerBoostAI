@@ -7,7 +7,7 @@ using CareerBoostAI.Domain.Common.ValueObjects;
 
 namespace CareerBoostAI.Domain.Candidate;
 
-public class CandidateAggregate : AggregateRoot<CandidateId>
+public class CandidateProfile : AggregateRoot<CandidateId>
 {
     #region  Properties
     
@@ -23,7 +23,7 @@ public class CandidateAggregate : AggregateRoot<CandidateId>
 
     #endregion
     
-    internal CandidateAggregate(
+    internal CandidateProfile(
         CandidateId id,
         FirstName firstName, LastName lastName,
         DateOfBirth dateOfBirth, Email email, 
@@ -38,6 +38,6 @@ public class CandidateAggregate : AggregateRoot<CandidateId>
         CandidateCv = candidateCv;
     }
     
-    public CandidateAggregate() {}
+    public CandidateProfile() {}
     
 }

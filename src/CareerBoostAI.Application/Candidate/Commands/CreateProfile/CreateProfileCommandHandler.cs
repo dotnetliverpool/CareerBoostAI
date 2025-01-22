@@ -44,7 +44,7 @@ namespace CareerBoostAI.Application.Candidate.Commands.CreateProfile;
             await _unitOfWork.SaveChangesAsync(cancellationToken); 
         }
 
-    private CandidateAggregate CreateAggregateFromCommand(CreateProfileCommand request)
+    private CandidateProfile CreateAggregateFromCommand(CreateProfileCommand request)
     {
         var cv = _candidateFactory.CreateCv(
             request.Id, request.CvData.Summary,
@@ -60,7 +60,7 @@ namespace CareerBoostAI.Application.Candidate.Commands.CreateProfile;
             request.CvData.Languages,
             request.CvData.Skills);
 
-        CandidateAggregate candidate = _candidateFactory
+        CandidateProfile candidate = _candidateFactory
             .Create(Guid.NewGuid(), request.FirstName, 
                 request.LastName, request.DateOfBirth, 
                 request.Email, request.PhoneCode, request.PhoneNumber, 

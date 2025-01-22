@@ -17,7 +17,7 @@ internal class TestDateTimeProvider : IDateTimeProvider
 
 public abstract class BaseCandidateTest
 {
-    protected CareerBoostAI.Domain.Candidate.CandidateAggregate GetNewCandidateWithCv()
+    protected CareerBoostAI.Domain.Candidate.CandidateProfile GetNewCandidateWithCv()
     {
         IDateTimeProvider dateTimeProvider = new TestDateTimeProvider();
         CandidateCv candidateCv = CreateCandidateCv();

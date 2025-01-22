@@ -17,21 +17,21 @@ namespace CareerBoostAI.Application.Candidate;
 
 public static class CandidateDtoMappingExtensions
 {
-    public static CandidateDto AsDto(this CandidateAggregate candidateAggregate)
+    public static CandidateDto AsDto(this CandidateProfile candidateProfile)
     {
         return new CandidateDto
         {
-            Id = candidateAggregate.Id.Value,
-            FirstName = candidateAggregate.FirstName.Value,
-            LastName = candidateAggregate.LastName.Value,
-            DateOfBirth = candidateAggregate.DateOfBirth.Value,
-            Email = candidateAggregate.Email.Value,
+            Id = candidateProfile.Id.Value,
+            FirstName = candidateProfile.FirstName.Value,
+            LastName = candidateProfile.LastName.Value,
+            DateOfBirth = candidateProfile.DateOfBirth.Value,
+            Email = candidateProfile.Email.Value,
             PhoneNumber = new PhoneNumberDto
             {
-                Number = candidateAggregate.PhoneNumber.Number,
-                Code = candidateAggregate.PhoneNumber.Code
+                Number = candidateProfile.PhoneNumber.Number,
+                Code = candidateProfile.PhoneNumber.Code
             },
-            Cv = candidateAggregate.CandidateCv.AsDto(),
+            Cv = candidateProfile.CandidateCv.AsDto(),
         };
     }
     
