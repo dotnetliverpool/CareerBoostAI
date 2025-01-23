@@ -26,7 +26,7 @@ public class UpdateCv(ILogger<UpdateCv> logger,
     [OpenApiResponseWithBody(
         statusCode: HttpStatusCode.OK, 
         contentType: "application/json", 
-        bodyType: typeof(OkObjectResult), 
+        bodyType: typeof(string), 
         Summary = "Cv Information Updated Successfully.", 
         Description = "Returns a success message when the cv information has been changed.")]
     public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post", 

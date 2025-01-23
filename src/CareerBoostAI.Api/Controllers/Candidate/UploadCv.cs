@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using CareerBoostAI.Api.JsonService;
 using CareerBoostAI.Application.Candidate.Commands.UploadCvDocument;
 using MediatR;
 using Microsoft.Azure.Functions.Worker;
@@ -19,13 +18,13 @@ public class UploadCv(ILogger<UploadCv> logger, IMediator mediator)
         Description = "Uploads the CV information for a candidate.")]
     [OpenApiRequestBody(
         contentType: "multipart/form-data", 
-        bodyType: typeof(IFormFile), 
+        bodyType: typeof(DocumentAddRequest), 
         Required = true, 
         Description = "The candidate's CV file to be uploaded.")]
     [OpenApiResponseWithBody(
         statusCode: HttpStatusCode.OK, 
         contentType: "application/json", 
-        bodyType: typeof(OkObjectResult), 
+        bodyType: typeof(string), 
         Summary = "Cv Uploaded Successfully.", 
         Description = "Returns a success message when the CV has been uploaded.")]
     public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post", 
@@ -44,11 +43,6 @@ public class UploadCv(ILogger<UploadCv> logger, IMediator mediator)
             return new BadRequestObjectResult(new {Message = "No file uploaded."});
         }
         
-        if (string.IsNullOrEmpty(formCollection["email"]))
-        {
-            return new BadRequestObjectResult(new {Message = "Email is required."});
-        }
-
         using var documentStream = new MemoryStream();
         await file.CopyToAsync(documentStream);
         documentStream.Position = 0;
@@ -64,3 +58,5 @@ public class UploadCv(ILogger<UploadCv> logger, IMediator mediator)
                                                  $"successfully for {command.Email}"});
     }
 }
+
+public record DocumentAddRequest(string Email, byte[] File);

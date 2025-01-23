@@ -27,7 +27,7 @@ public class CreateProfile(ILogger<CreateProfile> logger,
     [OpenApiResponseWithBody(
         statusCode: HttpStatusCode.Created, 
         contentType: "application/json", 
-        bodyType: typeof(CreatedResult), 
+        bodyType: typeof(string), 
         Summary = "Profile created successfully.", 
         Description = "Returns a success message when the profile is created.")]
     public async Task<IActionResult> RunAsync(
