@@ -10,11 +10,12 @@ using Microsoft.Extensions.Logging;
 
 namespace CareerBoostAI.Api.Controllers.Candidate;
 
-public class CreateProfile(IMediator mediator, IJsonSerializerService jsonSerializerService)
+public class CreateProfile(ILogger<CreateProfile> logger,
+    IMediator mediator, IJsonSerializerService jsonSerializerService)
 {
     [Function(nameof(CreateProfile))]
     [OpenApiOperation(
-        operationId: "createProfile", 
+        operationId: nameof(CreateProfile), 
         tags: [Constants.Tag.Candidate], 
         Summary = "Create a candidate profile", 
         Description = "Creates a new candidate profile with the provided information.")]
@@ -26,13 +27,14 @@ public class CreateProfile(IMediator mediator, IJsonSerializerService jsonSerial
     [OpenApiResponseWithBody(
         statusCode: HttpStatusCode.Created, 
         contentType: "application/json", 
-        bodyType: typeof(string), 
+        bodyType: typeof(CreatedResult), 
         Summary = "Profile created successfully.", 
         Description = "Returns a success message when the profile is created.")]
     public async Task<IActionResult> RunAsync(
-        [HttpTrigger(AuthorizationLevel.Anonymous,  "post", Route =  "candidate/createProfile")] HttpRequest req, ILogger log)
+        [HttpTrigger(AuthorizationLevel.Anonymous, "post",
+            Route =  Constants.Route.Candidate.CreateProfile)] HttpRequest req)
     {
-           string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+           var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
            var command = jsonSerializerService.Deserialize<CreateProfileCommand>(requestBody);
            var id = await  mediator.Send(command!);
            return new CreatedResult(location: "None", value: new { Id = id });
