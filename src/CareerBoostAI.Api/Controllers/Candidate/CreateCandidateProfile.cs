@@ -7,25 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
-namespace CareerBoostAI.Api.Controllers;
+namespace CareerBoostAI.Api.Controllers.Candidate;
 
-public class CreateCandidateProfile
+public class CreateCandidateProfile(IMediator mediator, IJsonSerializerService jsonSerializerService)
 {
-    private readonly IMediator _mediator;
-    private readonly IJsonSerializerService _jsonSerializerService;
-
-    public CreateCandidateProfile(IMediator mediator, IJsonSerializerService jsonSerializerService)
-    {
-        _mediator = mediator;
-        _jsonSerializerService = jsonSerializerService;
-    }
-
     [Function(nameof(CreateCandidateProfile))]
     [OpenApiOperation(
         operationId: "createProfile", 
-        tags: ["Candidate"], 
+        tags: [Constants.Tag.Candidate], 
         Summary = "Create a candidate profile", 
         Description = "Creates a new candidate profile with the provided information.")]
     [OpenApiRequestBody(
@@ -43,8 +33,8 @@ public class CreateCandidateProfile
         [HttpTrigger(AuthorizationLevel.Anonymous,  "post", Route =  "candidate/createProfile")] HttpRequest req, ILogger log)
     {
            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-           var command = _jsonSerializerService.Deserialize<CreateProfileCommand>(requestBody);
-           var id = await  _mediator.Send(command!);
+           var command = jsonSerializerService.Deserialize<CreateProfileCommand>(requestBody);
+           var id = await  mediator.Send(command!);
            return new CreatedResult(location: "None", value: new { Id = id });
     }
 }

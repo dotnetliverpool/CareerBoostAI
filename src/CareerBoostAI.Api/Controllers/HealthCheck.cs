@@ -12,7 +12,7 @@ public class HealthCheck(ILogger<HealthCheck> logger)
     [Function(nameof(HealthCheck))]
     [OpenApiOperation(
         operationId: "HealthCheck", 
-        tags: new[] { "Health" }, 
+        tags: [Constants.Tag.Health], 
         Summary = "Perform a health check", 
         Description = "Returns the health status of the application.")]
     [OpenApiResponseWithBody(
