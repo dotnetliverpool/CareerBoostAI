@@ -23,7 +23,11 @@ public class CreateCandidateProfile
     }
 
     [Function(nameof(CreateCandidateProfile))]
-    [OpenApiOperation(operationId: "createProfile", tags: ["Candidate"], Summary = "Create a candidate profile", Description = "Creates a new candidate profile with the provided information.")]
+    [OpenApiOperation(
+        operationId: "createProfile", 
+        tags: ["Candidate"], 
+        Summary = "Create a candidate profile", 
+        Description = "Creates a new candidate profile with the provided information.")]
     [OpenApiRequestBody(
         contentType: "application/json", 
         bodyType: typeof(CreateProfileCommand), 
