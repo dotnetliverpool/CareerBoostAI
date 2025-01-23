@@ -1,4 +1,6 @@
-﻿namespace CareerBoostAI.Application.Common.Extension;
+﻿using CareerBoostAI.Application.Common.Exceptions;
+
+namespace CareerBoostAI.Application.Extensions;
 
 public static class DataConversionExtensions
 {
@@ -6,7 +8,7 @@ public static class DataConversionExtensions
     {
         if (!Enum.TryParse<TEnum>(enumString, true, out TEnum result))
         {
-            throw new ApplicationException($"Storagemedium {enumString} is not supported");
+            throw new CareerBoostAIApplicationException($"{nameof(ToEnum)} {enumString} is not supported");
         }
         return result;
     }

@@ -2,7 +2,6 @@
 using CareerBoostAI.Application.Candidate.Commands.CreateProfile;
 using CareerBoostAI.Application.Candidate.Commands.UpdateCvContent;
 using CareerBoostAI.Application.Candidate.DTO;
-using CareerBoostAI.Application.Common.Extension;
 using CareerBoostAI.Domain.Candidate;
 using CareerBoostAI.Domain.Candidate.Cv;
 using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;

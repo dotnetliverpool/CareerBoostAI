@@ -1,42 +1,28 @@
 ﻿using CareerBoostAI.Application.Common.Abstractions;
 using CareerBoostAI.Application.Common.Abstractions.Mediator;
+using CareerBoostAI.Application.Common.Exceptions;
 using CareerBoostAI.Application.Services;
+using CareerBoostAI.Application.Services.DocumentSizeService;
 using CareerBoostAI.Domain.Common.Services;
 using CareerBoostAI.Domain.UploadContext;
 
 namespace CareerBoostAI.Application.Candidate.Commands.UploadCvDocument;
 
 
-public sealed class UploadCvDocumentCommandHandler : ICommandHandler<UploadCvDocumentCommand>
+public sealed class UploadCvDocumentCommandHandler(
+    IDocumentSizeService documentSizeService,
+    IFileStorageService fileStorageService,
+    IUploadRepository uploadRepository,
+    ICandidateReadService candidateReadService,
+    IUnitOfWork unitOfWork,
+    IDateTimeProvider dateTimeProvider)
+    : ICommandHandler<UploadCvDocumentCommand>
 {
-    private readonly ICandidateReadService _candidateReadService;
-    private readonly IFileStorageService _fileStorageService;
-    private readonly IUploadRepository _uploadRepository;
-    private readonly IDateTimeProvider _dateTimeProvider;
-    private readonly IUnitOfWork _unitOfWork;
-
-    public UploadCvDocumentCommandHandler( 
-        IFileStorageService fileStorageService,
-        IUploadRepository uploadRepository, 
-        ICandidateReadService candidateReadService, IUnitOfWork unitOfWork, IDateTimeProvider dateTimeProvider)
-    {
-        
-        _fileStorageService = fileStorageService;
-        _uploadRepository = uploadRepository;
-        _candidateReadService = candidateReadService;
-        _unitOfWork = unitOfWork;
-        _dateTimeProvider = dateTimeProvider;
-    }
-
     public async Task Handle(UploadCvDocumentCommand command, CancellationToken cancellationToken)
     {
-        if (!await _candidateReadService.CandidateExistsByEmailAsync(command.Email, cancellationToken))
-        {
-            // TODO : Use Custom Application Exception
-            throw new InvalidOperationException("Must upload profile data first.");
-        }
+        await ValidateAsync(command, cancellationToken);
         
-        var uploadResult = await _fileStorageService.UploadFileAsync(
+        var uploadResult = await fileStorageService.UploadFileAsync(
             StorageContainer.Cv,
             command.DocumentStream,
             command.DocumentName,
@@ -47,10 +33,24 @@ public sealed class UploadCvDocumentCommandHandler : ICommandHandler<UploadCvDoc
             uploadResult.Address,
             uploadResult.StorageMedium.ToString(),  
             uploadResult.OriginalName, uploadResult.FileExtension,
-            _dateTimeProvider.Now);
+            dateTimeProvider.Now);
 
         
-        await _uploadRepository.CreateNewAsync(upload, cancellationToken);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await uploadRepository.CreateNewAsync(upload, cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+    }
+
+    private async Task ValidateAsync(UploadCvDocumentCommand command, CancellationToken cancellationToken)
+    {
+        if (!await candidateReadService.CandidateExistsByEmailAsync(command.Email, cancellationToken))
+        {
+            throw new CandidateProfileNotFoundException(command.Email);
+        }
+
+        if (!documentSizeService.IsDocumentWithinAppLimit(command.DocumentStream))
+        {
+            throw new DocumentExceedsMaximumUploadSizeException(
+                documentSizeService.GetMaxSizeInFormat(DocumentSizeFormat.Mb));
+        }
     }
 }

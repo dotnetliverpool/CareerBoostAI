@@ -1,6 +1,7 @@
 ﻿using CareerBoostAI.Application.Services;
 using CareerBoostAI.Application.Services.CvParseService;
 using CareerBoostAI.Application.Services.EmailService;
+using CareerBoostAI.Domain.Common.Services;
 using CareerBoostAI.Infrastructure.EF.Extensions;
 using CareerBoostAI.Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +17,7 @@ public static class ServicesDependencyInjection
         services.AddScoped<IFileStorageService, DummyFileUploadService>();
         services.AddScoped<IEmailSender, DummyEmailSender>();
         services.AddScoped<ICvParserService, DummyCvParserService>();
-        
+        services.AddSingleton<IDateTimeProvider, SystemDateTimeProvider>();
         return services;
     }
 }

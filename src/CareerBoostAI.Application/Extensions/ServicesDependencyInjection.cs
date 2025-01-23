@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using CareerBoostAI.Application.Services;
+using CareerBoostAI.Application.Services.DocumentSizeService;
 using CareerBoostAI.Domain.Candidate.Factories;
 using CareerBoostAI.Domain.Common.Services;
 using CareerBoostAI.Domain.CvContext.Factory;
@@ -15,9 +16,10 @@ public static class ServicesDependencyInjection
         {
             config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
         });
-        services.AddSingleton<IDateTimeProvider, SystemDateTimeProvider>();
+        
         services.AddSingleton<ICandidateFactory, CandidateFactory>();
         services.AddSingleton<ICvFactory, CvFactory>();
+        services.AddSingleton<IDocumentSizeService, AppDocumentSizeService>();
         return services;
     }
 }

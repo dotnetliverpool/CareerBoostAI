@@ -2,8 +2,5 @@
 
 namespace CareerBoostAI.Application.Common.Exceptions;
 
-public class CareerBoostAIApplicationException : CareerBoostAIException
-{
-    protected CareerBoostAIApplicationException(string message) : base(message)
-    {}
-}
+public class CareerBoostAIApplicationException(string message) : 
+    CareerBoostAIException(message);

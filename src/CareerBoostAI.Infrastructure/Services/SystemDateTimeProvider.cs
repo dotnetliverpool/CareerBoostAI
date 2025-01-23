@@ -1,6 +1,6 @@
 ﻿using CareerBoostAI.Domain.Common.Services;
 
-namespace CareerBoostAI.Application.Services;
+namespace CareerBoostAI.Infrastructure.Services;
 
 public class SystemDateTimeProvider : IDateTimeProvider
 {
