@@ -2,7 +2,7 @@
 using Azure.Storage.Blobs.Models;
 using CareerBoostAI.Application.Services;
 
-namespace CareerBoostAI.Infrastructure.Services;
+namespace CareerBoostAI.Infrastructure.Services.FileStorageService.Azure;
 
 public class AzureBlobUploadResult : IFileStorageResult
 {

@@ -1,6 +1,6 @@
 ﻿using CareerBoostAI.Application.Services;
 
-namespace CareerBoostAI.Infrastructure.Services;
+namespace CareerBoostAI.Infrastructure.Services.FileStorageService;
 
 public class DummyFileUploadService : IFileStorageService
 {
