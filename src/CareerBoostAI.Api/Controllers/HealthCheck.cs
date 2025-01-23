@@ -19,12 +19,12 @@ public class HealthCheck(ILogger<HealthCheck> logger)
         statusCode: HttpStatusCode.OK, 
         contentType: "application/json",
         bodyType: typeof(ApplicationHealthCheck))]
-    public async Task<IActionResult> RunAsync(
+    public Task<IActionResult> RunAsync(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get",  Route = "health-check")] HttpRequest _)
     {
         logger.LogInformation("Health Check Run");
         var response = new ApplicationHealthCheck("Healthy", "Health check passed successfully.");
-        return new OkObjectResult(response);
+        return Task.FromResult<IActionResult>(new OkObjectResult(response));
     }
 }
 
