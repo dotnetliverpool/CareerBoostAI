@@ -10,9 +10,9 @@ using Microsoft.Extensions.Logging;
 
 namespace CareerBoostAI.Api.Controllers.Candidate;
 
-public class CreateCandidateProfile(IMediator mediator, IJsonSerializerService jsonSerializerService)
+public class CreateProfile(IMediator mediator, IJsonSerializerService jsonSerializerService)
 {
-    [Function(nameof(CreateCandidateProfile))]
+    [Function(nameof(CreateProfile))]
     [OpenApiOperation(
         operationId: "createProfile", 
         tags: [Constants.Tag.Candidate], 
