@@ -11,7 +11,7 @@ public class HealthCheck(ILogger<HealthCheck> logger)
 {
     [Function(nameof(HealthCheck))]
     [OpenApiOperation(
-        operationId: "HealthCheck", 
+        operationId: nameof(HealthCheck), 
         tags: [Constants.Tag.Health], 
         Summary = "Perform a health check", 
         Description = "Returns the health status of the application.")]
@@ -20,7 +20,7 @@ public class HealthCheck(ILogger<HealthCheck> logger)
         contentType: "application/json",
         bodyType: typeof(ApplicationHealthCheck))]
     public Task<IActionResult> RunAsync(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get",  Route = "health-check")] HttpRequest _)
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get",  Route = "health-check")] HttpRequest req)
     {
         logger.LogInformation("Health Check Run");
         var response = new ApplicationHealthCheck("Healthy", "Health check passed successfully.");
