@@ -3,4 +3,6 @@
 public interface IDateTimeProvider
 {
    DateOnly TodayAsDate { get; }
+   
+   DateTime Now { get;  }
 }

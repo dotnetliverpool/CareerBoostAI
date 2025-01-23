@@ -15,7 +15,7 @@ public static class ServicesDependencyInjection
         services.AddMySqlService(configuration);
         services.AddScoped<IFileStorageService, DummyFileUploadService>();
         services.AddScoped<IEmailSender, DummyEmailSender>();
-        services.AddScoped<ICvParseService, DummyCvParseService>();
+        services.AddScoped<ICvParserService, DummyCvParserService>();
         
         return services;
     }

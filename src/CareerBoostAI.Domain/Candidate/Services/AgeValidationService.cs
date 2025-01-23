@@ -1,4 +1,5 @@
-﻿using CareerBoostAI.Domain.Common.Services;
+﻿using CareerBoostAI.Domain.Common.Exceptions;
+using CareerBoostAI.Domain.Common.Services;
 
 namespace CareerBoostAI.Domain.Candidate.Services;
 
@@ -17,10 +18,14 @@ public static class AgeValidationService
         return age;
     }
 
-    public static bool IsWithinAcceptableAge(DateOnly birthDate, DateOnly today)
+    public static void IsWithinAcceptableAge(DateOnly birthDate, DateOnly today)
     {
         var age = CalculateAge(birthDate, today);
-        return age is > 12 and < 120;
+        var isWithinAcceptedRange=  age is > 12 and < 120;
+        if (!isWithinAcceptedRange)
+        {
+            throw new AgeNotWithinAcceptedRangeException();
+        }
     }
 
 }

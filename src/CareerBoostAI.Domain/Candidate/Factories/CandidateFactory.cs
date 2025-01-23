@@ -23,7 +23,7 @@ public sealed class CandidateFactory(IDateTimeProvider dateTimeProvider) : ICand
         var domainFirstName = FirstName.Create(firstName);
         var domainLastName = LastName.Create(lastName);
         var domainEmail = Email.Create(email);
-        var domainDateOfBirth = DateOfBirth.Create(dateOfBirth, _dateTimeProvider);
+        var domainDateOfBirth = DateOfBirth.Create(dateOfBirth, _dateTimeProvider.TodayAsDate);
         var domainPhone = PhoneNumber.Create(phoneCode, phoneNumber);
         candidateCv.ThrowIfNull();
         

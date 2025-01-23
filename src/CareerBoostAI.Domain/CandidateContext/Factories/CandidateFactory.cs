@@ -1,9 +1,4 @@
-﻿using CareerBoostAI.Domain.Candidate;
-using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
-using CareerBoostAI.Domain.Candidate.CvEntity;
-using CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects;
-using CareerBoostAI.Domain.Candidate.ValueObjects;
-using CareerBoostAI.Domain.Common.Exceptions;
+﻿using CareerBoostAI.Domain.CandidateContext.ValueObjects;
 using CareerBoostAI.Domain.Common.Services;
 using CareerBoostAI.Domain.Common.ValueObjects;
 
@@ -16,18 +11,18 @@ public sealed class CandidateFactory(IDateTimeProvider dateTimeProvider) : ICand
    
 
     public Candidate Create(
-        Guid id, string firstName, string lastName, DateOnly dateOfBirth, string email,
+         string firstName, string lastName, DateOnly dateOfBirth, string email,
         string phoneCode, string phoneNumber)
     {
         
-        var candidateId = CandidateId.Create(id);
+        var candidateId = EntityId.NewId();
         var domainFirstName = FirstName.Create(firstName);
         var domainLastName = LastName.Create(lastName);
         var domainEmail = Email.Create(email);
-        var domainDateOfBirth = DateOfBirth.Create(dateOfBirth, _dateTimeProvider);
+        var domainDateOfBirth = DateOfBirth.Create(dateOfBirth, _dateTimeProvider.TodayAsDate);
         var domainPhone = PhoneNumber.Create(phoneCode, phoneNumber);
         
-        return new(
+        return new Candidate(
             candidateId, domainFirstName, 
             domainLastName, domainDateOfBirth,
             domainEmail, domainPhone);

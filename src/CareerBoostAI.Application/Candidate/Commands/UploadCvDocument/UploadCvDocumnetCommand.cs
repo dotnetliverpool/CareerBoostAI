@@ -1,17 +1,8 @@
-﻿namespace CareerBoostAI.Application.Candidate.Commands.UploadCvDocument;
+﻿using CareerBoostAI.Application.Common.Abstractions.Mediator;
 
-public sealed class UploadCvDocumentCommand
-{
-    public string Email { get; }
-    public string DocumentName { get; }
-    public Stream DocumentContent { get; }
-    public string ContentType { get; }
+namespace CareerBoostAI.Application.Candidate.Commands.UploadCvDocument;
 
-    public UploadCvDocumentCommand(string email, string documentName, Stream documentContent, string contentType)
-    {
-        Email = email ?? throw new ArgumentNullException(nameof(email));
-        DocumentName = documentName ?? throw new ArgumentNullException(nameof(documentName));
-        DocumentContent = documentContent ?? throw new ArgumentNullException(nameof(documentContent));
-        ContentType = contentType ?? throw new ArgumentNullException(nameof(contentType));
-    }
-}
+public sealed record UploadCvDocumentCommand(
+    string Email, string DocumentName,
+    Stream DocumentStream) : ICommand;
+

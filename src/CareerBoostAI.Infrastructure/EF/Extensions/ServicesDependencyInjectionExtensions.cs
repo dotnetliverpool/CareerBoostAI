@@ -1,5 +1,7 @@
 ﻿using CareerBoostAI.Application.Candidate;
 using CareerBoostAI.Application.Common.Abstractions;
+using CareerBoostAI.Domain.CandidateContext;
+using CareerBoostAI.Domain.CvContext;
 using CareerBoostAI.Infrastructure.EF.Contexts;
 using CareerBoostAI.Infrastructure.EF.Options;
 using CareerBoostAI.Infrastructure.EF.Repositories;
@@ -31,6 +33,7 @@ public static class ServicesDependencyInjectionExtensions
         });
     
         services.AddScoped<ICandidateRepository, MySqlCandidateRepository>();
+        services.AddScoped<ICvRepository, MySqlCvRepository>();
         services.AddScoped<ICandidateReadService, MySqlCandidateReadService>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         

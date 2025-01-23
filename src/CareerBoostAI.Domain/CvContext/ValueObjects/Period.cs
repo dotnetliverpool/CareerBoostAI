@@ -26,7 +26,7 @@ public class Period : ValueObject
         startDate.ThrowIfNull();
         if (endDate.HasValue && endDate < startDate)
         {
-            throw new CvSectionItemEndDateEarlierThanStartDateException();
+            throw new InvalidProfessionalEntryTimePeriodException();
         }
     }
 

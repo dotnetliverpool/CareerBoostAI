@@ -1,21 +1,22 @@
-﻿using CareerBoostAI.Domain.Candidate;
-using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
-using CareerBoostAI.Domain.Candidate.CvEntity;
-using CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects;
-using CareerBoostAI.Domain.Candidate.ValueObjects;
+﻿using CareerBoostAI.Domain.CandidateContext;
+using CareerBoostAI.Domain.CandidateContext.ValueObjects;
 using CareerBoostAI.Domain.Common.ValueObjects;
-using CareerBoostAI.Domain.UserUpload;
+using CareerBoostAI.Domain.CvContext;
+using CareerBoostAI.Domain.CvContext.Entities;
+using CareerBoostAI.Domain.CvContext.ValueObjects;
+using CareerBoostAI.Domain.UploadContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CareerBoostAI.Infrastructure.EF.Configuration;
 
 
-internal class WriteDbConfiguration : IEntityTypeConfiguration<CandidateProfile>
+internal class WriteDbConfiguration : 
+    IEntityTypeConfiguration<Candidate>, IEntityTypeConfiguration<Cv>,
+    IEntityTypeConfiguration<Upload>
 
 {
-    public void Configure(EntityTypeBuilder<CandidateProfile> builder)
+    public void Configure(EntityTypeBuilder<Candidate> builder)
     {
         builder.ToTable("candidates");
         builder.HasKey(c => c.Id);
@@ -23,8 +24,8 @@ internal class WriteDbConfiguration : IEntityTypeConfiguration<CandidateProfile>
             .Property(c => c.Id)
             .HasConversion(
                 id => id.Value,
-                value => CandidateId.Create(value)
-                );
+                value => EntityId.Create(value)
+            );
         
         builder
             .Property(c => c.FirstName)
@@ -60,36 +61,37 @@ internal class WriteDbConfiguration : IEntityTypeConfiguration<CandidateProfile>
                 dbValue => PhoneNumber.Parse(dbValue)
             )
             .HasColumnName("PhoneNumber");
-
-        builder
-            .OwnsOne(candidate => candidate.CandidateCv, CongigureCandidateCv);
     }
 
-    private static void CongigureCandidateCv(OwnedNavigationBuilder<CandidateProfile, CandidateCv> cvb)
+    public void Configure(EntityTypeBuilder<Cv> builder)
     {
-        cvb.ToTable("cvs");
-        cvb.WithOwner().HasForeignKey("CandidateId");
-        cvb.HasKey(cv => cv.Id);
-        cvb.Property(cv => cv.Id )
+        builder.ToTable("cvs");
+        builder.HasKey(cv => cv.Id);
+        builder.Property(cv => cv.Id )
             .HasConversion(
                 writeObject => writeObject.Value,
-                storeValue => CvId.Create(storeValue));
+                storeValue => EntityId.Create(storeValue));
                 
-        cvb.Property(cv => cv.Summary)
+        builder.Property(cv => cv.Summary)
             .HasConversion(
                 writeObject => writeObject.Value,
                 storeValue => Summary.Create(storeValue));
+
+        builder.Property(cv => cv.CandidateEmail)
+            .HasConversion(
+                writeObject => writeObject.Value,
+                storeValue => Email.Create(storeValue));
                 
-        cvb.OwnsMany(cv => cv.Experiences, BuildCvExperience);
-        cvb.OwnsMany(cv => cv.Educations, BuildCvEducation);
-        cvb.OwnsMany(cv => cv.Skills, sb =>
+        builder.OwnsMany(cv => cv.Experiences, BuildCvExperience);
+        builder.OwnsMany(cv => cv.Educations, BuildCvEducation);
+        builder.OwnsMany(cv => cv.Skills, sb =>
         {
             sb.ToTable("skills");
             sb.HasKey(s => s.Value);
             sb.Property(s => s.Value).HasColumnName("Name");
             sb.WithOwner().HasForeignKey("CvId");
         });
-        cvb.OwnsMany(cv => cv.Languages, lb =>
+        builder.OwnsMany(cv => cv.Languages, lb =>
         {
             lb.ToTable("languages");
             lb.HasKey(l => l.Value);
@@ -97,24 +99,24 @@ internal class WriteDbConfiguration : IEntityTypeConfiguration<CandidateProfile>
             lb.WithOwner().HasForeignKey("CvId");
         });
                 
-        cvb.Navigation(cv => cv.Experiences)
+        builder.Navigation(cv => cv.Experiences)
             .Metadata
             .SetPropertyAccessMode(PropertyAccessMode.Field);
                 
-        cvb.Navigation(cv => cv.Educations)
+        builder.Navigation(cv => cv.Educations)
             .Metadata
             .SetPropertyAccessMode(PropertyAccessMode.Field);
                 
-        cvb.Navigation(cv => cv.Skills)
+        builder.Navigation(cv => cv.Skills)
             .Metadata
             .SetPropertyAccessMode(PropertyAccessMode.Field);
                 
-        cvb.Navigation(cv => cv.Languages)
+        builder.Navigation(cv => cv.Languages)
             .Metadata
             .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 
-    private static void BuildCvExperience(OwnedNavigationBuilder<CandidateCv, WorkExperience> builder)
+    private static void BuildCvExperience(OwnedNavigationBuilder<Cv, Experience> builder)
     {
         builder.ToTable("experiences");
         builder.WithOwner().HasForeignKey("CvId");
@@ -122,7 +124,7 @@ internal class WriteDbConfiguration : IEntityTypeConfiguration<CandidateProfile>
             .Property(exp => exp.Id)
             .HasConversion(
                 id => id.Value,
-                value => ProfessionalEntryId.Create(value))
+                value => EntityId.Create(value))
             .ValueGeneratedNever();
         
         builder
@@ -142,7 +144,7 @@ internal class WriteDbConfiguration : IEntityTypeConfiguration<CandidateProfile>
             .HasConversion(
                 idx => idx.Value,
                 value => SequenceIndex.Create(value));
-
+        
         builder
             .OwnsOne(exp => exp.Location, lb =>
             {
@@ -157,8 +159,8 @@ internal class WriteDbConfiguration : IEntityTypeConfiguration<CandidateProfile>
                 prd.Property(p => p.EndDate).HasColumnName("EndDate");
             });
     }
-
-    private static void BuildCvEducation(OwnedNavigationBuilder<CandidateCv, Education> builder)
+    
+    private static void BuildCvEducation(OwnedNavigationBuilder<Cv, Education> builder)
     {
         builder.ToTable("educations");
         builder.WithOwner().HasForeignKey("CvId");
@@ -166,7 +168,7 @@ internal class WriteDbConfiguration : IEntityTypeConfiguration<CandidateProfile>
             .Property(edu => edu.Id)
             .HasConversion(
                 id => id.Value,
-                value => ProfessionalEntryId.Create(value));
+                value => EntityId.Create(value));
         
         builder
             .Property(edu => edu.OrganisationName)
@@ -179,7 +181,7 @@ internal class WriteDbConfiguration : IEntityTypeConfiguration<CandidateProfile>
             .HasConversion(
                 idx => idx.Value,
                 value => SequenceIndex.Create(value));
-
+        
         builder
             .OwnsOne(edu => edu.Location, lb =>
             {
@@ -200,5 +202,22 @@ internal class WriteDbConfiguration : IEntityTypeConfiguration<CandidateProfile>
             grd.Property(g => g.Grade).HasColumnName("Grade");
         });
     }
-    
+
+    public void Configure(EntityTypeBuilder<Upload> builder)
+    {
+        builder.ToTable("uploads");
+        builder.HasKey(up => up.Id);
+        builder.Property(up => up.UserEmailAddress)
+            .HasConversion(
+                writeObject => writeObject.Value,
+                storeValue => Email.Create(storeValue));
+        
+        builder.OwnsOne(up => up.Document, docb =>
+        {
+            docb.Property(doc => doc.Address).HasColumnName("StorageAddress");
+            docb.Property(doc => doc.Medium).HasColumnName("StorageMedium");
+            docb.Property(doc => doc.FileName).HasColumnName("FileName");
+            docb.Property(doc => doc.Extension).HasColumnName("Extension");
+        });
+    }
 }

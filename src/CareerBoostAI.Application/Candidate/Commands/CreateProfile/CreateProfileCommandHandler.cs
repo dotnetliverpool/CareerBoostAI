@@ -1,78 +1,63 @@
 ﻿using CareerBoostAI.Application.Common.Abstractions;
 using CareerBoostAI.Application.Common.Abstractions.Mediator;
+using CareerBoostAI.Application.Common.Exceptions;
 using CareerBoostAI.Application.Services;
 using CareerBoostAI.Application.Services.EmailService;
-using CareerBoostAI.Domain.Candidate;
-using CareerBoostAI.Domain.Candidate.Factories;
-using CareerBoostAI.Domain.Common.Exceptions;
+using CareerBoostAI.Domain.CandidateContext;
+using CareerBoostAI.Domain.CandidateContext.Factories;
+using CareerBoostAI.Domain.CvContext;
+using CareerBoostAI.Domain.CvContext.Factory;
 
 namespace CareerBoostAI.Application.Candidate.Commands.CreateProfile;
 
-    public class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand>
+    public class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand, Guid>
     {
-
-        private readonly ICandidateReadService _candidateReadService;
+        
         private readonly ICandidateRepository _candidateRepository;
         private readonly IEmailSender _emailSender;
         private readonly ICandidateFactory _candidateFactory;
+        private readonly ICvFactory _cvFactory;
+        private readonly ICvRepository _cvRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ICandidateReadService _candidateReadService;
+
         public CreateProfileCommandHandler(
             IFileStorageService fileStorageService, 
             IEmailSender emailSender, ICandidateRepository candidateRepository, 
             ICandidateReadService candidateReadService,
-            ICandidateFactory candidateFactory, IUnitOfWork unitOfWork)
+            ICandidateFactory candidateFactory, IUnitOfWork unitOfWork, 
+            ICvFactory cvFactory, ICvRepository cvRepository)
         {
             _emailSender = emailSender;
             _candidateRepository = candidateRepository;
             _candidateReadService = candidateReadService;
             _candidateFactory = candidateFactory;
             _unitOfWork = unitOfWork;
+            _cvFactory = cvFactory;
+            _cvRepository = cvRepository;
         }
-        public async Task Handle(CreateProfileCommand command, CancellationToken cancellationToken)
-        {
-            await Validate(command, cancellationToken);
+        public async Task<Guid> Handle(CreateProfileCommand command, CancellationToken cancellationToken)
+        { 
+            if (await _candidateReadService.CandidateExistsByEmailAsync(command.Email, cancellationToken))
+            {
+                throw new CandidateProfileNotFoundException(command.Email);
+            }
+            var candidateProfile = _candidateFactory
+                    .Create( command.FirstName, 
+                        command.LastName, command.DateOfBirth, 
+                        command.Email, command.PhoneCode, command.PhoneNumber);
+            var cv = _cvFactory.CreateFromData(
+                    command.CreateCvCommand.AsDomainCvData(command.Email));
             
-            var candidate = CreateAggregateFromCommand(command);
-            
-            await _candidateRepository.CreateNewAsync(candidate);
-            
-            var adminNotificationMessage =
-                $"A new candidate profile has been created for {candidate.FirstName.Value} {candidate.LastName.Value}.";
-            await _emailSender.SendEmailToAdminAsync(subject: "New Candidate Profile Created", body: adminNotificationMessage);
-            
-            
-            await _unitOfWork.SaveChangesAsync(cancellationToken); 
+            await _candidateRepository.CreateNewAsync(candidateProfile);
+            await _cvRepository.CreateNewAsync(cv);
+                //  send profile created notification
+                // send cv created notification
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            return candidateProfile.Id.Value;
         }
 
-    private CandidateProfile CreateAggregateFromCommand(CreateProfileCommand request)
-    {
-        var cv = _candidateFactory.CreateCv(
-            Guid.NewGuid(), request.CreateCvCommand.Summary,
-            request.CreateCvCommand.Experiences
-                .Select(exp => ( Guid.NewGuid(),
-                    exp.OrganisationName, exp.City, exp.Country,
-                    exp.StartDate, exp.EndDate, exp.Description,
-                    exp.SequenceIndex)),
-            request.CreateCvCommand.Educations
-                .Select(edu => (Guid.NewGuid(), edu.OrganisationName, edu.City, edu.Country,
-                    edu.StartDate, edu.EndDate, edu.Program, edu.Grade,
-                    edu.SequenceIndex)),
-            request.CreateCvCommand.Languages,
-            request.CreateCvCommand.Skills);
-
-        CandidateProfile candidate = _candidateFactory
-            .Create(Guid.NewGuid(), request.FirstName, 
-                request.LastName, request.DateOfBirth, 
-                request.Email, request.PhoneCode, request.PhoneNumber, 
-                cv);
-        return candidate;
-    }
-
-    private async Task Validate(CreateProfileCommand request, CancellationToken cancellationToken)
-    {
-        if (await _candidateReadService.CandidateExistsByEmailAsync(request.Email, cancellationToken))
-        {
-            throw new CandidateProfileNotFoundException(request.Email);
-        }
-    }
+    
+    
 }

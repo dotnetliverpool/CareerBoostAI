@@ -2,6 +2,7 @@
 using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.CvContext.Entities;
 using CareerBoostAI.Domain.CvContext.ValueObjects;
+using CareerBoostAI.Domain.Services;
 using Education = CareerBoostAI.Domain.CvContext.Entities.Education;
 
 namespace CareerBoostAI.Domain.CvContext;
@@ -21,7 +22,7 @@ public class Cv : AggregateRoot<EntityId>
     public IReadOnlyCollection<Skill> Skills => _skills.AsReadOnly();
     public IReadOnlyCollection<Language> Languages => _languages.AsReadOnly();
     
-    internal Cv(EntityId id,
+    private Cv(EntityId id,
         Summary summary,
         Email candidateEmail,
         IEnumerable<Experience> experiences, 
@@ -29,12 +30,34 @@ public class Cv : AggregateRoot<EntityId>
         IEnumerable<Skill> skills, 
         IEnumerable<Language> languages)
     {
+        var experienceList = experiences.ToList();
+        var educationList = educations.ToList();
+        
+        ProfessionalEntrySequenceValidatorService.Validate(experienceList);
+        ProfessionalEntrySequenceValidatorService.Validate(educationList);
+        
         Id = id;
         Summary = summary;
         CandidateEmail = candidateEmail;
-        _experiences = experiences.ToList();
-        _educations = educations.ToList();
+        _experiences = experienceList;
+        _educations = educationList;
         _skills = skills.ToList();
         _languages = languages.ToList();
+    }
+    
+    internal static Cv Create(
+        EntityId id, Summary summary,
+        Email candidateEmail, IEnumerable<Experience> experiences, 
+        IEnumerable<Education> educations, IEnumerable<Skill> skills, 
+        IEnumerable<Language> languages)
+    {
+        var experienceList = experiences.ToList();
+        var educationList = educations.ToList();
+        
+        ProfessionalEntrySequenceValidatorService.Validate(experienceList);
+        ProfessionalEntrySequenceValidatorService.Validate(educationList);
+
+        return new(id, summary, candidateEmail, experienceList,
+            educationList, skills, languages);
     }
 }

@@ -1,20 +1,24 @@
-﻿public sealed class ParseCvDocumentCommandHandler
+﻿using CareerBoostAI.Application.Candidate.DTO;
+using CareerBoostAI.Application.Common.Abstractions.Mediator;
+using CareerBoostAI.Application.Services.CvParseService;
+
+namespace CareerBoostAI.Application.Candidate.Commands.ParseCv;
+
+public sealed class ParseCvCommandHandler : ICommandHandler<ParseCvCommand, ParsedCv>
 {
     private readonly ICvParserService _cvParserService;
 
-    public ParseCvDocumentCommandHandler(ICvParserService cvParserService)
+    public ParseCvCommandHandler(ICvParserService cvParserService)
     {
-        _cvParserService = cvParserService ?? throw new ArgumentNullException(nameof(cvParserService));
+        _cvParserService = cvParserService;
     }
 
-    public async Task<CvDto> HandleAsync(ParseCvDocumentCommand command, CancellationToken cancellationToken)
+    public async Task<ParsedCv> Handle(ParseCvCommand command, CancellationToken cancellationToken)
     {
         // Use the CV parser service to extract details from the document
-        var cvDto = await _cvParserService.ParseAsync(command.DocumentContent, command.ContentType, cancellationToken);
+        var parsedCv = await _cvParserService.ParseAsync(
+            command.DocumentContent, command.DocumentName, cancellationToken);
 
-        // Ensure no ID is included in the returned CvDto
-        cvDto.Id = null;
-
-        return cvDto;
+        return parsedCv;
     }
 }

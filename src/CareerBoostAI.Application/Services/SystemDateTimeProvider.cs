@@ -6,4 +6,7 @@ public class SystemDateTimeProvider : IDateTimeProvider
 {
     public DateOnly TodayAsDate 
         => DateOnly.FromDateTime(DateTime.Now);
+    
+    public DateTime Now
+        => DateTime.Now;
 }

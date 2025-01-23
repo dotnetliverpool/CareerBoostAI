@@ -105,10 +105,12 @@ internal class ReadDbConfiguration : IEntityTypeConfiguration<CandidateReadModel
     public void Configure(EntityTypeBuilder<UploadReadModel> builder)
     {
         builder.HasKey(up => up.Id);
+        
         builder
             .HasOne(up => up.CandidateReadModel)
             .WithMany(c => c.Uploads)
-            .HasForeignKey(up => up.CandidateId);
+            .HasForeignKey(up => up.CandidateEmail)
+            .HasPrincipalKey(c => c.Email);
 
     }
 }

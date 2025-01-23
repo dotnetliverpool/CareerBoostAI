@@ -8,7 +8,6 @@ public class CvFactory : ICvFactory
 {
     public Cv CreateFromData(Guid id, CvData data)
     {
-        var cvId = EntityId.Create(id);
         var domainSummary = Summary.Create(data.Summary);
         var domainCandidateEmail = Email.Create(data.CandidateEmail);
         var domainExperiences = data.Experiences
@@ -36,7 +35,12 @@ public class CvFactory : ICvFactory
         var domainLanguages = data.Languages
             .Select(Language.Create);
         
-        return new(cvId, domainSummary, domainCandidateEmail, domainExperiences, 
+        return Cv.Create(EntityId.NewId(), domainSummary, domainCandidateEmail, domainExperiences, 
             domainEducations, domainSkills, domainLanguages);
+    }
+
+    public Cv CreateFromData(CvData data)
+    {
+        throw new NotImplementedException();
     }
 }

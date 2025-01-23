@@ -39,12 +39,8 @@ public class CreateCandidateProfile
         [HttpTrigger(AuthorizationLevel.Anonymous,  "post", Route =  "candidate/createProfile")] HttpRequest req, ILogger log)
     {
            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-           var data = _jsonSerializerService.Deserialize<CreateProfileCommand>(requestBody);
-           var command = data! with
-           {
-               Id = Guid.NewGuid()
-           };
-           await _mediator.Send(command);
-           return new CreatedResult(location: "None", value: new { Id = command.Id });
+           var command = _jsonSerializerService.Deserialize<CreateProfileCommand>(requestBody);
+           var id = await  _mediator.Send(command!);
+           return new CreatedResult(location: "None", value: new { Id = id });
     }
 }

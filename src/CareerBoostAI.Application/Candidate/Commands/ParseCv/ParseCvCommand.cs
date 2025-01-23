@@ -1,6 +1,8 @@
-﻿namespace CareerBoostAI.Application.Candidate.Commands.ParseCv;
+﻿using CareerBoostAI.Application.Candidate.DTO;
+using CareerBoostAI.Application.Common.Abstractions.Mediator;
+using CareerBoostAI.Application.Services.CvParseService;
 
-public class ParseCvCommand
-{
-    
-}
+namespace CareerBoostAI.Application.Candidate.Commands.ParseCv;
+
+public sealed record ParseCvCommand(Stream DocumentContent, string DocumentName)
+    : ICommand<ParsedCv>;

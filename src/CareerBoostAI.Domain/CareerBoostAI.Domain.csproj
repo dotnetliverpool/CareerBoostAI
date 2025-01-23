@@ -9,6 +9,7 @@
     <ItemGroup>
       <Folder Include="Candidate\Entites\" />
       <Folder Include="Common\Entities\" />
+      <Folder Include="UploadContext\Entities\" />
     </ItemGroup>
 
     <ItemGroup>

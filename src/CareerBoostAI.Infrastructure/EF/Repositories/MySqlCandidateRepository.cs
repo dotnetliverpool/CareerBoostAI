@@ -1,41 +1,17 @@
-﻿using CareerBoostAI.Application.Candidate;
-using CareerBoostAI.Application.Candidate.DTO;
-using CareerBoostAI.Domain.Candidate;
-using CareerBoostAI.Domain.Candidate.ValueObjects;
+﻿using CareerBoostAI.Domain.CandidateContext;
+using CareerBoostAI.Domain.CvContext.ValueObjects;
 using CareerBoostAI.Infrastructure.EF.Contexts;
-using CareerBoostAI.Infrastructure.EF.MappingExtensions;
-using CareerBoostAI.Infrastructure.EF.Models;
 using Microsoft.EntityFrameworkCore;
-using Skill = CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects.Skill;
-
 namespace CareerBoostAI.Infrastructure.EF.Repositories;
 
 internal sealed class MySqlCandidateRepository(CareerBoostWriteDbContext context) : ICandidateRepository
 {
     
-    private readonly DbSet<CandidateProfile> _candidates = context.Candidates;
-    private readonly DbSet<Skill> _skills = context.Skills;
+    private readonly DbSet<Candidate> _candidates = context.Candidates;
     private readonly CareerBoostWriteDbContext _context = context;
 
-    public async Task<CandidateProfile?> GetAsync(CandidateId id)
+    public async Task CreateNewAsync(Candidate candidate)
     {
-        return await _candidates
-            .Include(c => c.CandidateCv)
-            .SingleOrDefaultAsync(c => c.Id == id);
-    }
-
-    public async Task CreateNewAsync(CandidateProfile candidate)
-    {
-        var existing = FindNonExistingSkills(candidate.CandidateCv.Skills);
         await _candidates.AddAsync(candidate);
     }
-
-    private async Task<IEnumerable<Skill>> FindNonExistingSkills(IEnumerable<Skill> skills)
-    {
-        var skillNames = skills.Select(s => s.Value).Distinct().ToList();
-        var res = await _context.Skills
-            .Where(s => skillNames.Contains(s.Value)).ToListAsync();
-        return res;
-    }
-    
 }

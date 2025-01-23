@@ -3,6 +3,7 @@
 public interface ICvFactory
 {
     Cv CreateFromData(Guid id, CvData data);
+    Cv CreateFromData(CvData data);
 }
 
 

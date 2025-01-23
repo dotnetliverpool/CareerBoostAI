@@ -1,52 +1,56 @@
-﻿namespace CareerBoostAI.Application.Candidate.Commands.UploadCvDocument;
+﻿using CareerBoostAI.Application.Common.Abstractions;
+using CareerBoostAI.Application.Common.Abstractions.Mediator;
+using CareerBoostAI.Application.Services;
+using CareerBoostAI.Domain.Common.Services;
+using CareerBoostAI.Domain.UploadContext;
+
+namespace CareerBoostAI.Application.Candidate.Commands.UploadCvDocument;
 
 
-public sealed class UploadCvDocumentCommandHandler
+public sealed class UploadCvDocumentCommandHandler : ICommandHandler<UploadCvDocumentCommand>
 {
-    private readonly IUserReadService _userReadService;
-    private readonly IFileUploadService _fileUploadService;
+    private readonly ICandidateReadService _candidateReadService;
+    private readonly IFileStorageService _fileStorageService;
     private readonly IUploadRepository _uploadRepository;
+    private readonly IDateTimeProvider _dateTimeProvider;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public UploadCvDocumentCommandHandler(
-        IUserReadService userReadService, 
-        IFileUploadService fileUploadService,
-        IUploadRepository uploadRepository)
+    public UploadCvDocumentCommandHandler( 
+        IFileStorageService fileStorageService,
+        IUploadRepository uploadRepository, 
+        ICandidateReadService candidateReadService, IUnitOfWork unitOfWork, IDateTimeProvider dateTimeProvider)
     {
-        _userReadService = userReadService ?? throw new ArgumentNullException(nameof(userReadService));
-        _fileUploadService = fileUploadService ?? throw new ArgumentNullException(nameof(fileUploadService));
-        _uploadRepository = uploadRepository ?? throw new ArgumentNullException(nameof(uploadRepository));
+        
+        _fileStorageService = fileStorageService;
+        _uploadRepository = uploadRepository;
+        _candidateReadService = candidateReadService;
+        _unitOfWork = unitOfWork;
+        _dateTimeProvider = dateTimeProvider;
     }
 
-    public async Task<string> HandleAsync(UploadCvDocumentCommand command, CancellationToken cancellationToken)
+    public async Task Handle(UploadCvDocumentCommand command, CancellationToken cancellationToken)
     {
-        // Step 1: Check if user exists
-        var userExists = await _userReadService.UserExistsAsync(command.Email, cancellationToken);
-        if (!userExists)
+        if (!await _candidateReadService.CandidateExistsByEmailAsync(command.Email, cancellationToken))
         {
+            // TODO : Use Custom Application Exception
             throw new InvalidOperationException("Must upload profile data first.");
         }
-
-        // Step 2: Upload the file using the file upload service
-        var storageAddress = await _fileUploadService.UploadFileAsync(
-            command.DocumentName, 
-            command.DocumentContent, 
-            command.ContentType, 
+        
+        var uploadResult = await _fileStorageService.UploadFileAsync(
+            StorageContainer.Cv,
+            command.DocumentStream,
+            command.DocumentName,
             cancellationToken);
+        
+        var upload = Upload.Create(
+            uploadResult.Id, command.Email, 
+            uploadResult.Address,
+            uploadResult.StorageMedium.ToString(),  
+            uploadResult.OriginalName, uploadResult.FileExtension,
+            _dateTimeProvider.Now);
 
-        // Step 3: Create the upload entity
-        var upload = new UploadEntity
-        {
-            StorageMedium = "CloudStorage", // Example storage medium
-            StorageAddress = storageAddress,
-            UserEmail = command.Email,
-            DocumentName = command.DocumentName,
-            UploadedAt = DateTime.UtcNow
-        };
-
-        // Step 4: Save the upload entity
-        await _uploadRepository.AddAsync(upload, cancellationToken);
-
-        // Step 5: Return the storage address
-        return storageAddress;
+        
+        await _uploadRepository.CreateNewAsync(upload, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

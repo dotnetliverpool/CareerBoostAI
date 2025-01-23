@@ -1,11 +1,10 @@
-﻿using CareerBoostAI.Domain.Candidate.CvEntity;
-using CareerBoostAI.Domain.Candidate.ValueObjects;
+﻿using CareerBoostAI.Domain.CandidateContext.ValueObjects;
 using CareerBoostAI.Domain.Common.Abstractions;
 using CareerBoostAI.Domain.Common.ValueObjects;
 
 namespace CareerBoostAI.Domain.CandidateContext;
 
-public class Candidate : AggregateRoot<CandidateId>
+public class Candidate : AggregateRoot<EntityId>
 {
     #region  Properties
     public FirstName FirstName { get; }
@@ -17,7 +16,7 @@ public class Candidate : AggregateRoot<CandidateId>
     #endregion
     
     internal Candidate(
-        CandidateId id,
+        EntityId id,
         FirstName firstName, LastName lastName,
         DateOfBirth dateOfBirth, Email email, 
         PhoneNumber phoneNumber)

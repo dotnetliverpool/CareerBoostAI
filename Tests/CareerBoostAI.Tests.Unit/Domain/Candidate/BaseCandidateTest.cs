@@ -13,6 +13,7 @@ namespace CareerBoostAI.Tests.Unit.Domain.Candidate;
 internal class TestDateTimeProvider : IDateTimeProvider
 {
     public DateOnly TodayAsDate => new DateOnly(2025, 1, 25);
+    public DateTime Now => DateTime.Now;
 }
 
 public abstract class BaseCandidateTest
@@ -26,7 +27,7 @@ public abstract class BaseCandidateTest
         return new (
             CandidateId.New(), FirstName.Create("John"), 
             LastName.Create("Doe"),
-            DateOfBirth.Create(dateOfBirth, dateTimeProvider), 
+            DateOfBirth.Create(dateOfBirth, dateTimeProvider.TodayAsDate), 
             Email.Create("john.doe@gmail.com"), 
             PhoneNumber.Create("+44", "88436287893"), 
             candidateCv

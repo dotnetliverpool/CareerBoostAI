@@ -1,12 +1,16 @@
-﻿using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
-using CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects;
+﻿using CareerBoostAI.Domain.Common.ValueObjects;
+using CareerBoostAI.Domain.CvContext.ValueObjects;
+using Description = CareerBoostAI.Domain.CvContext.ValueObjects.Description;
+using Location = CareerBoostAI.Domain.CvContext.ValueObjects.Location;
+using OrganisationName = CareerBoostAI.Domain.CvContext.ValueObjects.OrganisationName;
+using SequenceIndex = CareerBoostAI.Domain.CvContext.ValueObjects.SequenceIndex;
 
 namespace CareerBoostAI.Domain.CvContext.Entities;
 
-public class Experience : Candidate.CvEntity.ProfessionalEntry
+public class Experience : ProfessionalEntry
 {
     private Experience(
-        ProfessionalEntryId id,
+        EntityId id,
         OrganisationName organisationName,
         Location location,
         Period timePeriod,
@@ -26,11 +30,11 @@ public class Experience : Candidate.CvEntity.ProfessionalEntry
         DateOnly startDate, DateOnly? endDate,
         string description, uint index)
     {
-        var expId = ProfessionalEntryId.Create(id);
+        var expId = EntityId.Create(id);
         var orgName = OrganisationName.Create(organisationName);
-        var location = Candidate.CvEntity.ValueObjects.Location.Create(city, country);
+        var location = Location.Create(city, country);
         var timePeriod = Period.Create(startDate, endDate);
-        var descriptionDomain = Candidate.CvEntity.ValueObjects.Description.Create(description);
+        var descriptionDomain = Description.Create(description);
         var sequenceIndex = SequenceIndex.Create(index);
         return new(expId, orgName, location, timePeriod, descriptionDomain, sequenceIndex);
     }
