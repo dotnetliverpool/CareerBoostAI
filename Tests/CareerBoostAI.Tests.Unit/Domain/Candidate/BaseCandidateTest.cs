@@ -14,16 +14,15 @@ internal class TestDateTimeProvider : IDateTimeProvider
 
 public abstract class BaseCandidateTest
 {
+    
+    protected readonly IDateTimeProvider DateTimeProvider = new TestDateTimeProvider();
     protected CareerBoostAI.Domain.CandidateContext.Candidate GetNewCandidateWithCv()
     {
-        IDateTimeProvider dateTimeProvider = new TestDateTimeProvider();
-        
-        
         DateOnly dateOfBirth = new DateOnly(1998, 12, 13);
         return new (
             EntityId.NewId(), FirstName.Create("John"), 
             LastName.Create("Doe"),
-            DateOfBirth.Create(dateOfBirth, dateTimeProvider.TodayAsDate), 
+            DateOfBirth.Create(dateOfBirth, DateTimeProvider.TodayAsDate), 
             Email.Create("john.doe@gmail.com"), 
             PhoneNumber.Create("+44", "88436287893")
              );
@@ -31,7 +30,6 @@ public abstract class BaseCandidateTest
 
     protected ICandidateFactory GetCandidateFactory()
     {
-        IDateTimeProvider dateTimeProvider = new TestDateTimeProvider();
-        return new CandidateFactory(dateTimeProvider);
+        return new CandidateFactory(DateTimeProvider);
     }
 }
