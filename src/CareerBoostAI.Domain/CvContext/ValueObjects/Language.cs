@@ -6,7 +6,6 @@ namespace CareerBoostAI.Domain.CvContext.ValueObjects;
 
 public class Language : ValueObject
 {
-    private static readonly ConcurrentDictionary<string, Language> FlyweightCache = new();
     public string Value { get; }
 
     private Language(string value)
@@ -20,7 +19,7 @@ public class Language : ValueObject
     {
         value.ThrowIfNullOrEmpty(nameof(Language));
         var result = value.Trim().ToLower();
-        return FlyweightCache.GetOrAdd(result, key => new Language(key));;
+        return new Language(result);
     }
 
     protected override IEnumerable<object> GetAtomicValues()

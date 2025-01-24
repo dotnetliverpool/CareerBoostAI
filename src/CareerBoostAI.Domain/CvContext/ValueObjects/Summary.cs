@@ -16,15 +16,17 @@ public class Summary : ValueObject
     {
         value.ThrowIfNullOrEmpty(value);
     }
+    
+    public static Summary Create(string value)
+    {
+        Validate(value);
+        return new Summary(value);
+    }
 
     protected override IEnumerable<object> GetAtomicValues()
     {
         yield return Value;
     }
 
-    public static Summary Create(string value)
-    {
-        Validate(value);
-        return new Summary(value);
-    }
+    
 }

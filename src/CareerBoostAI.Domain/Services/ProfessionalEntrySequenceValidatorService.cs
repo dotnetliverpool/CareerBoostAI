@@ -8,12 +8,18 @@ public static class ProfessionalEntrySequenceValidatorService
 {
     public static void Validate(IEnumerable<ProfessionalEntry> entries)
     {
-        var entriesList = entries.ToList();
-        var invalidSequence = entriesList
-            .Select((entry, index) => new { entry, index })
-            .FirstOrDefault(x => x.entry.SequenceIndex != SequenceIndex.Create((uint)x.index));
-        if (invalidSequence is null) return;
-        var concreteClassName = invalidSequence.entry.GetType().Name;
-        throw new ProfessionalEntrySequenceInvalidError(concreteClassName);
+        
+        var entriesList = entries.ToArray();
+        var indexes = entriesList.Select(entry => entry.SequenceIndex).ToArray();
+        
+        var validRange = Enumerable
+            .Range(1, indexes.Length)
+            .Select(idx => SequenceIndex.Create((uint)idx)).ToArray();
+
+        if (indexes.All(validRange.Contains) && indexes.Distinct().Count() == indexes.Length) return;
+        
+        var concreteClassName = entriesList.First().GetType().Name;
+        throw new ProfessionalEntrySequenceInvalidException(concreteClassName);
+
     }
 }

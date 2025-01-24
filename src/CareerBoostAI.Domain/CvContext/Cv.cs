@@ -30,17 +30,11 @@ public class Cv : AggregateRoot<EntityId>
         IEnumerable<Skill> skills, 
         IEnumerable<Language> languages)
     {
-        var experienceList = experiences.ToList();
-        var educationList = educations.ToList();
-        
-        ProfessionalEntrySequenceValidatorService.Validate(experienceList);
-        ProfessionalEntrySequenceValidatorService.Validate(educationList);
-        
         Id = id;
         Summary = summary;
         CandidateEmail = candidateEmail;
-        _experiences = experienceList;
-        _educations = educationList;
+        _experiences = experiences.ToList();
+        _educations = educations.ToList();
         _skills = skills.ToList();
         _languages = languages.ToList();
     }
@@ -51,8 +45,8 @@ public class Cv : AggregateRoot<EntityId>
         IEnumerable<Education> educations, IEnumerable<Skill> skills, 
         IEnumerable<Language> languages)
     {
-        var experienceList = experiences.ToList();
-        var educationList = educations.ToList();
+        var experienceList = experiences.ToArray();
+        var educationList = educations.ToArray();
         
         ProfessionalEntrySequenceValidatorService.Validate(experienceList);
         ProfessionalEntrySequenceValidatorService.Validate(educationList);
