@@ -1,12 +1,9 @@
 ﻿using CareerBoostAI.Domain.Common.Exceptions;
-using CareerBoostAI.Domain.Common.Services;
 
-namespace CareerBoostAI.Domain.Candidate.Services;
+namespace CareerBoostAI.Domain.Services;
 
 public static class AgeValidationService
 {
-    // Use Specification Pattern Instead to explicitly describe behaviour
-    
     private static int CalculateAge(DateOnly birthDate, DateOnly today)
     {
         int age = today.Year - birthDate.Year;

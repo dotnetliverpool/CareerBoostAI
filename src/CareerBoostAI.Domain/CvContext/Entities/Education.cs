@@ -1,6 +1,4 @@
-﻿using CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects;
-using CareerBoostAI.Domain.Common.Abstractions;
-using CareerBoostAI.Domain.Common.ValueObjects;
+﻿using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.CvContext.ValueObjects;
 using Location = CareerBoostAI.Domain.CvContext.ValueObjects.Location;
 using OrganisationName = CareerBoostAI.Domain.CvContext.ValueObjects.OrganisationName;

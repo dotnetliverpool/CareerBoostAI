@@ -1,19 +1,7 @@
-﻿using System.Collections.Specialized;
-using CareerBoostAI.Application.Candidate.Commands.CreateProfile;
+﻿using CareerBoostAI.Application.Candidate.Commands.CreateProfile;
 using CareerBoostAI.Application.Candidate.Commands.UpdateCvContent;
-using CareerBoostAI.Application.Candidate.DTO;
-using CareerBoostAI.Domain.Candidate;
-using CareerBoostAI.Domain.Candidate.Cv;
-using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
-using CareerBoostAI.Domain.Candidate.CvEntity;
-using CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects;
-using CareerBoostAI.Domain.Candidate.Factories;
-using CareerBoostAI.Domain.Candidate.ValueObjects;
-using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.CvContext.Factory;
-using CareerBoostAI.Domain.ValueObjects;
 using CvData = CareerBoostAI.Domain.CvContext.Factory.CvData;
-using Education = CareerBoostAI.Domain.Candidate.CvEntity.Education;
 
 namespace CareerBoostAI.Application.Candidate;
 

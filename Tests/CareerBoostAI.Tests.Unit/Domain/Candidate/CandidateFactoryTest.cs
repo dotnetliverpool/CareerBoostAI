@@ -1,7 +1,4 @@
-﻿using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
-using CareerBoostAI.Domain.Candidate.CvEntity;
-using CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects;
-using Xunit;
+﻿using Xunit;
 using Shouldly;
 
 namespace CareerBoostAI.Tests.Unit.Domain.Candidate;

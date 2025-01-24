@@ -1,5 +1,4 @@
-﻿using CareerBoostAI.Domain.Candidate;
-
+﻿
 namespace CareerBoostAI.Domain.CandidateContext.Factories;
 
 public interface ICandidateFactory

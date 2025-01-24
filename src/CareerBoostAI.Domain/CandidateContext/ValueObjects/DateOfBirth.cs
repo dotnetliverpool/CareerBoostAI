@@ -1,5 +1,5 @@
-﻿using CareerBoostAI.Domain.Candidate.Services;
-using CareerBoostAI.Domain.Common.Exceptions;
+﻿using CareerBoostAI.Domain.Common.Exceptions;
+using CareerBoostAI.Domain.Services;
 using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.CandidateContext.ValueObjects;
