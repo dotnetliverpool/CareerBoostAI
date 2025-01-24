@@ -14,6 +14,10 @@ public class SequenceIndex : ValueObject
 
     public static SequenceIndex Create(uint value)
     {
+        if (value == 0)
+        {
+            throw new InvalidEntrySequenceIndexException($"{value}");
+        }
         value.ThrowIfNull();
         return new SequenceIndex(value);
     }
