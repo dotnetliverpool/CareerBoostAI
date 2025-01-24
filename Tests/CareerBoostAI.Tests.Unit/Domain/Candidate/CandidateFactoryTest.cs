@@ -1,4 +1,5 @@
 ﻿using CareerBoostAI.Domain.CandidateContext.Factories;
+using CareerBoostAI.Domain.CandidateContext.ValueObjects;
 using Xunit;
 using Shouldly;
 

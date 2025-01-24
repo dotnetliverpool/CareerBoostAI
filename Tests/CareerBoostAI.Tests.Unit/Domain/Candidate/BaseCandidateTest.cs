@@ -20,8 +20,7 @@ public abstract class BaseCandidateTest
     {
         DateOnly dateOfBirth = new DateOnly(1998, 12, 13);
         return new (
-            EntityId.NewId(), FirstName.Create("John"), 
-            LastName.Create("Doe"),
+            EntityId.NewId(), Name.Create("John", "Doe"),
             DateOfBirth.Create(dateOfBirth, DateTimeProvider.TodayAsDate), 
             Email.Create("john.doe@gmail.com"), 
             PhoneNumber.Create("+44", "88436287893")

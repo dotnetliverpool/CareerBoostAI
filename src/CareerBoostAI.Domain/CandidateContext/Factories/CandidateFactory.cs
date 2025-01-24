@@ -16,15 +16,13 @@ public sealed class CandidateFactory(IDateTimeProvider dateTimeProvider) : ICand
     {
         
         var candidateId = EntityId.NewId();
-        var domainFirstName = FirstName.Create(firstName);
-        var domainLastName = LastName.Create(lastName);
+        var candidateName = Name.Create(firstName, lastName);
         var domainEmail = Email.Create(email);
         var domainDateOfBirth = DateOfBirth.Create(dateOfBirth, _dateTimeProvider.TodayAsDate);
         var domainPhone = PhoneNumber.Create(phoneCode, phoneNumber);
         
         return new Candidate(
-            candidateId, domainFirstName, 
-            domainLastName, domainDateOfBirth,
+            candidateId, candidateName, domainDateOfBirth,
             domainEmail, domainPhone);
     }
 

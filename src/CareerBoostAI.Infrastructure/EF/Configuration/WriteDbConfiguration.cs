@@ -26,20 +26,12 @@ internal class WriteDbConfiguration :
                 id => id.Value,
                 value => EntityId.Create(value)
             );
-        
-        builder
-            .Property(c => c.FirstName)
-            .HasConversion<string>(
-                objectValue => objectValue.Value,
-                value => FirstName.Create(value)
-            );
-        
-        builder
-            .Property(c => c.LastName)
-            .HasConversion(
-                ln => ln.Value,
-                value => LastName.Create(value)
-            );
+
+        builder.OwnsOne(c => c.Name, nb =>
+        {
+            nb.Property(n => n.FirstName).HasColumnName("FirstName");
+            nb.Property(n => n.LastName).HasColumnName("LastName");
+        });
 
         builder
             .Property(c => c.DateOfBirth)

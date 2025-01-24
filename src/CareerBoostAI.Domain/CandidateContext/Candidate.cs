@@ -7,23 +7,20 @@ namespace CareerBoostAI.Domain.CandidateContext;
 public class Candidate : AggregateRoot<EntityId>
 {
     #region  Properties
-    public FirstName FirstName { get; }
-    public LastName LastName { get;  }
+    public Name Name {get; private set; }
     public DateOfBirth DateOfBirth { get; private set; }
     public Email Email { get; private set; }
     public PhoneNumber PhoneNumber { get; private set; }
-    public string FullName => $"{FirstName.Value} {LastName.Value}";
     #endregion
     
     internal Candidate(
         EntityId id,
-        FirstName firstName, LastName lastName,
+        Name name,
         DateOfBirth dateOfBirth, Email email, 
         PhoneNumber phoneNumber)
     {
         Id = id;
-        FirstName = firstName;
-        LastName = lastName;
+        Name = name;
         DateOfBirth = dateOfBirth;
         Email = email;
         PhoneNumber = phoneNumber;
