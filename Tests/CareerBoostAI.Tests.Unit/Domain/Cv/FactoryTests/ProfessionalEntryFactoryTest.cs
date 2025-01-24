@@ -3,9 +3,9 @@ using CareerBoostAI.Domain.CvContext.ValueObjects;
 using Shouldly;
 using Xunit;
 
-namespace CareerBoostAI.Tests.Unit.Domain.Cv;
+namespace CareerBoostAI.Tests.Unit.Domain.Cv.FactoryTests;
 
-public class ProfessionalEntryFactoryTest : BaseCvTest
+public class ProfessionalEntryFactoryTest
 {
     [Fact]
     public void Create_ShouldReturnOrganisationName_WhenPassedValidValue()
