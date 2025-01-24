@@ -16,10 +16,10 @@ public abstract class BaseCandidateTest
 {
     
     protected readonly IDateTimeProvider DateTimeProvider = new TestDateTimeProvider();
-    protected CareerBoostAI.Domain.CandidateContext.Candidate GetNewCandidateWithCv()
+    protected CareerBoostAI.Domain.CandidateContext.Candidate GetNewValidCandidate()
     {
-        DateOnly dateOfBirth = new DateOnly(1998, 12, 13);
-        return new (
+        var dateOfBirth = new DateOnly(1998, 12, 13);
+        return new CareerBoostAI.Domain.CandidateContext.Candidate(
             EntityId.NewId(), Name.Create("John", "Doe"),
             DateOfBirth.Create(dateOfBirth, DateTimeProvider.TodayAsDate), 
             Email.Create("john.doe@gmail.com"), 

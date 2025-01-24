@@ -6,7 +6,7 @@ namespace CareerBoostAI.Domain.CvContext.Factory;
 
 public class CvFactory : ICvFactory
 {
-    public Cv CreateFromData(Guid id, CvData data)
+    public Cv CreateFromData( CvData data)
     {
         var domainSummary = Summary.Create(data.Summary);
         var domainCandidateEmail = Email.Create(data.CandidateEmail);
@@ -38,9 +38,5 @@ public class CvFactory : ICvFactory
         return Cv.Create(EntityId.NewId(), domainSummary, domainCandidateEmail, domainExperiences, 
             domainEducations, domainSkills, domainLanguages);
     }
-
-    public Cv CreateFromData(CvData data)
-    {
-        throw new NotImplementedException();
-    }
+    
 }
