@@ -19,21 +19,21 @@ public class PhoneNumber : ValueObject
     {
         code.ThrowIfNullOrEmpty("PhoneNumber.Code");
         number.ThrowIfNullOrEmpty("PhoneNumber.Number");
-        
-        if (!IsValidPhoneNumber(code + number))
-        {
-            
-        }
+
+        ValidateNumberFormat(code, number);
         return new PhoneNumber(code, number);
     }
     
 
-    private static void IsValidPhoneNumber(string code, string number)
+    private static void ValidateNumberFormat(string code, string number)
     {
         var phoneRegex = new Regex(@"^\+?[1-9]\d{1,14}$");
-        if (!phoneRegex.IsMatch(phoneNumber))
+        
+        var fullPhoneNumber = code + number;
+        
+        if (fullPhoneNumber.Length < 7 || fullPhoneNumber.Length > 15 || !phoneRegex.IsMatch(fullPhoneNumber))
         {
-            throw new InvalidPhoneNumberException(phoneNumber);
+            throw new InvalidPhoneNumberException(code, number);
         }
         
     }

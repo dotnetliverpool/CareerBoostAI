@@ -78,19 +78,56 @@ public class CandidateFactoryTest : BaseCandidateTest
         email.ShouldNotBeNull();
         email.Value.ShouldBe(emailInput);
     }
+    
+    [Theory]
+    [InlineData(null, "1234567890", typeof(EmptyArgumentException), "PhoneNumber.Code")]
+    [InlineData("", "1234567890", typeof(EmptyArgumentException), "PhoneNumber.Code")]
+    [InlineData("+44", null, typeof(EmptyArgumentException), "PhoneNumber.Number")]
+    [InlineData("+44", "", typeof(EmptyArgumentException), "PhoneNumber.Number")]
+    [InlineData("+44", "abc123", typeof(InvalidPhoneNumberException), "Invalid phone number: +44 - abc123")]
+    [InlineData("+1", "123", typeof(InvalidPhoneNumberException), "Invalid phone number: +1 - 123")]
+    public void PhoneNumber_Create_ShouldThrowException_ForInvalidInputs(string code, string number, Type exceptionType, string expectedMessage)
+    {
+        // Act
+        var exception = Record.Exception(() => PhoneNumber.Create(code, number));
+
+        // Assert
+        exception.ShouldNotBeNull();
+        exception.ShouldBeOfType(exceptionType);
+        exception.Message.ShouldContain(expectedMessage);
+    }
+    
+    [Theory]
+    [InlineData("+44", "1234567890")]
+    [InlineData("+1", "9876543210")]
+    [InlineData("+91", "9988776655")]
+    public void PhoneNumber_Create_ShouldReturnValidPhoneNumber_ForValidInputs(string code, string number)
+    {
+        // Act
+        var phoneNumber = PhoneNumber.Create(code, number);
+
+        // Assert
+        phoneNumber.ShouldNotBeNull();
+        phoneNumber.Code.ShouldBe(code);
+        phoneNumber.Number.ShouldBe(number);
+    }
 
 
-    [Fact]
-    public void Create_ShouldReturnValidCandidate_WhenPassedCorrectValues()
+    [Theory]
+    [InlineData("John", "Doe", "john.doe@example.com", "1990-01-01", "+44", "1234567890")]
+    [InlineData("Jane", "Smith", "jane.smith@example.com", "1985-06-15", "+1", "9876543210")]
+    [InlineData("Alex", "Johnson", "alex.johnson@example.com", "2000-11-23", "+91", "5555555555")]
+    public void Create_ShouldReturnValidCandidate_WhenPassedCorrectValues(
+        string firstName, 
+        string lastName, 
+        string email, 
+        string dateOfBirthString, 
+        string phoneCode, 
+        string phoneNumber)
     {
         // Arrange
         var factory = GetCandidateFactory();
-        var firstName = "John";
-        var lastName = "Doe";
-        var email = "john.doe@example.com";
-        var dateOfBirth = DateOnly.FromDateTime(new DateTime(1990, 1, 1));
-        var phoneCode = "+44";
-        var phoneNumber = "1234567890";
+        var dateOfBirth = DateOnly.Parse(dateOfBirthString);
 
         // Act
         var candidate = factory.Create(
