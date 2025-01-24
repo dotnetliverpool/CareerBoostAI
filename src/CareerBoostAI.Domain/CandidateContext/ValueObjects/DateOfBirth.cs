@@ -23,7 +23,10 @@ public class DateOfBirth : ValueObject
     public static DateOfBirth Create(DateOnly value, DateOnly today)
     {
         value.ThrowIfNull();
-        AgeValidationService.IsWithinAcceptableAge(value, today);
+        if (!AgeValidationService.IsWithinAcceptableAge(value, today))
+        {
+            throw new AgeNotWithinAcceptedRangeException();
+        }
         return new DateOfBirth(value);
     }
     

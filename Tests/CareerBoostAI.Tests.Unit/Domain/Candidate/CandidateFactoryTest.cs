@@ -64,7 +64,42 @@ public class CandidateFactoryTest : BaseCandidateTest
         exception.ShouldBeOfType(expectedExceptionType);
         exception.Message.ShouldContain(expectedMessage);
     }
+    
+    [Theory]
+    [InlineData("2000-01-01", "2025-01-01")] // Age 25, valid
+    [InlineData("2010-12-31", "2025-01-01")] // Age 14, valid
+    [InlineData("1905-06-15", "2025-01-01")] // Age 119, valid
+    public void DateOfBirth_Create_ShouldReturnValidDateOfBirth_WhenAgeIsValid(string birthDateString, string todayString)
+    {
+        // Arrange
+        var birthDate = DateOnly.Parse(birthDateString);
+        var today = DateOnly.Parse(todayString);
 
+        // Act
+        var dob = DateOfBirth.Create(birthDate, today);
+
+        // Assert
+        dob.ShouldNotBeNull();
+        dob.Value.ShouldBe(birthDate);
+    }
+    
+    [Theory]
+    [InlineData("2020-01-01", "2025-01-01")] // Age 5, invalid
+    [InlineData("1800-01-01", "2025-01-01")] // Too old, invalid
+    public void DateOfBirth_Create_ShouldThrowException_WhenAgeIsLessThan10OrGreaterThan120(string birthDateString, string todayString)
+    {
+        // Arrange
+        var birthDate = DateOnly.Parse(birthDateString);
+        var today = DateOnly.Parse(todayString);
+
+        // Act
+        var exception = Record.Exception(() => DateOfBirth.Create(birthDate, today));
+
+        // Assert
+        exception.ShouldNotBeNull();
+        exception.ShouldBeOfType<AgeNotWithinAcceptedRangeException>();
+    }
+    
     [Theory]
     [InlineData("john.doe@example.com")]
     [InlineData("user123@domain.co.uk")]

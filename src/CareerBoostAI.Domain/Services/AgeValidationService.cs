@@ -15,14 +15,10 @@ public static class AgeValidationService
         return age;
     }
 
-    public static void IsWithinAcceptableAge(DateOnly birthDate, DateOnly today)
+    public static bool IsWithinAcceptableAge(DateOnly birthDate, DateOnly today)
     {
         var age = CalculateAge(birthDate, today);
-        var isWithinAcceptedRange=  age is > 12 and < 120;
-        if (!isWithinAcceptedRange)
-        {
-            throw new AgeNotWithinAcceptedRangeException();
-        }
+        return  age is > 12 and < 120;
     }
 
 }
