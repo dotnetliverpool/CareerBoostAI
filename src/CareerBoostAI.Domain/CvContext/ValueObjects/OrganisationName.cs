@@ -14,7 +14,7 @@ public class OrganisationName : ValueObject
 
     public static OrganisationName Create(string value)
     {
-        value.ThrowIfNull();
+        value.ThrowIfNullOrEmpty(nameof(OrganisationName));
         return new OrganisationName(value);
     }
     protected override IEnumerable<object> GetAtomicValues()
