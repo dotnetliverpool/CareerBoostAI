@@ -25,8 +25,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Application\Candidate\" />
       <Folder Include="Application\Services\" />
+      <Folder Include="Domain\Cv\" />
+      <Folder Include="Domain\Upload\" />
     </ItemGroup>
 
     <ItemGroup>
