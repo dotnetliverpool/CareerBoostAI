@@ -22,16 +22,20 @@ public class PhoneNumber : ValueObject
         
         if (!IsValidPhoneNumber(code + number))
         {
-            throw new InvalidPhoneNumberException(code, number);
+            
         }
         return new PhoneNumber(code, number);
     }
     
 
-    private static bool IsValidPhoneNumber(string phoneNumber)
+    private static void IsValidPhoneNumber(string code, string number)
     {
-        var phoneRegex = new Regex(@"^\+?[1-9]\d{1,14}$"); 
-        return phoneRegex.IsMatch(phoneNumber);
+        var phoneRegex = new Regex(@"^\+?[1-9]\d{1,14}$");
+        if (!phoneRegex.IsMatch(phoneNumber))
+        {
+            throw new InvalidPhoneNumberException(phoneNumber);
+        }
+        
     }
 
     protected override IEnumerable<object> GetAtomicValues()

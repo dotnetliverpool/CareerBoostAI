@@ -25,7 +25,7 @@ public static class DomainExceptionExtensions
     {
         if (string.IsNullOrEmpty(value))
         {
-            throw new EmptyArgumentException($"{fieldName} cannot be null or empty.");
+            throw new EmptyArgumentException(fieldName);
         }
     }
     

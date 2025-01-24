@@ -18,19 +18,17 @@ public class Email : ValueObject
     public static Email Create(string value)
     {
         value.ThrowIfNullOrEmpty(nameof(Email));
-
-        if (!IsValidEmail(value))
-        {
-            throw new InvalidEmailFormatException(value);
-        }
+        ValidateEmailFormat(value);
         return new Email(value);
     }
 
-    private static bool IsValidEmail(string email)
+    private static void ValidateEmailFormat(string email)
     {
-        // Simple email validation (this can be more complex if needed)
         var emailRegex = new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
-        return emailRegex.IsMatch(email);
+        if (!emailRegex.IsMatch(email))
+        {
+            throw new InvalidEmailFormatException(email);
+        }
     }
 
 
