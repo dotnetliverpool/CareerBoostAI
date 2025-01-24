@@ -8,18 +8,18 @@ namespace CareerBoostAI.Domain.CvContext.Entities;
 
 public class Education : ProfessionalEntry
 {
-    public ProgramResult Grade { get;  }
+    public EducationalGrade EducationalGrade { get;  }
     
     private Education(
         EntityId id,
         OrganisationName organisationName,
         Location location,
         Period timePeriod,
-        ProgramResult educationGrade,
+        EducationalGrade educationalGrade,
         SequenceIndex sequenceIndex)
         : base(id, organisationName, location, timePeriod, sequenceIndex)
     {
-        Grade = educationGrade;
+        EducationalGrade = educationalGrade;
     }
 
    
@@ -35,7 +35,7 @@ public class Education : ProfessionalEntry
         var orgName = OrganisationName.Create(organisationName);
         var location = Location.Create(city, country);
         var timePeriod = Period.Create(startDate, endDate);
-        var gradeDomain = ProgramResult.Create(program, grade);
+        var gradeDomain = EducationalGrade.Create(program, grade);
         var sequenceIndex = SequenceIndex.Create(index);
         return new(edId, orgName, location, timePeriod, gradeDomain, sequenceIndex);
     }

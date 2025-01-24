@@ -3,21 +3,21 @@ using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.CvContext.ValueObjects;
 
-public class ProgramResult : ValueObject
+public class EducationalGrade : ValueObject
 {
     public string Program { get;  }
     public string Grade { get;}
     
-    private ProgramResult(string program, string grade)
+    private EducationalGrade(string program, string grade)
     {
         Program = program;
         Grade = grade;
     }
 
-    public static ProgramResult Create(string program, string grade)
+    public static EducationalGrade Create(string program, string grade)
     {
-        program.ThrowIfNullOrEmpty("Education.Program");
-        grade.ThrowIfNullOrEmpty("Education.Grade");
+        program.ThrowIfNullOrEmpty("EducationalGrade.Program");
+        grade.ThrowIfNullOrEmpty("EducationalGrade.Grade");
         return new(program, grade);
     }
     

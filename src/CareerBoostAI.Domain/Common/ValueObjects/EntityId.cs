@@ -1,8 +1,9 @@
 ﻿using CareerBoostAI.Domain.Common.Exceptions;
+using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.Common.ValueObjects;
 
-public class EntityId
+public class EntityId : ValueObject
 {
     private EntityId(Guid value)
     {
@@ -19,5 +20,10 @@ public class EntityId
     {
         value.ThrowIfNull();
         return new(value);
+    }
+
+    protected override IEnumerable<object> GetAtomicValues()
+    {
+        yield return Value;
     }
 }

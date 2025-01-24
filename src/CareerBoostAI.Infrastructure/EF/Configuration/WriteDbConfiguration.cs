@@ -188,7 +188,7 @@ internal class WriteDbConfiguration :
                 prd.Property(p => p.EndDate).HasColumnName("EndDate");
             });
         
-        builder.OwnsOne(edu => edu.Grade, grd =>
+        builder.OwnsOne(edu => edu.EducationalGrade, grd =>
         {
             grd.Property(g => g.Program).HasColumnName("Program");
             grd.Property(g => g.Grade).HasColumnName("Grade");
