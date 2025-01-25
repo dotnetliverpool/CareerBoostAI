@@ -1,4 +1,5 @@
 ﻿using CareerBoostAI.Domain.Common.Exceptions;
+using CareerBoostAI.Domain.Common.Services;
 using CareerBoostAI.Domain.Services;
 using CareerBoostAI.Domain.ValueObjects;
 
@@ -20,10 +21,10 @@ public class DateOfBirth : ValueObject
         return new DateOfBirth(value);
     }
 
-    public static DateOfBirth Create(DateOnly value, DateOnly today)
+    public static DateOfBirth Create(DateOnly value, IDateTimeProvider dateTimeProvider)
     {
         value.ThrowIfNull();
-        if (!AgeValidationService.IsWithinAcceptableAge(value, today))
+        if (!AgeValidationService.IsWithinAcceptableAge(value, dateTimeProvider.TodayAsDate))
         {
             throw new AgeNotWithinAcceptedRangeException();
         }

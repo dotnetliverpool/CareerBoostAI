@@ -17,7 +17,7 @@ public abstract class BaseCandidateTest
         var dateOfBirth = new DateOnly(1998, 12, 13);
         return new CareerBoostAI.Domain.CandidateContext.Candidate(
             EntityId.NewId(), Name.Create("John", "Doe"),
-            DateOfBirth.Create(dateOfBirth, DateTimeProvider.TodayAsDate), 
+            DateOfBirth.Create(dateOfBirth, DateTimeProvider), 
             Email.Create("john.doe@gmail.com"), 
             PhoneNumber.Create("+44", "88436287893")
              );
