@@ -72,30 +72,25 @@ public class Cv : AggregateRoot<EntityId>
 
     public void UpdateSkills(IEnumerable<string> dataSkills)
     {
-        throw new NotImplementedException();
+        var newSkills = dataSkills.Select(Skill.Create);  
+        _skills.Clear(); 
+        _skills.AddRange(newSkills);
+
     }
 
     public void UpdateLanguages(IEnumerable<string> dataLanguages)
     {
-        throw new NotImplementedException();
+        var newLanguages = dataLanguages.Select(Language.Create);
+        _languages.Clear();
+        _languages.AddRange(newLanguages);
     }
-
-    public void ClearExperiences()
+    
+    public void UpdateExperiences(IEnumerable<ExperienceData> dataExperiences)
     {
         throw new NotImplementedException();
     }
 
-    public void ClearEducations()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void AddExperiences(IEnumerable<ExperienceData> dataExperiences)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void AddEducations(IEnumerable<EducationData> dataEducations)
+    public void UpdateEducations(IEnumerable<EducationData> dataEducations)
     {
         throw new NotImplementedException();
     }

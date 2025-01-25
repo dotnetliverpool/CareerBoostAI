@@ -10,10 +10,8 @@ public static class CvInformationUpdateService
         cv.UpdateSummary(data.Summary);
         cv.UpdateSkills(data.Skills);
         cv.UpdateLanguages(data.Languages);
-        cv.ClearExperiences();
-        cv.ClearEducations();
-        cv.AddExperiences(data.Experiences);
-        cv.AddEducations(data.Educations);
+        cv.UpdateExperiences(data.Experiences);
+        cv.UpdateEducations(data.Educations);
     }
     
     
