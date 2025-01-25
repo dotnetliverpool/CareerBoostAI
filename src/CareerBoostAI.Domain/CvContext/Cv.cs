@@ -1,6 +1,8 @@
 ﻿using CareerBoostAI.Domain.Common.Abstractions;
+using CareerBoostAI.Domain.Common.Exceptions;
 using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.CvContext.Entities;
+using CareerBoostAI.Domain.CvContext.Specifications;
 using CareerBoostAI.Domain.CvContext.ValueObjects;
 using CareerBoostAI.Domain.Services;
 using Education = CareerBoostAI.Domain.CvContext.Entities.Education;
@@ -47,9 +49,15 @@ public class Cv : AggregateRoot<EntityId>
     {
         var experienceList = experiences.ToArray();
         var educationList = educations.ToArray();
-        
-        ProfessionalEntrySequenceValidatorService.Validate(experienceList);
-        ProfessionalEntrySequenceValidatorService.Validate(educationList);
+        var spec = new ProfessionalEntrySequenceRangesFrom1ToNumberOfEntriesSpec();
+        if (!spec.IsSatisfiedBy(experienceList))
+        {
+            throw new ProfessionalEntrySequenceInvalidException(nameof(Experience));
+        }
+        if (!spec.IsSatisfiedBy(educationList))
+        {
+            throw new ProfessionalEntrySequenceInvalidException(nameof(Education));
+        }
 
         return new(id, summary, candidateEmail, experienceList,
             educationList, skills, languages);

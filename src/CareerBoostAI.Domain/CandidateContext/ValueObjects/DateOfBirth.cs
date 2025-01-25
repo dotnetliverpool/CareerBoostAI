@@ -1,4 +1,4 @@
-﻿using CareerBoostAI.Domain.CandidateContext.Specification;
+﻿using CareerBoostAI.Domain.CandidateContext.Specifications;
 using CareerBoostAI.Domain.Common.Exceptions;
 using CareerBoostAI.Domain.Common.Services;
 using CareerBoostAI.Domain.Services;

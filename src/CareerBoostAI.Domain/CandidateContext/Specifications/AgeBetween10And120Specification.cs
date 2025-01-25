@@ -2,7 +2,7 @@
 using CareerBoostAI.Domain.Common.Abstractions.SpecificationPattern;
 using CareerBoostAI.Domain.Common.Services;
 
-namespace CareerBoostAI.Domain.CandidateContext.Specification;
+namespace CareerBoostAI.Domain.CandidateContext.Specifications;
 
 public class AgeBetween10And120Specification(IDateTimeProvider dateTimeProvider) : Specification<DateOfBirth>
 {
