@@ -87,7 +87,26 @@ public class Cv : AggregateRoot<EntityId>
     
     public void UpdateExperiences(IEnumerable<ExperienceData> dataExperiences)
     {
-        throw new NotImplementedException();
+        var newExperiences = dataExperiences.Select(
+            data => Experience.Create(
+                Guid.NewGuid(), data.OrganisationName,
+                data.City, data.Country, data.StartDate, data.EndDate,
+                data.Description, data.Index)).ToArray();
+        var spec = new ProfessionalEntrySequenceRangesFrom1ToNumberOfEntriesSpec();
+        if (!spec.IsSatisfiedBy(newExperiences))
+        {
+            throw new ProfessionalEntrySequenceInvalidException(nameof(Experience));
+        }
+        _experiences.Clear();
+        _experiences.AddRange(newExperiences);
+    }
+
+    public bool HasExperienceAt(string company)
+    {
+        var orgName = OrganisationName.Create(company);
+        var result = _experiences
+            .FirstOrDefault(exp => exp.OrganisationName.Equals(orgName));
+        return result is not null;
     }
 
     public void UpdateEducations(IEnumerable<EducationData> dataEducations)

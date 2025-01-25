@@ -1,5 +1,4 @@
 ﻿using CareerBoostAI.Domain.Common.Abstractions;
-using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.Common.Exceptions;
 

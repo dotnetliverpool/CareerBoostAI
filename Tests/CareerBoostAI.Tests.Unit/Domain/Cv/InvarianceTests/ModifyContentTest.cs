@@ -190,8 +190,8 @@ public class ModifyContentTest : BaseCvTest
 
         // Assert
         cv.Experiences.Count.ShouldBe(2);  // New experiences should be added
-        cv.Experiences.ElementAt(0).OrganisationName.ShouldBe(OrganisationName.Create("New Company 1"));
-        cv.Experiences.ElementAt(0).OrganisationName.ShouldBe(OrganisationName.Create("New Company 2"));
+        cv.Experiences.ElementAt(0).OrganisationName.ShouldBeEquivalentTo(OrganisationName.Create("New Company 1"));
+        cv.Experiences.ElementAt(1).OrganisationName.ShouldBeEquivalentTo(OrganisationName.Create("New Company 2"));
     }
 
     [Fact]

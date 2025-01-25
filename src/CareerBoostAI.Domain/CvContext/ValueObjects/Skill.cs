@@ -1,5 +1,5 @@
-﻿using CareerBoostAI.Domain.Common.Exceptions;
-using CareerBoostAI.Domain.ValueObjects;
+﻿using CareerBoostAI.Domain.Common.Abstractions;
+using CareerBoostAI.Domain.Common.Exceptions;
 
 namespace CareerBoostAI.Domain.CvContext.ValueObjects;
 

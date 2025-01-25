@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
+using CareerBoostAI.Domain.Common.Abstractions;
 using CareerBoostAI.Domain.Common.Exceptions;
-using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.CvContext.ValueObjects;
 
