@@ -1,4 +1,5 @@
-﻿using CareerBoostAI.Domain.Common.Exceptions;
+﻿using CareerBoostAI.Domain.CandidateContext.Specification;
+using CareerBoostAI.Domain.Common.Exceptions;
 using CareerBoostAI.Domain.Common.Services;
 using CareerBoostAI.Domain.Services;
 using CareerBoostAI.Domain.ValueObjects;
@@ -24,14 +25,14 @@ public class DateOfBirth : ValueObject
     public static DateOfBirth Create(DateOnly value, IDateTimeProvider dateTimeProvider)
     {
         value.ThrowIfNull();
-        if (!AgeValidationService.IsWithinAcceptableAge(value, dateTimeProvider.TodayAsDate))
+        var result =  new DateOfBirth(value);
+        var spec = new AgeBetween10And120Specification(dateTimeProvider);
+        if (!spec.IsSatisfiedBy(result))
         {
             throw new AgeNotWithinAcceptedRangeException();
         }
-        return new DateOfBirth(value);
+        return result;
     }
-    
-
 
     protected override IEnumerable<object> GetAtomicValues()
     {
