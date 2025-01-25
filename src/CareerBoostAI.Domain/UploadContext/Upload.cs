@@ -1,4 +1,5 @@
 ﻿using CareerBoostAI.Domain.Common.Abstractions;
+using CareerBoostAI.Domain.Common.Services;
 using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.UploadContext.ValueObjects;
 
@@ -12,7 +13,7 @@ public class Upload : AggregateRoot<EntityId>
     public DateTime CreationDateTime { get; private set; }
     
     
-    public Upload(EntityId id, Email userEmailAddress, Document document,
+    private Upload(EntityId id, Email userEmailAddress, Document document,
         DateTime creationDateTime)
     {
         Id = id;
@@ -22,13 +23,13 @@ public class Upload : AggregateRoot<EntityId>
     }
 
     public static Upload Create(Guid id, string email, string address, 
-        string medium, string fileName, string extension, DateTime creationDateTime)
+        string medium, string fileName, string extension, IDateTimeProvider dateTimeProvider)
     {
         var domainEmail = Email.Create(email);
         var document = Document.Create(
             address, medium, fileName, extension
         );
-        return new (EntityId.Create(id), domainEmail, document, creationDateTime);
+        return new (EntityId.Create(id), domainEmail, document, dateTimeProvider.UtcNow);
 
     }
 
