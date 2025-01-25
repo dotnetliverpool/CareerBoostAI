@@ -33,6 +33,7 @@
     &lt;TestId&gt;xUnit::81D2C1A0-7880-4F05-B0AD-3E45B31AAE77::net8.0::CareerBoostAI.Tests.Unit.Domain.Upload.UploadFactoryTest&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::81D2C1A0-7880-4F05-B0AD-3E45B31AAE77::net8.0::CareerBoostAI.Tests.Unit.Domain.Candidate.CandidateFactoryTest.DateOfBirth_Create_ShouldReturnValidDateOfBirth_WhenAgeIsValid&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::81D2C1A0-7880-4F05-B0AD-3E45B31AAE77::net8.0::CareerBoostAI.Tests.Unit.Domain.Candidate.CandidateFactoryTest.DateOfBirth_Create_ShouldThrowException_WhenAgeIsLessThan10OrGreaterThan120&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::81D2C1A0-7880-4F05-B0AD-3E45B31AAE77::net8.0::CareerBoostAI.Tests.Unit.Domain.Cv.InvarianceTests.ModifyContentTest.UpdateSummary_ShouldUpdateCvSummary_WhenValidDataIsProvided&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e5156c4a_002Da81f_002D4147_002Dbf55_002D7acf29cb8c3f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;CareerBoostAI.Tests.Unit&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;

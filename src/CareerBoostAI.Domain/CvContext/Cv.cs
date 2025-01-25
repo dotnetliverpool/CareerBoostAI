@@ -2,6 +2,7 @@
 using CareerBoostAI.Domain.Common.Exceptions;
 using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.CvContext.Entities;
+using CareerBoostAI.Domain.CvContext.Factory;
 using CareerBoostAI.Domain.CvContext.Specifications;
 using CareerBoostAI.Domain.CvContext.ValueObjects;
 using CareerBoostAI.Domain.Services;
@@ -61,5 +62,41 @@ public class Cv : AggregateRoot<EntityId>
 
         return new(id, summary, candidateEmail, experienceList,
             educationList, skills, languages);
+    }
+
+    public void UpdateSummary(string newSummary)
+    {
+        var result = ValueObjects.Summary.Create(newSummary);
+        Summary = result;
+    }
+
+    public void UpdateSkills(IEnumerable<string> dataSkills)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void UpdateLanguages(IEnumerable<string> dataLanguages)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void ClearExperiences()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void ClearEducations()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void AddExperiences(IEnumerable<ExperienceData> dataExperiences)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void AddEducations(IEnumerable<EducationData> dataEducations)
+    {
+        throw new NotImplementedException();
     }
 }
