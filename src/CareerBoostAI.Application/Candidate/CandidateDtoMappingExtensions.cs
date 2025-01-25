@@ -8,7 +8,7 @@ namespace CareerBoostAI.Application.Candidate;
 public static class CandidateDtoMappingExtensions
 {
 
-    public static CvData AsDomainCvData(this CreateCvCommand command, string candidateEmail)
+    public static CvData AsDomainCvData(this CreateCvCommand command)
     {
         return new CvData
         {
@@ -35,8 +35,7 @@ public static class CandidateDtoMappingExtensions
                 Index = edu.SequenceIndex
             }),
             Skills = command.Skills,
-            Languages = command.Languages,
-            CandidateEmail = candidateEmail
+            Languages = command.Languages
         };
     }
     
@@ -67,8 +66,7 @@ public static class CandidateDtoMappingExtensions
                 Index = edu.SequenceIndex
             }),
             Skills = command.Skills,
-            Languages = command.Languages,
-            CandidateEmail = command.Email
+            Languages = command.Languages
         };
     }
     

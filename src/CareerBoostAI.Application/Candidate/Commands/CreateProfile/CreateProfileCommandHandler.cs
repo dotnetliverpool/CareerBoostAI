@@ -46,8 +46,8 @@ namespace CareerBoostAI.Application.Candidate.Commands.CreateProfile;
                     .Create( command.FirstName, 
                         command.LastName, command.DateOfBirth, 
                         command.Email, command.PhoneCode, command.PhoneNumber);
-            var cv = _cvFactory.CreateFromData(
-                    command.CreateCvCommand.AsDomainCvData(command.Email));
+            var cv = _cvFactory.CreateFromData(command.Email,
+                    command.CreateCvCommand.AsDomainCvData());
             
             await _candidateRepository.CreateNewAsync(candidateProfile);
             await _cvRepository.CreateNewAsync(cv);

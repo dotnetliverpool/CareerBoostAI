@@ -6,10 +6,10 @@ namespace CareerBoostAI.Domain.CvContext.Factory;
 
 public class CvFactory : ICvFactory
 {
-    public Cv CreateFromData( CvData data)
+    public Cv CreateFromData(string candidateEmail, CvData data)
     {
         var domainSummary = Summary.Create(data.Summary);
-        var domainCandidateEmail = Email.Create(data.CandidateEmail);
+        var domainCandidateEmail = Email.Create(candidateEmail);
         var domainExperiences = data.Experiences
             .Select(exp => Experience.Create(
                 Guid.NewGuid(),

@@ -14,7 +14,6 @@ public abstract class BaseCvTest
         return new CvData
         {
             Summary = GetValidCvSummary(),
-            CandidateEmail = "candidate@example.com",
             Experiences = GetValidCvExperiences(),
             Educations = GetValidCvEducations(),
             Skills = GetValidCvSkills(),

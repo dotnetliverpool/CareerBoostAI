@@ -27,7 +27,7 @@ public class ModifyContentTest : BaseCvTest
         var factory = GetCvFactory();
         var data = GetValidCvData();
 
-        var cv = factory.CreateFromData(data);
+        var cv = factory.CreateFromData("candidate@cv.com", data);
 
         // Act
         cv.UpdateSummary(inputSummary);  
@@ -45,7 +45,6 @@ public class ModifyContentTest : BaseCvTest
         var data = new CvData
         {
             Summary = GetValidCvSummary(),
-            CandidateEmail = "candidate@cv.com",
             Educations = GetValidCvEducations(),
             Experiences = GetValidCvExperiences(),
             Languages = GetValidCvLanguages(),
@@ -54,7 +53,7 @@ public class ModifyContentTest : BaseCvTest
 
         var skillsData = new [] {"C#", "ASP.NET Core"}; 
 
-        var cv = factory.CreateFromData(data); 
+        var cv = factory.CreateFromData("candidate@cv.com", data); 
 
         // Act
         cv.UpdateSkills(skillsData); 
@@ -73,7 +72,6 @@ public class ModifyContentTest : BaseCvTest
         var data = new CvData
         {
             Summary = GetValidCvSummary(),
-            CandidateEmail = "candidate@cv.com",
             Educations = GetValidCvEducations(),
             Experiences = GetValidCvExperiences(),
             Languages = GetValidCvLanguages(),
@@ -82,7 +80,7 @@ public class ModifyContentTest : BaseCvTest
 
         var skillsData = new [] {"C#",  "SQL", "AZURE"}; 
 
-        var cv = factory.CreateFromData(data); 
+        var cv = factory.CreateFromData("candidate@cv.com", data); 
 
         // Act
         cv.UpdateSkills(skillsData); 
@@ -102,7 +100,6 @@ public class ModifyContentTest : BaseCvTest
         var data = new CvData
         {
             Summary = GetValidCvSummary(),
-            CandidateEmail = "candidate@cv.com",
             Educations = GetValidCvEducations(),
             Experiences = GetValidCvExperiences(),
             Languages = [],  
@@ -111,7 +108,7 @@ public class ModifyContentTest : BaseCvTest
 
         var languagesData = new[] { "English", "Spanish" };
 
-        var cv = factory.CreateFromData(data);
+        var cv = factory.CreateFromData("candidate@cv.com", data);
 
         // Act
         cv.UpdateLanguages(languagesData); 
@@ -130,7 +127,6 @@ public class ModifyContentTest : BaseCvTest
         var data = new CvData
         {
             Summary = GetValidCvSummary(),
-            CandidateEmail = "candidate@cv.com",
             Educations = GetValidCvEducations(),
             Experiences = GetValidCvExperiences(),
             Languages = new List<string> { "English", "Spanish", "French", "German" }, 
@@ -139,7 +135,7 @@ public class ModifyContentTest : BaseCvTest
 
         var languagesData = new[] { "English", "Arabic" }; 
 
-        var cv = factory.CreateFromData(data);
+        var cv = factory.CreateFromData("candidate@cv.com", data);
 
         // Act
         cv.UpdateLanguages(languagesData); 
@@ -161,14 +157,13 @@ public class ModifyContentTest : BaseCvTest
         var data = new CvData
         {
             Summary = GetValidCvSummary(),
-            CandidateEmail = "candidate@cv.com",
             Educations = GetValidCvEducations(),
             Experiences = GetValidCvExperiences(),
             Languages = GetValidCvLanguages(),
             Skills = GetValidCvSkills(),
         };
 
-        var cv = factory.CreateFromData(data);
+        var cv = factory.CreateFromData("candidate@cv.com", data);
 
         var newExperiences = new[]
         {
@@ -203,14 +198,13 @@ public class ModifyContentTest : BaseCvTest
         var data = new CvData
         {
             Summary = GetValidCvSummary(),
-            CandidateEmail = "candidate@cv.com",
             Educations = GetValidCvEducations(),
             Experiences = GetValidCvExperiences(),
             Languages = GetValidCvLanguages(),
             Skills = GetValidCvSkills(),
         };
 
-        var cv = factory.CreateFromData(data);
+        var cv = factory.CreateFromData("candidate@cv.com", data);
 
         var invalidExperiences = new[]
         {
@@ -245,14 +239,13 @@ public class ModifyContentTest : BaseCvTest
         var data = new CvData
         {
             Summary = GetValidCvSummary(),
-            CandidateEmail = "candidate@cv.com",
             Educations = GetValidCvEducations(),
             Experiences = GetValidCvExperiences(),
             Languages = GetValidCvLanguages(),
             Skills = GetValidCvSkills(),
         };
 
-        var cv = factory.CreateFromData(data);
+        var cv = factory.CreateFromData("candidate@cv.com", data);
 
         var newEducations = new[]
         {
@@ -287,14 +280,13 @@ public class ModifyContentTest : BaseCvTest
         var data = new CvData
         {
             Summary = GetValidCvSummary(),
-            CandidateEmail = "candidate@cv.com",
             Educations = GetValidCvEducations(),
             Experiences = GetValidCvExperiences(),
             Languages = GetValidCvLanguages(),
             Skills = GetValidCvSkills(),
         };
 
-        var cv = factory.CreateFromData(data);
+        var cv = factory.CreateFromData("candidate@cv.com", data);
 
         var invalidEducations = new[]
         {

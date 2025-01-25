@@ -218,7 +218,7 @@ public class CvFactoryTest : BaseCvTest
         var data = GetValidCvData();
 
         // Act
-        var cv = factory.CreateFromData(data);
+        var cv = factory.CreateFromData("candidate@cv.com", data);
         
         // Validate
         cv.ShouldNotBeNull();

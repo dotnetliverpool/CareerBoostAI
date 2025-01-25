@@ -2,7 +2,7 @@
 
 public interface ICvFactory
 {
-    Cv CreateFromData(CvData data);
+    Cv CreateFromData(string candidateEmail, CvData data);
 }
 
 
@@ -14,7 +14,6 @@ public class CvData
     public required IEnumerable<string> Skills { get; init; }
     public required IEnumerable<string> Languages { get; init; }
     public required string Summary { get; init; }
-    public required string CandidateEmail { get; init; }
 }
 
 public abstract class ProfessionalEntryData
