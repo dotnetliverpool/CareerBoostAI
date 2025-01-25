@@ -100,6 +100,22 @@ public class Cv : AggregateRoot<EntityId>
         _experiences.Clear();
         _experiences.AddRange(newExperiences);
     }
+    
+    public void UpdateEducations(IEnumerable<EducationData> dataEducations)
+    {
+        var newEducations = dataEducations.Select(
+            data => Education.Create(
+                Guid.NewGuid(), data.OrganisationName,
+                data.City, data.Country, data.StartDate, data.EndDate,
+                data.Program, data.Grade,  data.Index)).ToArray();
+        var spec = new ProfessionalEntrySequenceRangesFrom1ToNumberOfEntriesSpec();
+        if (!spec.IsSatisfiedBy(newEducations))
+        {
+            throw new ProfessionalEntrySequenceInvalidException(nameof(Education));
+        }
+        _educations.Clear();
+        _educations.AddRange(newEducations);
+    }
 
     public bool HasExperienceAt(string company)
     {
@@ -117,8 +133,5 @@ public class Cv : AggregateRoot<EntityId>
         return result is not null;
     }
 
-    public void UpdateEducations(IEnumerable<EducationData> dataEducations)
-    {
-        throw new NotImplementedException();
-    }
+    
 }

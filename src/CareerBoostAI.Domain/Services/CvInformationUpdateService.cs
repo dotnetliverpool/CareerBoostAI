@@ -13,6 +13,4 @@ public static class CvInformationUpdateService
         cv.UpdateExperiences(data.Experiences);
         cv.UpdateEducations(data.Educations);
     }
-    
-    
 }
