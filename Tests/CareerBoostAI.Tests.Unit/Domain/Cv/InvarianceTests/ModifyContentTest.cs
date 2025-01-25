@@ -20,7 +20,8 @@ public class ModifyContentTest : BaseCvTest
 
     [Theory]
     [MemberData(nameof(SummaryTestData))]
-    public void UpdateSummary_ShouldUpdateCvSummary_WhenValidDataIsProvided(string inputSummary, string expectedSummary)
+    public void UpdateSummary_ShouldUpdateCvSummary_WhenValidDataIsProvided(
+        string inputSummary, string expectedSummary)
     {
         // Arrange
         var factory = GetCvFactory();
@@ -189,9 +190,9 @@ public class ModifyContentTest : BaseCvTest
         cv.UpdateExperiences(newExperiences);
 
         // Assert
-        cv.Experiences.Count.ShouldBe(2);  // New experiences should be added
-        cv.Experiences.ElementAt(0).OrganisationName.ShouldBeEquivalentTo(OrganisationName.Create("New Company 1"));
-        cv.Experiences.ElementAt(1).OrganisationName.ShouldBeEquivalentTo(OrganisationName.Create("New Company 2"));
+        cv.Experiences.Count.ShouldBe(2); 
+        cv.HasExperienceAt("New Company 1").ShouldBeTrue();
+        cv.HasExperienceAt("New Company 2").ShouldBeTrue();
     }
 
     [Fact]
@@ -235,5 +236,90 @@ public class ModifyContentTest : BaseCvTest
         exception.ShouldBeOfType<ProfessionalEntrySequenceInvalidException>();
 
     }
+    
+    [Fact]
+    public void UpdateEducations_ShouldReplaceEducations_WhenValidDataIsProvided()
+    {
+        // Arrange
+        var factory = GetCvFactory();
+        var data = new CvData
+        {
+            Summary = GetValidCvSummary(),
+            CandidateEmail = "candidate@cv.com",
+            Educations = GetValidCvEducations(),
+            Experiences = GetValidCvExperiences(),
+            Languages = GetValidCvLanguages(),
+            Skills = GetValidCvSkills(),
+        };
+
+        var cv = factory.CreateFromData(data);
+
+        var newEducations = new[]
+        {
+            new EducationData
+            {
+                OrganisationName = "New University 1",  City = "City1", Country = "Country1",
+                StartDate = DateOnly.Parse("2015-09-01"), EndDate = DateOnly.Parse("2019-06-01"), 
+                Program = "Program 1", Grade = "A", Index = 1
+            },
+            new EducationData
+            {
+                OrganisationName = "New University 2",  City = "City2", Country = "Country2",
+                StartDate = DateOnly.Parse("2019-09-01"), EndDate = DateOnly.Parse("2021-06-01"),
+                Program = "Master's Degree", Grade = "C", Index = 2
+            }
+        };
+
+        // Act
+        cv.UpdateEducations(newEducations);
+
+        // Assert
+        cv.Educations.Count.ShouldBe(2);
+        cv.HasEducationalBackgroundAt("New University 1").ShouldBeTrue();
+        cv.HasEducationalBackgroundAt("New University 2").ShouldBeTrue();
+    }
+    
+    [Fact]
+    public void UpdateEducations_ShouldThrowException_WhenSequenceIsInvalid()
+    {
+        // Arrange
+        var factory = GetCvFactory();
+        var data = new CvData
+        {
+            Summary = GetValidCvSummary(),
+            CandidateEmail = "candidate@cv.com",
+            Educations = GetValidCvEducations(),
+            Experiences = GetValidCvExperiences(),
+            Languages = GetValidCvLanguages(),
+            Skills = GetValidCvSkills(),
+        };
+
+        var cv = factory.CreateFromData(data);
+
+        var invalidEducations = new[]
+        {
+            new EducationData
+            {
+                OrganisationName = "New University 1",  City = "City1", Country = "Country1",
+                StartDate = DateOnly.Parse("2015-09-01"), EndDate = DateOnly.Parse("2019-06-01"), 
+                Program = "Program 1", Grade = "A", Index = 1
+            },
+            new EducationData
+            {
+                OrganisationName = "New University 2",  City = "City2", Country = "Country2",
+                StartDate = DateOnly.Parse("2019-09-01"), EndDate = DateOnly.Parse("2021-06-01"),
+                Program = "Master's Degree", Grade = "C", Index = 5
+            }
+        };
+
+        // Act
+        var exception = Record.Exception(() => cv.UpdateEducations(invalidEducations));
+
+        // Assert
+        exception.ShouldNotBeNull();
+        exception.ShouldBeOfType<ProfessionalEntrySequenceInvalidException>();
+    }
+
+
 
 }

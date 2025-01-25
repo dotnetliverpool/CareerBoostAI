@@ -108,6 +108,14 @@ public class Cv : AggregateRoot<EntityId>
             .FirstOrDefault(exp => exp.OrganisationName.Equals(orgName));
         return result is not null;
     }
+    
+    public bool HasEducationalBackgroundAt(string institution)
+    {
+        var orgName = OrganisationName.Create(institution);
+        var result = _educations
+            .FirstOrDefault(edu => edu.OrganisationName.Equals(orgName));
+        return result is not null;
+    }
 
     public void UpdateEducations(IEnumerable<EducationData> dataEducations)
     {
