@@ -6,11 +6,7 @@ using NSubstitute;
 
 namespace CareerBoostAI.Tests.Unit.Domain.Candidate;
 
-internal class TestDateTimeProvider : IDateTimeProvider
-{
-    public DateOnly TodayAsDate => new DateOnly(2025, 1, 25);
-    public DateTime Now => DateTime.Now;
-}
+
 
 public abstract class BaseCandidateTest
 {

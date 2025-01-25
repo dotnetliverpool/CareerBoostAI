@@ -33,7 +33,7 @@ public sealed class UploadCvDocumentCommandHandler(
             uploadResult.Address,
             uploadResult.StorageMedium.ToString(),  
             uploadResult.OriginalName, uploadResult.FileExtension,
-            dateTimeProvider.Now);
+            dateTimeProvider.UtcNow);
 
         
         await uploadRepository.CreateNewAsync(upload, cancellationToken);

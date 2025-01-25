@@ -1,4 +1,5 @@
-﻿using CareerBoostAI.Domain.ValueObjects;
+﻿using CareerBoostAI.Domain.Common.Exceptions;
+using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.UploadContext.ValueObjects;
 
@@ -19,6 +20,10 @@ public class Document : ValueObject
 
     public static Document Create(string address, string medium, string fileName, string extension)
     {
+        address.ThrowIfNullOrEmpty("Document.Address");
+        medium.ThrowIfNullOrEmpty("Document.Medium");
+        fileName.ThrowIfNullOrEmpty("Document.FileName");
+        extension.ThrowIfNullOrEmpty("Document.Extension");
         
         return new (address, medium, fileName, extension);
     }

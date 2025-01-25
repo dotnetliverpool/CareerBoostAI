@@ -30,7 +30,6 @@ public class Upload : AggregateRoot<EntityId>
         );
         return new (EntityId.Create(id), domainEmail, document, creationDateTime);
 
-
     }
 
     

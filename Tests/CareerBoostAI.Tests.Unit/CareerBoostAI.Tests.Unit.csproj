@@ -26,7 +26,6 @@
 
     <ItemGroup>
       <Folder Include="Application\Services\" />
-      <Folder Include="Domain\Upload\" />
     </ItemGroup>
 
     <ItemGroup>
