@@ -10,52 +10,38 @@ using CareerBoostAI.Domain.CvContext.Factory;
 
 namespace CareerBoostAI.Application.Candidate.Commands.CreateProfile;
 
-    public class CreateProfileCommandHandler : ICommandHandler<CreateProfileCommand, Guid>
+    public class CreateProfileCommandHandler(
+        ICandidateReadService candidateReadService,
+        ICandidateRepository candidateRepository,
+        ICandidateFactory candidateFactory,
+        ICvRepository cvRepository,
+        ICvFactory cvFactory,
+        IUnitOfWork unitOfWork,
+        IEmailSender emailSender)
+        : ICommandHandler<CreateProfileCommand, Guid>
     {
-        
-        private readonly ICandidateRepository _candidateRepository;
-        private readonly IEmailSender _emailSender;
-        private readonly ICandidateFactory _candidateFactory;
-        private readonly ICvFactory _cvFactory;
-        private readonly ICvRepository _cvRepository;
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly ICandidateReadService _candidateReadService;
+        private readonly IEmailSender _emailSender = emailSender;
 
-        public CreateProfileCommandHandler(
-            IFileStorageService fileStorageService, 
-            IEmailSender emailSender, ICandidateRepository candidateRepository, 
-            ICandidateReadService candidateReadService,
-            ICandidateFactory candidateFactory, IUnitOfWork unitOfWork, 
-            ICvFactory cvFactory, ICvRepository cvRepository)
-        {
-            _emailSender = emailSender;
-            _candidateRepository = candidateRepository;
-            _candidateReadService = candidateReadService;
-            _candidateFactory = candidateFactory;
-            _unitOfWork = unitOfWork;
-            _cvFactory = cvFactory;
-            _cvRepository = cvRepository;
-        }
         public async Task<Guid> Handle(CreateProfileCommand command, CancellationToken cancellationToken)
         { 
-            if (await _candidateReadService.CandidateExistsByEmailAsync(command.Email, cancellationToken))
+            if (await candidateReadService.CandidateExistsByEmailAsync(command.Email, cancellationToken))
             {
                 throw new CandidateProfileAlreadyExistsException(command.Email);
             }
-            var candidateProfile = _candidateFactory
+            var candidate = candidateFactory
                     .Create( command.FirstName, 
                         command.LastName, command.DateOfBirth, 
                         command.Email, command.PhoneCode, command.PhoneNumber);
-            var cv = _cvFactory.CreateFromData(command.Email,
+            var cv = cvFactory.CreateFromData(command.Email,
                     command.CreateCvCommand.AsDomainCvData());
             
-            await _candidateRepository.CreateNewAsync(candidateProfile);
-            await _cvRepository.CreateNewAsync(cv);
+            await candidateRepository.CreateNewAsync(candidate);
+            await cvRepository.CreateNewAsync(cv);
                 //  send profile created notification
                 // send cv created notification
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return candidateProfile.Id.Value;
+            return candidate.Id.Value;
         }
 
     

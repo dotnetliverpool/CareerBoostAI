@@ -29,6 +29,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\src\CareerBoostAI.Application\CareerBoostAI.Application.csproj" />
       <ProjectReference Include="..\..\src\CareerBoostAI.Domain\CareerBoostAI.Domain.csproj" />
     </ItemGroup>
 

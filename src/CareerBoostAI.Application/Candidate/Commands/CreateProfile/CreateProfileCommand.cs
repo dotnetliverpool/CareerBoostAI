@@ -15,12 +15,12 @@ public sealed record CreateProfileCommand(
 
 public sealed record CreateCvCommand(
     string Summary,
-    IEnumerable<Experience> Experiences,
-    IEnumerable<Education> Educations,
+    IEnumerable<CreateExperienceCommand> Experiences,
+    IEnumerable<CreateEducationCommand> Educations,
     IEnumerable<string> Skills,
     IEnumerable<string> Languages);
 
-public sealed record Experience(
+public sealed record CreateExperienceCommand(
     string OrganisationName,
     string City,
     string Country,
@@ -28,7 +28,7 @@ public sealed record Experience(
     DateOnly? EndDate,
     string Description,
     uint SequenceIndex);
-public  record Education(
+public  record CreateEducationCommand(
     string OrganisationName,
     string City,
     string Country,
