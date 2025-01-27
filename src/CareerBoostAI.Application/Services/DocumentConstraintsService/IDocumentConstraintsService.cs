@@ -9,7 +9,6 @@ public enum DocumentSizeFormat
 }
 public interface IDocumentConstraintsService
 {
-    long MaxDocumentSize { get; }
     bool SizeWithinLimit(Stream documentStream);
 
     bool SupportsDocumentType(string documentName);
