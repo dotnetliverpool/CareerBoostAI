@@ -6,7 +6,7 @@ using CareerBoostAI.Application.Common.Abstractions.Mediator;
 using CareerBoostAI.Application.Common.Exceptions;
 using CareerBoostAI.Domain.CvContext;
 using CareerBoostAI.Domain.CvContext.Factory;
-using CareerBoostAI.Domain.Services;
+using CareerBoostAI.Domain.CvContext.Services;
 using NSubstitute;
 using NSubstitute.ReceivedExtensions;
 using Shouldly;
@@ -92,7 +92,7 @@ public class UpdateCvCommandTest
         _cvRepository = Substitute.For<ICvRepository>();
         _unitOfWork = Substitute.For<IUnitOfWork>();
         _cvUpdateService = Substitute.For<ICvUpdateService>();
-        _commandHandler = new UpdateCvCommandHandler(_cvRepository, _unitOfWork);
+        _commandHandler = new UpdateCvCommandHandler(_cvRepository, _cvUpdateService, _unitOfWork);
         _commandFactory = new CommandFactory();
         _domainFactory = new TestDomainFactory();
     }

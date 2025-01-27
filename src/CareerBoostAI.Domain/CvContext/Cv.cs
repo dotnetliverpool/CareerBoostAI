@@ -5,7 +5,6 @@ using CareerBoostAI.Domain.CvContext.Entities;
 using CareerBoostAI.Domain.CvContext.Factory;
 using CareerBoostAI.Domain.CvContext.Specifications;
 using CareerBoostAI.Domain.CvContext.ValueObjects;
-using CareerBoostAI.Domain.Services;
 using Education = CareerBoostAI.Domain.CvContext.Entities.Education;
 
 namespace CareerBoostAI.Domain.CvContext;

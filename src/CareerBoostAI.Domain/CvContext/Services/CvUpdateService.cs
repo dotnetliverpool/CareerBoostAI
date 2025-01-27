@@ -1,11 +1,10 @@
-﻿using CareerBoostAI.Domain.CvContext;
-using CareerBoostAI.Domain.CvContext.Factory;
+﻿using CareerBoostAI.Domain.CvContext.Factory;
 
-namespace CareerBoostAI.Domain.Services;
+namespace CareerBoostAI.Domain.CvContext.Services;
 
-public static class CvInformationUpdateService
+public class CvUpdateService : ICvUpdateService
 {
-    public static void Update(Cv cv, CvData data)
+    public void Update(Cv cv, CvData data)
     {
         cv.UpdateSummary(data.Summary);
         cv.UpdateSkills(data.Skills);

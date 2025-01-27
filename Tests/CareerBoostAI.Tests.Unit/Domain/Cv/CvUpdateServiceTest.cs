@@ -1,13 +1,13 @@
 ﻿using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.CvContext.Factory;
+using CareerBoostAI.Domain.CvContext.Services;
 using CareerBoostAI.Domain.CvContext.ValueObjects;
-using CareerBoostAI.Domain.Services;
 using Shouldly;
 using Xunit;
 
 namespace CareerBoostAI.Tests.Unit.Domain.Cv;
 
-public class CvInformationUpdateServiceTest : BaseCvTest
+public class CvUpdateServiceTest : BaseCvTest
 {
     
     [Fact]
@@ -15,6 +15,7 @@ public class CvInformationUpdateServiceTest : BaseCvTest
     {
         // Arrange
         var factory = GetCvFactory();
+        var sut = new CvUpdateService();
         var cvData = new CvData
         {
             Summary = GetValidCvSummary(),
@@ -87,7 +88,7 @@ public class CvInformationUpdateServiceTest : BaseCvTest
         
         // Act
         
-        CvInformationUpdateService.Update(cv, updateData);
+        sut.Update(cv, updateData);
         
         // Assert
         cv.Experiences.Count.ShouldBe(2);
