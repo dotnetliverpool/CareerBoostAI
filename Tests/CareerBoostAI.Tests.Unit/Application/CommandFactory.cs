@@ -1,4 +1,5 @@
 ﻿using CareerBoostAI.Application.Candidate.Commands.CreateProfile;
+using CareerBoostAI.Application.Candidate.Commands.UpdateCvContent;
 
 namespace CareerBoostAI.Tests.Unit.Application;
 
@@ -30,6 +31,8 @@ public class CommandFactory
             GetValidLanguages(1, numberOfLanguages)
         );
     }
+    
+    
 
     public IEnumerable<CreateExperienceCommand> GetValidCreateExperiences(int start = 1, int count = 10)
     {
@@ -100,7 +103,7 @@ public class CommandFactory
             );
     }
 
-    public IEnumerable<string> GetValidSkills(int start, int count = 20)
+    public IEnumerable<string> GetValidSkills(int start=1, int count = 20)
     {
         var allSkills = new[]
         {
@@ -120,7 +123,7 @@ public class CommandFactory
     }
 
 
-    public IEnumerable<string> GetValidLanguages(int start, int count = 10)
+    public IEnumerable<string> GetValidLanguages(int start=1, int count = 10)
     {
         var allLanguages = new[]
         {
@@ -135,5 +138,21 @@ public class CommandFactory
             throw new ArgumentException("Start and count exceed the number of available languages.", nameof(count));
 
         return allLanguages.Skip(start - 1).Take(count);
+    }
+
+    public (CreateCvCommand, UpdateCvCommand) GetValidUpdateCvCommand(string email)
+    {
+        var originalCvCommand = new CreateCvCommand("Original Summary", 
+            GetValidCreateExperiences(1, 4),
+            GetValidCreateEducations(1, 3),
+            GetValidSkills(1, 8), GetValidLanguages(1, 4)
+            );
+        var updateCvCommand = new UpdateCvCommand(email, "Updated Sumamry",
+            GetValidCreateExperiences(3, 8),
+            GetValidCreateEducations(3, 5),
+            GetValidSkills(4, 9), GetValidLanguages(3, 8)
+            );
+
+        return (originalCvCommand, updateCvCommand);
     }
 }

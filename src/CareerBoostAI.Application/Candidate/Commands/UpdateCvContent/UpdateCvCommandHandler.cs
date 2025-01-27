@@ -1,5 +1,6 @@
 ﻿using CareerBoostAI.Application.Common.Abstractions;
 using CareerBoostAI.Application.Common.Abstractions.Mediator;
+using CareerBoostAI.Application.Common.Exceptions;
 using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.CvContext;
 using CareerBoostAI.Domain.Services;
@@ -22,7 +23,7 @@ public class UpdateCvCommandHandler : ICommandHandler<UpdateCvCommand>
         var cv = await _cvRepository.GetByEmailAsync(command.Email);
         if (cv is null)
         {
-            // candidate does not have cv exception
+            throw new CandidateCvNotFoundException(command.Email);
         }
 
         CvInformationUpdateService.Update(cv!, command.AsDomainCvData());
