@@ -10,7 +10,7 @@ public enum StorageMedium
 {
     AzureStorageBlob
 }
-public interface IFileStorageResult
+public interface IStorageDocument
 {
     public Guid Id { get; init; }
     public string Address { get; init; }
@@ -24,7 +24,7 @@ public interface IFileStorageResult
 
 public interface IFileStorageService
 {
-    Task<IFileStorageResult> UploadFileAsync(
+    Task<IStorageDocument> UploadFileAsync(
         StorageContainer container,
         Stream documentStream, string documentName, CancellationToken cancellationToken);
     

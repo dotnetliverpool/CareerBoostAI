@@ -4,7 +4,7 @@ using CareerBoostAI.Application.Services;
 
 namespace CareerBoostAI.Infrastructure.Services.FileStorageService.Azure;
 
-public class AzureBlobUploadResult : IFileStorageResult
+public class AzureBlobUploadDocument : IStorageDocument
 {
     public Guid Id { get; init; }
     public string Address { get; init; }
@@ -23,7 +23,7 @@ public class AzureBlobFileStorageService : IFileStorageService
         _client = client;
     }
 
-    public async Task<IFileStorageResult> UploadFileAsync(
+    public async Task<IStorageDocument> UploadFileAsync(
         StorageContainer container,
         Stream documentStream, string documentName, 
         CancellationToken cancellationToken)
@@ -39,7 +39,7 @@ public class AzureBlobFileStorageService : IFileStorageService
             new BlobHttpHeaders { ContentType = GetContentType(documentName) },
             cancellationToken: cancellationToken);
         
-        var result =  new AzureBlobUploadResult
+        var result =  new AzureBlobUploadDocument
         {
             Id = id,
             Address = blobClient.Uri.ToString(),

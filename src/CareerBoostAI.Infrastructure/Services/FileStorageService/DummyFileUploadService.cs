@@ -4,7 +4,7 @@ namespace CareerBoostAI.Infrastructure.Services.FileStorageService;
 
 public class DummyFileUploadService : IFileStorageService
 {
-    public Task<IFileStorageResult> UploadFileAsync(
+    public Task<IStorageDocument> UploadFileAsync(
         StorageContainer container,
         Stream documentStream, string documentName, CancellationToken cancellationToken)
     {

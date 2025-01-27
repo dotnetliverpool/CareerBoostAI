@@ -14,7 +14,7 @@ using Xunit;
 
 namespace CareerBoostAI.Tests.Unit.Application.Candidate;
 
-public class CreateProfileCommandTest
+public class CreateProfileCommandHandlerTest
 {
     Task<Guid> Act(CreateProfileCommand command)
         => _commandHandler.Handle(command, CancellationToken.None);
@@ -120,7 +120,7 @@ public class CreateProfileCommandTest
     private readonly CommandFactory _commandFactory;
     private readonly TestDomainFactory _domainFactory;
 
-    public CreateProfileCommandTest()
+    public CreateProfileCommandHandlerTest()
     {
         _candidateReadService = Substitute.For<ICandidateReadService>();
         _candidateRepository = Substitute.For<ICandidateRepository>();
