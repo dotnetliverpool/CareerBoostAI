@@ -11,29 +11,28 @@ namespace CareerBoostAI.Application.Candidate.Commands.UploadCvDocument;
 
 public sealed class UploadCvDocumentCommandHandler(
     IDocumentConstraintsService documentConstraintsService,
-    IFileStorageService fileStorageService,
+    IStorageService storageService,
+    IUploadFactory uploadFactory,
     IUploadRepository uploadRepository,
     ICandidateReadService candidateReadService,
-    IUnitOfWork unitOfWork,
-    IDateTimeProvider dateTimeProvider)
+    IUnitOfWork unitOfWork)
     : ICommandHandler<UploadCvDocumentCommand>
 {
     public async Task Handle(UploadCvDocumentCommand command, CancellationToken cancellationToken)
     {
         await ValidateAsync(command, cancellationToken);
         
-        var uploadResult = await fileStorageService.UploadFileAsync(
+        var uploadResult = await storageService.UploadFileAsync(
             StorageContainer.Cv,
             command.DocumentStream,
             command.DocumentName,
             cancellationToken);
         
-        var upload = Upload.Create(
+        var upload = uploadFactory.Create(
             uploadResult.Id, command.Email, 
             uploadResult.Address,
             uploadResult.StorageMedium.ToString(),  
-            uploadResult.OriginalName, uploadResult.FileExtension,
-            dateTimeProvider);
+            uploadResult.OriginalName, uploadResult.FileExtension);
 
         
         await uploadRepository.CreateNewAsync(upload, cancellationToken);

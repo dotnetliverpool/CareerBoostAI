@@ -22,7 +22,7 @@ public interface IStorageDocument
     public StorageMedium StorageMedium { get; }
 }
 
-public interface IFileStorageService
+public interface IStorageService
 {
     Task<IStorageDocument> UploadFileAsync(
         StorageContainer container,

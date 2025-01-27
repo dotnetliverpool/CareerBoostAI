@@ -2,6 +2,8 @@
 using CareerBoostAI.Application.Services.DocumentConstraintsService;
 using CareerBoostAI.Domain.CandidateContext.Factories;
 using CareerBoostAI.Domain.CvContext.Factory;
+using CareerBoostAI.Domain.UploadContext;
+using CareerBoostAI.Domain.UploadContext.ValueObjects;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CareerBoostAI.Application.Extensions;
@@ -17,7 +19,8 @@ public static class ServicesDependencyInjection
         
         services.AddSingleton<ICandidateFactory, CandidateFactory>();
         services.AddSingleton<ICvFactory, CvFactory>();
-        services.AddSingleton<IDocumentSizeService, AppDocumentSizeService>();
+        services.AddSingleton<IUploadFactory, UploadFactory>();
+        services.AddSingleton<IDocumentConstraintsService, AppDocumentConstraintsService>();
         return services;
     }
 }

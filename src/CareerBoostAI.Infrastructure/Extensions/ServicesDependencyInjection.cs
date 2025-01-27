@@ -16,7 +16,7 @@ public static class ServicesDependencyInjection
     {
         services.AddMySqlService(configuration);
         services.AddAzureBlobStorage(configuration);
-        services.AddScoped<IFileStorageService, DummyFileUploadService>();
+        services.AddScoped<IStorageService, DummyUploadService>();
         services.AddScoped<IEmailSender, DummyEmailSender>();
         services.AddScoped<ICvParserService, DummyCvParserService>();
         services.AddSingleton<IDateTimeProvider, SystemDateTimeProvider>();

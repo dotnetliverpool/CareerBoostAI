@@ -13,7 +13,7 @@ public class Upload : AggregateRoot<EntityId>
     public DateTime CreationDateTime { get; private set; }
     
     
-    private Upload(EntityId id, Email userEmailAddress, Document document,
+    internal Upload(EntityId id, Email userEmailAddress, Document document,
         DateTime creationDateTime)
     {
         Id = id;

@@ -1,6 +1,6 @@
 ﻿namespace CareerBoostAI.Application.Services.DocumentConstraintsService;
 
-public class AppDocumentSizeService : IDocumentConstraintsService
+public class AppDocumentConstraintsService : IDocumentConstraintsService
 {
     private readonly long _maxDocumentSize = 5 * 1024 * 1024;
     

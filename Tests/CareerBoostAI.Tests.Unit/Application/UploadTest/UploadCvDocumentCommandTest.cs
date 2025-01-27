@@ -89,7 +89,7 @@ public class UploadCvDocumentCommandHandlerTest
         _candidateReadService.CandidateExistsByEmailAsync(command.Email, CancellationToken.None).Returns(true);
         _documentConstraintsService.SupportsDocumentType(command.DocumentName).Returns(true);
         _documentConstraintsService.SizeWithinLimit(command.DocumentStream).Returns(true);
-        _fileStorageService.UploadFileAsync(
+        _storageService.UploadFileAsync(
             StorageContainer.Cv, command.DocumentStream, command.DocumentName, CancellationToken.None)
             .Returns(storedDocument);
 
@@ -97,7 +97,7 @@ public class UploadCvDocumentCommandHandlerTest
         await ActAsync(command);
 
         // ASSERT
-        await _fileStorageService.Received(1).UploadFileAsync(
+        await _storageService.Received(1).UploadFileAsync(
             Arg.Is(StorageContainer.Cv),
             Arg.Is(command.DocumentStream),
             Arg.Is(command.DocumentName),
@@ -121,7 +121,7 @@ public class UploadCvDocumentCommandHandlerTest
         _candidateReadService.CandidateExistsByEmailAsync(command.Email, CancellationToken.None).Returns(true);
         _documentConstraintsService.SupportsDocumentType(command.DocumentName).Returns(true);
         _documentConstraintsService.SizeWithinLimit(command.DocumentStream).Returns(true);
-        _fileStorageService.UploadFileAsync(
+        _storageService.UploadFileAsync(
             StorageContainer.Cv, command.DocumentStream, command.DocumentName, CancellationToken.None)
             .Returns(storedDocument);
 
@@ -129,7 +129,9 @@ public class UploadCvDocumentCommandHandlerTest
         await ActAsync(command);
 
         // ASSERT
-        _uploadFactory.Received(1).Create(Arg.Any<Guid>(), Arg.Any<string>());
+        _uploadFactory.Received(1).Create(Arg.Any<Guid>(), Arg.Any<string>(), 
+            Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(),
+            Arg.Any<string>());
         await _uploadRepository.Received(1).CreateNewAsync(Arg.Any<Upload>(), 
             Arg.Any<CancellationToken>());
 
@@ -140,7 +142,7 @@ public class UploadCvDocumentCommandHandlerTest
 
     private readonly ICommandHandler<UploadCvDocumentCommand> _commandHandler;
     private readonly IDocumentConstraintsService _documentConstraintsService;
-    private readonly IFileStorageService _fileStorageService;
+    private readonly IStorageService _storageService;
     private readonly IUploadFactory _uploadFactory;
     private readonly IUploadRepository _uploadRepository;
     private readonly ICandidateReadService _candidateReadService;
@@ -150,7 +152,7 @@ public class UploadCvDocumentCommandHandlerTest
     public UploadCvDocumentCommandHandlerTest()
     {
         _documentConstraintsService = Substitute.For<IDocumentConstraintsService>();
-        _fileStorageService = Substitute.For<IFileStorageService>();
+        _storageService = Substitute.For<IStorageService>();
         _uploadFactory = Substitute.For<IUploadFactory>();
         _uploadRepository = Substitute.For<IUploadRepository>();
         _candidateReadService = Substitute.For<ICandidateReadService>();
@@ -158,13 +160,12 @@ public class UploadCvDocumentCommandHandlerTest
         _dateTimeProvider = Substitute.For<IDateTimeProvider>();
 
         _commandHandler = new UploadCvDocumentCommandHandler(
-            _documentSizeService,
-            _fileStorageService,
+            _documentConstraintsService,
+            _storageService,
+            _uploadFactory,
             _uploadRepository,
             _candidateReadService,
-            _unitOfWork,
-            _dateTimeProvider);
-
+            _unitOfWork);
     }
 
     #endregion

@@ -2,7 +2,7 @@
 
 namespace CareerBoostAI.Infrastructure.Services.FileStorageService;
 
-public class DummyFileUploadService : IFileStorageService
+public class DummyUploadService : IStorageService
 {
     public Task<IStorageDocument> UploadFileAsync(
         StorageContainer container,

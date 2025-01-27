@@ -13,12 +13,12 @@ public class AzureBlobUploadDocument : IStorageDocument
     public StorageMedium StorageMedium => StorageMedium.AzureStorageBlob;
 }
 
-public class AzureBlobFileStorageService : IFileStorageService
+public class AzureBlobStorageService : IStorageService
 {
 
     private readonly BlobServiceClient _client;
 
-    public AzureBlobFileStorageService(BlobServiceClient client)
+    public AzureBlobStorageService(BlobServiceClient client)
     {
         _client = client;
     }
