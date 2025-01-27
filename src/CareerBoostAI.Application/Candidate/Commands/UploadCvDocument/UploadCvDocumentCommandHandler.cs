@@ -3,7 +3,6 @@ using CareerBoostAI.Application.Common.Abstractions.Mediator;
 using CareerBoostAI.Application.Common.Exceptions;
 using CareerBoostAI.Application.Services;
 using CareerBoostAI.Application.Services.DocumentConstraintsService;
-using CareerBoostAI.Domain.Common.Services;
 using CareerBoostAI.Domain.UploadContext;
 
 namespace CareerBoostAI.Application.Candidate.Commands.UploadCvDocument;

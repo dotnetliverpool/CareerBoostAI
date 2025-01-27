@@ -22,16 +22,5 @@ public class Upload : AggregateRoot<EntityId>
         CreationDateTime = creationDateTime;
     }
 
-    public static Upload Create(Guid id, string email, string address, 
-        string medium, string fileName, string extension, IDateTimeProvider dateTimeProvider)
-    {
-        var domainEmail = Email.Create(email);
-        var document = Document.Create(
-            address, medium, fileName, extension
-        );
-        return new (EntityId.Create(id), domainEmail, document, dateTimeProvider.UtcNow);
-
-    }
-
     
 }

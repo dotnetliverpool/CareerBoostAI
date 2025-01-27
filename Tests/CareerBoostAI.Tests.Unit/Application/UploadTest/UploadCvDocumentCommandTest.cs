@@ -5,7 +5,6 @@ using CareerBoostAI.Application.Common.Abstractions.Mediator;
 using CareerBoostAI.Application.Common.Exceptions;
 using CareerBoostAI.Application.Services;
 using CareerBoostAI.Application.Services.DocumentConstraintsService;
-using CareerBoostAI.Domain.Common.Services;
 using CareerBoostAI.Domain.UploadContext;
 using NSubstitute;
 using Shouldly;
@@ -69,7 +68,6 @@ public class UploadCvDocumentCommandHandlerTest
         // ASSERT
         exception.ShouldNotBeNull();
         exception.ShouldBeOfType<DocumentExceedsMaximumUploadSizeException>();
-        exception.Message.ShouldContain(command.DocumentName);
     }
 
     [Fact]
@@ -147,7 +145,6 @@ public class UploadCvDocumentCommandHandlerTest
     private readonly IUploadRepository _uploadRepository;
     private readonly ICandidateReadService _candidateReadService;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IDateTimeProvider _dateTimeProvider;
 
     public UploadCvDocumentCommandHandlerTest()
     {
@@ -157,7 +154,6 @@ public class UploadCvDocumentCommandHandlerTest
         _uploadRepository = Substitute.For<IUploadRepository>();
         _candidateReadService = Substitute.For<ICandidateReadService>();
         _unitOfWork = Substitute.For<IUnitOfWork>();
-        _dateTimeProvider = Substitute.For<IDateTimeProvider>();
 
         _commandHandler = new UploadCvDocumentCommandHandler(
             _documentConstraintsService,

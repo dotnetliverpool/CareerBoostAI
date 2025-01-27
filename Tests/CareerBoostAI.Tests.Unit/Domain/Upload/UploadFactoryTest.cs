@@ -55,8 +55,8 @@ public class UploadFactoryTest
         var dateTimeProvider = new TestDateTimeProvider();
 
         // Act
-        var upload = CareerBoostAI.Domain.UploadContext.Upload.Create(
-            id, email, address, medium, fileName, extension, dateTimeProvider);
+        var upload = new UploadFactory(dateTimeProvider).Create(
+            id, email, address, medium, fileName, extension);
 
         // Assert
         upload.ShouldNotBeNull();
