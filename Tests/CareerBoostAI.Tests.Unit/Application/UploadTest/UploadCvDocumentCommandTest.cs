@@ -67,7 +67,7 @@ public class UploadCvDocumentCommandHandlerTest
 
         // ASSERT
         exception.ShouldNotBeNull();
-        exception.ShouldBeOfType<DocumentExceedsMaximumUploadSizeException>();
+        exception.ShouldBeOfType<DocumentExceedsMaximumUploadSizeException>();  
     }
 
     [Fact]

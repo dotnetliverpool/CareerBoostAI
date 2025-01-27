@@ -18,7 +18,7 @@ public class UpdateCvCommandTest
 {
     public class UpdateCvCommandHandlerTest
 {
-    Task Act(UpdateCvCommand command)
+    Task ActAsync(UpdateCvCommand command)
         => _commandHandler.Handle(command, CancellationToken.None);
 
     [Fact]
@@ -32,7 +32,7 @@ public class UpdateCvCommandTest
         _cvRepository.GetByEmailAsync(command.Email).Returns((Cv)null!);
 
         // ACT
-        var exception = await Record.ExceptionAsync(() => Act(command));
+        var exception = await Record.ExceptionAsync(() => ActAsync(command));
 
         // ASSERT
         exception.ShouldNotBeNull();
@@ -50,7 +50,7 @@ public class UpdateCvCommandTest
         _cvRepository.GetByEmailAsync(updateCommand.Email).Returns(cv);
 
         // ACT
-        await Act(updateCommand);
+        await ActAsync(updateCommand);
 
         // ASSERT
         await _cvRepository.Received(1).GetByEmailAsync(Arg.Is(updateCommand.Email));
@@ -69,7 +69,7 @@ public class UpdateCvCommandTest
         _cvRepository.GetByEmailAsync(updateCommand.Email).Returns(cv);
 
         // ACT
-        await Act(updateCommand);
+        await ActAsync(updateCommand);
         
         // Assert
         _cvUpdateService.Received(1).Update(Arg.Any<Cv>(), Arg.Any<CvData>());

@@ -12,11 +12,11 @@ using NSubstitute;
 using Shouldly;
 using Xunit;
 
-namespace CareerBoostAI.Tests.Unit.Application.Candidate;
+namespace CareerBoostAI.Tests.Unit.Application.CandidateTest;
 
 public class CreateProfileCommandHandlerTest
 {
-    Task<Guid> Act(CreateProfileCommand command)
+    Task<Guid> ActAsync(CreateProfileCommand command)
         => _commandHandler.Handle(command, CancellationToken.None);
 
     [Fact]
@@ -31,7 +31,7 @@ public class CreateProfileCommandHandlerTest
         
             
 
-        var exception = await Record.ExceptionAsync(() => Act(command));
+        var exception = await Record.ExceptionAsync(() => ActAsync(command));
 
         exception.ShouldNotBeNull();
         exception.ShouldBeOfType<CandidateProfileAlreadyExistsException>();
@@ -55,7 +55,7 @@ public class CreateProfileCommandHandlerTest
             .Returns(_domainFactory.GetCvFromCommand(Guid.NewGuid(), command.CreateCvCommand));
 
         // ACT
-        var result = await Act(command);
+        var result = await ActAsync(command);
 
         // ASSERT
         result.ShouldNotBe(Guid.Empty);
@@ -92,7 +92,7 @@ public class CreateProfileCommandHandlerTest
             .Returns(_domainFactory.GetCvFromCommand(Guid.NewGuid(), command.CreateCvCommand));
 
         // ACT
-        await Act(command);
+        await ActAsync(command);
 
         // ASSERT
         await _candidateRepository.Received(1).CreateNewAsync(

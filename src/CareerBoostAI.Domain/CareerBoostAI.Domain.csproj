@@ -8,7 +8,6 @@
 
     <ItemGroup>
       <Folder Include="Common\Entities\" />
-      <Folder Include="Services\" />
       <Folder Include="UploadContext\Entities\" />
     </ItemGroup>
 

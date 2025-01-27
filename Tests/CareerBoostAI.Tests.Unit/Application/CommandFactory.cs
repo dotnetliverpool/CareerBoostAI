@@ -148,9 +148,9 @@ public class CommandFactory
             GetValidSkills(1, 8), GetValidLanguages(1, 4)
             );
         var updateCvCommand = new UpdateCvCommand(email, "Updated Sumamry",
-            GetValidCreateExperiences(3, 8),
-            GetValidCreateEducations(3, 5),
-            GetValidSkills(4, 9), GetValidLanguages(3, 8)
+            GetValidCreateExperiences(3, 5),
+            GetValidCreateEducations(3, 2),
+            GetValidSkills(4, 4), GetValidLanguages(3, 5)
             );
 
         return (originalCvCommand, updateCvCommand);
