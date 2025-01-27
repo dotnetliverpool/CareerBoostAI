@@ -1,11 +1,21 @@
-﻿namespace CareerBoostAI.Application.Services.DocumentSizeService;
+﻿namespace CareerBoostAI.Application.Services.DocumentConstraintsService;
 
-public class AppDocumentSizeService : IDocumentSizeService
+public class AppDocumentSizeService : IDocumentConstraintsService
 {
     public long MaxDocumentSize => 5 * 1024 * 1024;
-    public bool IsDocumentWithinAppLimit(Stream documentStream)
+    public bool SizeWithinLimit(Stream documentStream)
     {
         return documentStream.Length < MaxDocumentSize;
+    }
+
+    public bool SupportsDocumentType(string documentName)
+    {
+        return true;
+    }
+
+    public IEnumerable<string> GetSupportedFileTypes()
+    {
+        return Enumerable.Empty<string>();
     }
 
     public string GetMaxSizeInFormat(DocumentSizeFormat format) => format switch

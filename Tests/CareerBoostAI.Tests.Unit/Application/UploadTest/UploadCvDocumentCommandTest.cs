@@ -4,7 +4,7 @@ using CareerBoostAI.Application.Common.Abstractions;
 using CareerBoostAI.Application.Common.Abstractions.Mediator;
 using CareerBoostAI.Application.Common.Exceptions;
 using CareerBoostAI.Application.Services;
-using CareerBoostAI.Application.Services.DocumentSizeService;
+using CareerBoostAI.Application.Services.DocumentConstraintsService;
 using CareerBoostAI.Domain.Common.Services;
 using CareerBoostAI.Domain.UploadContext;
 using NSubstitute;
@@ -149,7 +149,7 @@ public class UploadCvDocumentCommandHandlerTest
 
     public UploadCvDocumentCommandHandlerTest()
     {
-        _documentSizeService = Substitute.For<IDocumentConstraintsService>();
+        _documentConstraintsService = Substitute.For<IDocumentConstraintsService>();
         _fileStorageService = Substitute.For<IFileStorageService>();
         _uploadFactory = Substitute.For<IUploadFactory>();
         _uploadRepository = Substitute.For<IUploadRepository>();

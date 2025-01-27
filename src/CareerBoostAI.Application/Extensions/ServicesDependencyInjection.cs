@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using CareerBoostAI.Application.Services.DocumentSizeService;
+using CareerBoostAI.Application.Services.DocumentConstraintsService;
 using CareerBoostAI.Domain.CandidateContext.Factories;
 using CareerBoostAI.Domain.CvContext.Factory;
 using Microsoft.Extensions.DependencyInjection;

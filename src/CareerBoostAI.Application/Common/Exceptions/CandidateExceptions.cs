@@ -11,8 +11,12 @@ public class CandidateProfileAlreadyExistsException(string email)
 public class CandidateProfileNotFoundException(string email)
     : CareerBoostAIApplicationException($"Profile not found for email: {email}.");
 
+
 public class CandidateCvNotFoundException(string email)
     : CareerBoostAIApplicationException($"Cv belonging to user [{email}] not found.");
     
 public class DocumentExceedsMaximumUploadSizeException(string maxSize)
     : CareerBoostAIApplicationException($"the document exceeds the maximum supported size of {maxSize}mb.");
+    
+public class UnsupportedFileTypeException(IEnumerable<string> supportedFileTypes) : CareerBoostAIApplicationException(
+    $"The uploaded file type is not supported. Supported file types are: {string.Join(", ", supportedFileTypes)}.");

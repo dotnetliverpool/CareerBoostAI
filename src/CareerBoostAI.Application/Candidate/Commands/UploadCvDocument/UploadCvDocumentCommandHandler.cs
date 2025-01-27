@@ -2,7 +2,7 @@
 using CareerBoostAI.Application.Common.Abstractions.Mediator;
 using CareerBoostAI.Application.Common.Exceptions;
 using CareerBoostAI.Application.Services;
-using CareerBoostAI.Application.Services.DocumentSizeService;
+using CareerBoostAI.Application.Services.DocumentConstraintsService;
 using CareerBoostAI.Domain.Common.Services;
 using CareerBoostAI.Domain.UploadContext;
 
@@ -10,7 +10,7 @@ namespace CareerBoostAI.Application.Candidate.Commands.UploadCvDocument;
 
 
 public sealed class UploadCvDocumentCommandHandler(
-    IDocumentSizeService documentSizeService,
+    IDocumentConstraintsService documentConstraintsService,
     IFileStorageService fileStorageService,
     IUploadRepository uploadRepository,
     ICandidateReadService candidateReadService,
@@ -47,10 +47,15 @@ public sealed class UploadCvDocumentCommandHandler(
             throw new CandidateProfileNotFoundException(command.Email);
         }
 
-        if (!documentSizeService.IsDocumentWithinAppLimit(command.DocumentStream))
+        if (!documentConstraintsService.SupportsDocumentType(command.DocumentName))
+        {
+            throw new UnsupportedFileTypeException(documentConstraintsService.GetSupportedFileTypes());
+        }
+
+        if (!documentConstraintsService.SizeWithinLimit(command.DocumentStream))
         {
             throw new DocumentExceedsMaximumUploadSizeException(
-                documentSizeService.GetMaxSizeInFormat(DocumentSizeFormat.Mb));
+                documentConstraintsService.GetMaxSizeInFormat(DocumentSizeFormat.Mb));
         }
     }
 }
