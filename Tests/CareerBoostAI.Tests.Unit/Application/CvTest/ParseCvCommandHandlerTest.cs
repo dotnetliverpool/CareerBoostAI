@@ -37,7 +37,8 @@ public class ParseCvCommandHandlerTest
     {
         // ARRANGE
         var command = new ParseCvCommand("cv.pdf", Stream.Null);
-        _documentConstraintsService.SizeWithinLimit(command.DocumentContent.Length).Returns(false);
+        _documentConstraintsService.SupportsDocumentType(command.DocumentName).Returns(true);
+        _documentConstraintsService.SizeWithinLimit(command.DocumentStream.Length).Returns(false);
 
         // ACT
         var exception = await Record.ExceptionAsync(() => ActAsync(command));
@@ -54,8 +55,8 @@ public class ParseCvCommandHandlerTest
         // ARRANGE
         var command = new ParseCvCommand("cv.pdf", Stream.Null);
         _documentConstraintsService.SupportsDocumentType(command.DocumentName).Returns(true);
-        _documentConstraintsService.SizeWithinLimit(command.DocumentContent.Length).Returns(true);
-        _ocrService.ExtractTextAsync(command.DocumentContent, CancellationToken.None).Returns((string)null!);
+        _documentConstraintsService.SizeWithinLimit(command.DocumentStream.Length).Returns(true);
+        _ocrService.ExtractTextAsync(command.DocumentStream, CancellationToken.None).Returns((string)null!);
 
         // ACT
         var exception = await Record.ExceptionAsync(() => ActAsync(command));
@@ -71,8 +72,8 @@ public class ParseCvCommandHandlerTest
         // ARRANGE
         var command = new ParseCvCommand("cv.pdf", Stream.Null);
         _documentConstraintsService.SupportsDocumentType(command.DocumentName).Returns(true);
-        _documentConstraintsService.SizeWithinLimit(command.DocumentContent.Length).Returns(true);
-        _ocrService.ExtractTextAsync(command.DocumentContent, CancellationToken.None).Returns("Extracted text");
+        _documentConstraintsService.SizeWithinLimit(command.DocumentStream.Length).Returns(true);
+        _ocrService.ExtractTextAsync(command.DocumentStream, CancellationToken.None).Returns("Extracted text");
         _cvDocumentContentParser.ParseAsync("Extracted text", CancellationToken.None)
             .Returns((ParsedCvDocumentDto)null!);
 
@@ -93,8 +94,8 @@ public class ParseCvCommandHandlerTest
         var expectedDto = new ParsedCvDocumentDto {  };
 
         _documentConstraintsService.SupportsDocumentType(command.DocumentName).Returns(true);
-        _documentConstraintsService.SizeWithinLimit(command.DocumentContent.Length).Returns(true);
-        _ocrService.ExtractTextAsync(command.DocumentContent, CancellationToken.None).Returns("Extracted text");
+        _documentConstraintsService.SizeWithinLimit(command.DocumentStream.Length).Returns(true);
+        _ocrService.ExtractTextAsync(command.DocumentStream, CancellationToken.None).Returns("Extracted text");
         _cvDocumentContentParser.ParseAsync("Extracted text", CancellationToken.None).Returns(expectedDto);
 
         // ACT
