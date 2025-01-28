@@ -91,7 +91,14 @@ public class ParseCvCommandHandlerTest
     {
         // ARRANGE
         var command = new ParseCvCommand("cv.pdf", Stream.Null);
-        var expectedDto = new ParsedCvDocumentDto {  };
+        var expectedDto = new ParsedCvDocumentDto
+        {
+            Summary = "Test Summary",
+            Experiences = [],
+            Educations = [],
+            Skills = ["Test Skill"],
+            Languages = ["Test Language"],
+        };
 
         _documentConstraintsService.SupportsDocumentType(command.DocumentName).Returns(true);
         _documentConstraintsService.SizeWithinLimit(command.DocumentStream.Length).Returns(true);
