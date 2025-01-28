@@ -59,7 +59,7 @@ public class UploadCvDocumentCommandHandlerTest
             "validCv.pdf", Stream.Null);
         _candidateReadService.CandidateExistsByEmailAsync(command.Email, CancellationToken.None).Returns(true);
         _documentConstraintsService.SupportsDocumentType(command.DocumentName).Returns(true);
-        _documentConstraintsService.SizeWithinLimit(command.DocumentStream).Returns(false);
+        _documentConstraintsService.SizeWithinLimit(command.DocumentStream.Length).Returns(false);
        
 
         // ACT
@@ -67,7 +67,7 @@ public class UploadCvDocumentCommandHandlerTest
 
         // ASSERT
         exception.ShouldNotBeNull();
-        exception.ShouldBeOfType<DocumentExceedsMaximumUploadSizeException>();  
+        exception.ShouldBeOfType<DocumentSizeOutOfBoundsException>();  
     }
 
     [Fact]
@@ -86,7 +86,7 @@ public class UploadCvDocumentCommandHandlerTest
         
         _candidateReadService.CandidateExistsByEmailAsync(command.Email, CancellationToken.None).Returns(true);
         _documentConstraintsService.SupportsDocumentType(command.DocumentName).Returns(true);
-        _documentConstraintsService.SizeWithinLimit(command.DocumentStream).Returns(true);
+        _documentConstraintsService.SizeWithinLimit(command.DocumentStream.Length).Returns(true);
         _storageService.UploadFileAsync(
             StorageContainer.Cv, command.DocumentStream, command.DocumentName, CancellationToken.None)
             .Returns(storedDocument);
@@ -118,7 +118,7 @@ public class UploadCvDocumentCommandHandlerTest
 
         _candidateReadService.CandidateExistsByEmailAsync(command.Email, CancellationToken.None).Returns(true);
         _documentConstraintsService.SupportsDocumentType(command.DocumentName).Returns(true);
-        _documentConstraintsService.SizeWithinLimit(command.DocumentStream).Returns(true);
+        _documentConstraintsService.SizeWithinLimit(command.DocumentStream.Length).Returns(true);
         _storageService.UploadFileAsync(
             StorageContainer.Cv, command.DocumentStream, command.DocumentName, CancellationToken.None)
             .Returns(storedDocument);

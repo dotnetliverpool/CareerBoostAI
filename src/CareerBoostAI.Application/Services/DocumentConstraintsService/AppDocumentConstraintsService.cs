@@ -8,9 +8,10 @@ public class AppDocumentConstraintsService : IDocumentConstraintsService
     {
         ".txt", ".pdf", ".doc", ".docx"
     };
-    public bool SizeWithinLimit(Stream documentStream)
+    public bool SizeWithinLimit(long sizeInBytes)
     {
-        return documentStream.Length < _maxDocumentSize;
+        return sizeInBytes > 0 
+               && sizeInBytes < _maxDocumentSize;
     }
 
     public bool SupportsDocumentType(string documentName)

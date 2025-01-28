@@ -50,9 +50,9 @@ public sealed class UploadCvDocumentCommandHandler(
             throw new UnsupportedFileTypeException(documentConstraintsService.GetSupportedFileTypes());
         }
 
-        if (!documentConstraintsService.SizeWithinLimit(command.DocumentStream))
+        if (!documentConstraintsService.SizeWithinLimit(command.DocumentStream.Length))
         {
-            throw new DocumentExceedsMaximumUploadSizeException(
+            throw new DocumentSizeOutOfBoundsException(
                 documentConstraintsService.GetMaxSizeInFormat(DocumentSizeFormat.Mb));
         }
     }
