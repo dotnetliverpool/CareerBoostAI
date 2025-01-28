@@ -1,6 +1,8 @@
 ﻿using CareerBoostAI.Application.Candidate.Commands.ParseCv;
+using CareerBoostAI.Application.Candidate.DTO;
 using CareerBoostAI.Application.Common.Abstractions.Mediator;
 using CareerBoostAI.Application.Common.Exceptions;
+using CareerBoostAI.Application.Services;
 using CareerBoostAI.Application.Services.CvParseService;
 using CareerBoostAI.Application.Services.DocumentConstraintsService;
 using NSubstitute;
@@ -11,7 +13,7 @@ namespace CareerBoostAI.Tests.Unit.Application.CvTest;
 
 public class ParseCvCommandHandlerTest
 {
-    public Task<ParsedCvDocumentDto> ActAsync(ParseCvCommand command)
+    private Task<ParsedCvDocumentDto> ActAsync(ParseCvCommand command)
         => _commandHandler.Handle(command, CancellationToken.None);
     // Test that UnsupportedFileTypeException is raised if document extension is not supported
     [Fact]

@@ -6,11 +6,11 @@ namespace CareerBoostAI.Application.Candidate.Commands.ParseCv;
 
 public sealed class ParseCvCommandHandler : ICommandHandler<ParseCvCommand, ParsedCvDocumentDto>
 {
-    private readonly ICvParserService _cvParserService;
+    private readonly ICvDocumentContentParser _cvDocumentContentParser;
 
-    public ParseCvCommandHandler(ICvParserService cvParserService)
+    public ParseCvCommandHandler(ICvDocumentContentParser cvDocumentContentParser)
     {
-        _cvParserService = cvParserService;
+        _cvDocumentContentParser = cvDocumentContentParser;
     }
 
     public async Task<ParsedCvDocumentDto> Handle(ParseCvCommand command, CancellationToken cancellationToken)
@@ -26,7 +26,7 @@ public sealed class ParseCvCommandHandler : ICommandHandler<ParseCvCommand, Pars
         // return result
         
         // Use the CV parser service to extract details from the document
-        var parsedCv = await _cvParserService.ParseAsync(
+        var parsedCv = await _cvDocumentContentParser.ParseAsync(
             command.DocumentContent, command.DocumentName, cancellationToken);
 
         return parsedCv;
