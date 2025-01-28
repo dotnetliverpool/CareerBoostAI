@@ -4,5 +4,5 @@ namespace CareerBoostAI.Application.Services.CvParseService;
 
 public interface ICvDocumentContentParser
 {
-    Task<ParsedCvDocumentDto> ParseAsync(Stream cvStream, string fileName, CancellationToken cancellationToken);
+    Task<ParsedCvDocumentDto> ParseAsync(string documentContent, CancellationToken cancellationToken);
 }

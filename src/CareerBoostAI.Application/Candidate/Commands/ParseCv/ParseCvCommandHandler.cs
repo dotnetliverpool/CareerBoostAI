@@ -1,6 +1,8 @@
 ﻿using CareerBoostAI.Application.Candidate.DTO;
 using CareerBoostAI.Application.Common.Abstractions.Mediator;
+using CareerBoostAI.Application.Services;
 using CareerBoostAI.Application.Services.CvParseService;
+using CareerBoostAI.Application.Services.DocumentConstraintsService;
 
 namespace CareerBoostAI.Application.Candidate.Commands.ParseCv;
 
@@ -8,7 +10,10 @@ public sealed class ParseCvCommandHandler : ICommandHandler<ParseCvCommand, Pars
 {
     private readonly ICvDocumentContentParser _cvDocumentContentParser;
 
-    public ParseCvCommandHandler(ICvDocumentContentParser cvDocumentContentParser)
+    public ParseCvCommandHandler(
+        IDocumentConstraintsService documentConstraintsService,
+        IOcrService ocrService,
+        ICvDocumentContentParser cvDocumentContentParser)
     {
         _cvDocumentContentParser = cvDocumentContentParser;
     }
@@ -22,12 +27,12 @@ public sealed class ParseCvCommandHandler : ICommandHandler<ParseCvCommand, Pars
         // use ocr service to extract content as string
         
         // use ai service to return result as parsed cv dto
+        var parsedCv = await _cvDocumentContentParser.ParseAsync();
         
         // return result
         
-        // Use the CV parser service to extract details from the document
-        var parsedCv = await _cvDocumentContentParser.ParseAsync(
-            command.DocumentContent, command.DocumentName, cancellationToken);
+        
+        
 
         return parsedCv;
     }

@@ -21,3 +21,6 @@ public class DocumentSizeOutOfBoundsException(string maxSize)
     
 public class UnsupportedFileTypeException(IEnumerable<string> supportedFileTypes) : CareerBoostAIApplicationException(
     $"The uploaded file type is not supported. Supported file types are: {string.Join(", ", supportedFileTypes)}.");
+
+public class DocumentParseFailedException() : CareerBoostAIApplicationException(
+    "Failed to parse the document. Try again later. Contact support if the problem persists.");

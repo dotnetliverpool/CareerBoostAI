@@ -55,7 +55,7 @@ public class ParseCvCommandHandlerTest
         var command = new ParseCvCommand("cv.pdf", Stream.Null);
         _documentConstraintsService.SupportsDocumentType(command.DocumentName).Returns(true);
         _documentConstraintsService.SizeWithinLimit(command.DocumentContent.Length).Returns(true);
-        _ocrService.ExtractTextAsync(command.DocumentContent).Returns((string)null!);
+        _ocrService.ExtractTextAsync(command.DocumentContent, CancellationToken.None).Returns((string)null!);
 
         // ACT
         var exception = await Record.ExceptionAsync(() => ActAsync(command));
@@ -72,8 +72,9 @@ public class ParseCvCommandHandlerTest
         var command = new ParseCvCommand("cv.pdf", Stream.Null);
         _documentConstraintsService.SupportsDocumentType(command.DocumentName).Returns(true);
         _documentConstraintsService.SizeWithinLimit(command.DocumentContent.Length).Returns(true);
-        _ocrService.ExtractTextAsync(command.DocumentContent).Returns("Extracted text");
-        _cvDocumentContentParser.ParseContent("Extracted text").Returns((ParsedCvDocumentDto)null!);
+        _ocrService.ExtractTextAsync(command.DocumentContent, CancellationToken.None).Returns("Extracted text");
+        _cvDocumentContentParser.ParseAsync("Extracted text", CancellationToken.None)
+            .Returns((ParsedCvDocumentDto)null!);
 
         // ACT
         var exception = await Record.ExceptionAsync(() => ActAsync(command));
@@ -93,8 +94,8 @@ public class ParseCvCommandHandlerTest
 
         _documentConstraintsService.SupportsDocumentType(command.DocumentName).Returns(true);
         _documentConstraintsService.SizeWithinLimit(command.DocumentContent.Length).Returns(true);
-        _ocrService.ExtractTextAsync(command.DocumentContent).Returns("Extracted text");
-        _cvDocumentContentParser.ParseContent("Extracted text").Returns(expectedDto);
+        _ocrService.ExtractTextAsync(command.DocumentContent, CancellationToken.None).Returns("Extracted text");
+        _cvDocumentContentParser.ParseAsync("Extracted text", CancellationToken.None).Returns(expectedDto);
 
         // ACT
         var result = await ActAsync(command);
@@ -112,7 +113,7 @@ public class ParseCvCommandHandlerTest
     private readonly ICvDocumentContentParser _cvDocumentContentParser;
     
 
-    public UpdateCvCommandHandlerTest()
+    public ParseCvCommandHandlerTest()
     {
         _documentConstraintsService = Substitute.For<IDocumentConstraintsService>();
         _ocrService = Substitute.For<IOcrService>();
