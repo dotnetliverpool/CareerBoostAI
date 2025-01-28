@@ -4,7 +4,7 @@ namespace CareerBoostAI.Infrastructure.Services;
 
 public class DummyCvParserService : ICvParserService
 {
-    public Task<ParsedCv> ParseAsync(Stream cvStream, string fileName, CancellationToken cancellationToken)
+    public Task<ParsedCvDocumentDto> ParseAsync(Stream cvStream, string fileName, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

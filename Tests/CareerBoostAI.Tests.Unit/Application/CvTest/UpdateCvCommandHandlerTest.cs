@@ -14,9 +14,7 @@ using Xunit;
 
 namespace CareerBoostAI.Tests.Unit.Application.CvTest;
 
-public class UpdateCvCommandTest
-{
-    public class UpdateCvCommandHandlerTest
+public class UpdateCvCommandHandlerTest  
 {
     Task ActAsync(UpdateCvCommand command)
         => _commandHandler.Handle(command, CancellationToken.None);
@@ -98,6 +96,4 @@ public class UpdateCvCommandTest
     }
 
     #endregion
-}
-
 }

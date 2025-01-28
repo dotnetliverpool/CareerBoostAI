@@ -2,5 +2,5 @@
 
 public interface ICvParserService
 {
-    Task<ParsedCv> ParseAsync(Stream cvStream, string fileName, CancellationToken cancellationToken);
+    Task<ParsedCvDocumentDto> ParseAsync(Stream cvStream, string fileName, CancellationToken cancellationToken);
 }
