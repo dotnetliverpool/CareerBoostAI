@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using CareerBoostAI.Application.Services.DocumentConstraintsService;
 using CareerBoostAI.Domain.CandidateContext.Factories;
+using CareerBoostAI.Domain.CandidateContext.Services;
 using CareerBoostAI.Domain.CvContext.Factory;
 using CareerBoostAI.Domain.CvContext.Services;
 using CareerBoostAI.Domain.UploadContext;
@@ -22,6 +23,7 @@ public static class ServicesDependencyInjection
         services.AddSingleton<ICvFactory, CvFactory>();
         services.AddSingleton<IUploadFactory, UploadFactory>();
         services.AddSingleton<IDocumentConstraintsService, AppDocumentConstraintsService>();
+        services.AddSingleton<ICandidateProfileUpdateDomainService, CandidateProfileUpdateService>();
         services.AddSingleton<ICvUpdateService, CvUpdateService>();
         return services;
     }
