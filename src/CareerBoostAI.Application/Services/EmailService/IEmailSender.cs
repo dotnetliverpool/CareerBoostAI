@@ -2,11 +2,6 @@
 
 public interface IEmailSender
 {
-    Task SendEmailToAdminAsync(string subject, string body, IEnumerable<string>? attachments = null);
+    Task SendToAdminAsync(IApplicationNotification applicationNotification);
 }
 
-public interface INotificationSender
-{
-    Task SendToAdminAsync();
-    Task SendAsync();
-}

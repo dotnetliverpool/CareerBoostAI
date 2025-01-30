@@ -1,5 +1,4 @@
 ﻿using CareerBoostAI.Application.Candidate.Commands.CreateOrUpdateData;
-using CareerBoostAI.Application.Candidate.Commands.CreateProfile;
 using CareerBoostAI.Application.Candidate.Commands.UpdateCvContent;
 using CareerBoostAI.Domain.CvContext.Factory;
 using CvData = CareerBoostAI.Domain.CvContext.Factory.CvData;

@@ -1,6 +1,5 @@
 ﻿using CareerBoostAI.Application.Candidate;
 using CareerBoostAI.Application.Candidate.Commands.CreateOrUpdateData;
-using CareerBoostAI.Application.Candidate.Commands.CreateProfile;
 using CareerBoostAI.Domain.CandidateContext.ValueObjects;
 using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.CvContext;
@@ -13,9 +12,25 @@ public class TestDomainFactory
 {
     public CareerBoostAI.Domain.CandidateContext.Candidate GetDefaultCandidate(Guid id)
     {
+        return GetDefaultCandidate(id: id, firstName: "john");
+    }
+
+    public CareerBoostAI.Domain.CandidateContext.Candidate GetDefaultCandidate(
+        Guid? id, 
+        string? firstName = null, 
+        string? lastName = null, 
+        DateOnly? dateOfBirth = null, 
+        string? email = null, 
+        string? phoneCode = null, 
+        string? phoneNumber = null)
+    {
         return new CareerBoostAI.Domain.CandidateContext.Candidate(
-            EntityId.Create(id), Name.Create("John", "Doe"), DateOfBirth.Create(DateOnly.Parse("1998-12-01")), 
-            Email.Create("johndoe@example.com"), PhoneNumber.Create("+44", "1234567890"));
+            EntityId.Create(id ?? Guid.NewGuid()),
+            Name.Create(firstName ?? "John", lastName ?? "Doe"),
+            DateOfBirth.Create(dateOfBirth ?? DateOnly.Parse("1998-12-01")),
+            Email.Create(email ?? "johndoe@example.com"),
+            PhoneNumber.Create(phoneCode ?? "+44", phoneNumber ?? "1234567890")
+        );
     }
     
     public CareerBoostAI.Domain.CandidateContext.Candidate GetCandidateFromCommand(Guid id, CreateOrUpdateProfileCommand command)

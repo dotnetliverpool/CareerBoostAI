@@ -1,12 +1,14 @@
 ﻿using CareerBoostAI.Application.Candidate;
 using CareerBoostAI.Application.Candidate.Commands.CreateOrUpdateData;
-using CareerBoostAI.Application.Candidate.Commands.CreateProfile;
 using CareerBoostAI.Application.Common.Abstractions;
 using CareerBoostAI.Application.Common.Abstractions.Mediator;
 using CareerBoostAI.Application.Common.Exceptions;
+using CareerBoostAI.Application.Notifications;
 using CareerBoostAI.Application.Services.EmailService;
 using CareerBoostAI.Domain.CandidateContext;
 using CareerBoostAI.Domain.CandidateContext.Factories;
+using CareerBoostAI.Domain.CandidateContext.Services;
+using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.CvContext;
 using CareerBoostAI.Domain.CvContext.Factory;
 using CareerBoostAI.Domain.CvContext.Services;
@@ -22,97 +24,237 @@ public class CreateProfileCommandHandlerTest
         => _commandHandler.Handle(command, CancellationToken.None);
 
     [Fact]
-    public async Task HandleAsync_Throws_CandidateProfileAlreadyExistsException_WhenCandidateAlreadyExists()
+    public async Task HandleAsync_RetrievesAndUpdatesCandidateAndCv_WhenCandidateAlreadyExists()
     {
         var command = new CreateOrUpdateProfileCommand(
-            "John", "Doe", "johndoe@example.com", DateOnly.Parse("1998-12-12"),
-                "+44", "1234567890", _commandFactory.GetValidCreateCvCommand());
-        
+            "Jane", "Jones", "johndoe@example.com", DateOnly.Parse("1998-01-01"),
+                "+1", "98765234", 
+            _commandFactory.GetValidCreateCvCommand(5, 4));
+        var id = Guid.NewGuid();
+        var cvId = Guid.NewGuid();
         _candidateReadService.CandidateExistsByEmailAsync(command.Email, CancellationToken.None).Returns(true);
+        _candidateRepository.GetByEmailAsync(command.Email, Arg.Any<CancellationToken>())
+            .Returns(_domainFactory.GetDefaultCandidate(
+                id, "John", "Doe", DateOnly.Parse("1998-12-01"), phoneCode: "+44"));
+
+        _cvRepository.GetByEmailAsync(command.Email, Arg.Any<CancellationToken>())
+            .Returns(_domainFactory.GetDefaultCv(cvId));
         
-        
-            
-
-        var exception = await Record.ExceptionAsync(() => ActAsync(command));
-
-        exception.ShouldNotBeNull();
-        exception.ShouldBeOfType<CandidateProfileAlreadyExistsException>();
-        exception.Message.ShouldContain(command.Email);
-    }
-    
-    [Fact]
-    public async Task HandleAsync_CallsCreateProfileAndCreateCvOnce_WhenValidDataIsProvided()
-    {
-        // ARRANGE
-        var command = new CreateOrUpdateProfileCommand(
-            "John", "Doe", "johndoe@example.com", DateOnly.Parse("1998-12-12"),
-            "+44", "1234567890", _commandFactory.GetValidCreateCvCommand()
-        );
-        var id = Guid.NewGuid();
-        _candidateReadService.CandidateExistsByEmailAsync(command.Email, CancellationToken.None).Returns(false);
-        _candidateFactory.Create(command.FirstName, command.LastName, command.DateOfBirth, command.Email,
-                command.PhoneCode, command.PhoneNumber)
-            .Returns(_domainFactory.GetCandidateFromCommand(id, command));
-        _cvFactory.CreateFromData(command.Email, command.CreateCvCommand.AsDomainCvData())
-            .Returns(_domainFactory.GetCvFromCommand(Guid.NewGuid(), command.CreateCvCommand));
-
         // ACT
-        var result = await ActAsync(command);
-
+        await ActAsync(command);
+        
         // ASSERT
-        result.ShouldNotBe(Guid.Empty);
-        result.ShouldBe(id);
+        _candidateProfileUpdateDomainService
+            .Received(1)
+            .Update(Arg.Any<Candidate>(), Arg.Any<string>(),
+                Arg.Any<string>(), Arg.Any<DateOnly>(),
+                Arg.Any<string>(), Arg.Any<string>());
+        _cvUpdateService
+            .Received(1)
+            .Update(Arg.Any<Cv>(), Arg.Any<CvData>());
+        await _candidateRepository
+            .Received(1)
+            .UpdateAsync(Arg.Any<Candidate>(), Arg.Any<CancellationToken>());
+        await _cvRepository
+            .Received(1)
+            .UpdateAsync(Arg.Any<Cv>(), Arg.Any<CancellationToken>());
+        await _unitOfWork
+            .Received(1)
+            .SaveChangesAsync(Arg.Any<CancellationToken>());
 
-        _candidateFactory.Received(1).Create(
-            Arg.Is(command.FirstName),
-            Arg.Is(command.LastName),
-            Arg.Is(command.DateOfBirth),
-            Arg.Is(command.Email),
-            Arg.Is(command.PhoneCode),
-            Arg.Is(command.PhoneNumber)
-        );
-
-        _cvFactory.Received(1).CreateFromData(
-            Arg.Is(command.Email),
-            Arg.Any<CvData>());
     }
     
     [Fact]
-    public async Task HandleAsync_SavesCandidateAndCvOnceAndCommitsUnitOfWork_WhenValidDataIsProvided()
+    public async Task HandleAsync_DoesNotCreateCandidateOrCv_WhenEmailAlreadyExists()
+    {
+        // Arrange
+        var command = new CreateOrUpdateProfileCommand(
+            "Jane", "Jones", "johndoe@example.com", DateOnly.Parse("1998-01-01"),
+            "+1", "98765234", 
+            _commandFactory.GetValidCreateCvCommand(5, 4));
+        var id = Guid.NewGuid();
+        var cvId = Guid.NewGuid();
+        _candidateReadService.CandidateExistsByEmailAsync(command.Email, CancellationToken.None).Returns(true);
+        _candidateRepository.GetByEmailAsync(command.Email, Arg.Any<CancellationToken>())
+            .Returns(_domainFactory.GetDefaultCandidate(
+                id, "John", "Doe", DateOnly.Parse("1998-12-01"), phoneCode: "+44"));
+
+        _cvRepository.GetByEmailAsync(command.Email, Arg.Any<CancellationToken>())
+            .Returns(_domainFactory.GetDefaultCv(cvId));
+
+        // Act
+        await ActAsync(command);
+
+        // Assert
+        _candidateFactory
+            .DidNotReceive()
+            .Create(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<DateOnly>(),
+                Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>());
+        _cvFactory
+            .DidNotReceive()
+            .CreateFromData(Arg.Any<string>(), Arg.Any<CvData>());
+        await _candidateRepository
+            .DidNotReceive()
+            .CreateNewAsync(Arg.Any<Candidate>(), Arg.Any<CancellationToken>());
+        await _cvRepository
+            .DidNotReceive()
+            .CreateNewAsync(Arg.Any<Cv>(), Arg.Any<CancellationToken>());
+    }
+    
+    [Fact]
+    public async Task HandleAsync_SendsCandidateProfileUpdatedNotification_WhenCandidateExists()
     {
         // ARRANGE
         var command = new CreateOrUpdateProfileCommand(
-            "John", "Doe", "johndoe@example.com", DateOnly.Parse("1998-12-12"),
-            "+44", "1234567890", _commandFactory.GetValidCreateCvCommand()
-        );
+            "Jane", "Jones", "johndoe@example.com", DateOnly.Parse("1998-01-01"),
+            "+1", "98765234", 
+            _commandFactory.GetValidCreateCvCommand(5, 4));
         var id = Guid.NewGuid();
-        _candidateReadService.CandidateExistsByEmailAsync(command.Email, CancellationToken.None).Returns(false);
-        _candidateFactory.Create(command.FirstName, command.LastName, command.DateOfBirth, command.Email,
-                command.PhoneCode, command.PhoneNumber)
-            .Returns(_domainFactory.GetCandidateFromCommand(id, command));
-        _cvFactory.CreateFromData(command.Email, command.CreateCvCommand.AsDomainCvData())
-            .Returns(_domainFactory.GetCvFromCommand(Guid.NewGuid(), command.CreateCvCommand));
+        var cvId = Guid.NewGuid();
+        _candidateReadService.CandidateExistsByEmailAsync(command.Email, CancellationToken.None).Returns(true);
+        _candidateRepository.GetByEmailAsync(command.Email, Arg.Any<CancellationToken>())
+            .Returns(_domainFactory.GetDefaultCandidate(
+                id, "John", "Doe", DateOnly.Parse("1998-12-01"), phoneCode: "+44"));
 
+        _cvRepository.GetByEmailAsync(command.Email, Arg.Any<CancellationToken>())
+            .Returns(_domainFactory.GetDefaultCv(cvId));
+        
         // ACT
         await ActAsync(command);
 
-        // ASSERT
-        await _candidateRepository.Received(1).CreateNewAsync(
-            Arg.Any<CareerBoostAI.Domain.CandidateContext.Candidate>(),
-            Arg.Any<CancellationToken>());
-        await _cvRepository.Received(1).CreateNewAsync(
-            Arg.Any<Cv>(), Arg.Any<CancellationToken>());
+        // Assert
+        await _emailSender
+            .Received(1)
+            .SendToAdminAsync(Arg.Any<CandidateProfileUpdatedNotification>());
 
-        await _unitOfWork.Received(1).SaveChangesAsync(CancellationToken.None);
+        await _emailSender
+            .DidNotReceive()
+            .SendToAdminAsync(Arg.Any<CandidateProfileCreatedNotification>());
+    }
+
+    
+    [Fact]
+    public async Task HandleAsync_CreatesCandidateAndCv_WhenEmailDoesNotExist()
+    {
+        // Arrange
+        var command = new CreateOrUpdateProfileCommand(
+            "Jane", "Jones", "janedoe@example.com", DateOnly.Parse("1998-01-01"),
+            "+1", "98765234", _commandFactory.GetValidCreateCvCommand(5, 4));
+
+        _candidateReadService.CandidateExistsByEmailAsync(command.Email, CancellationToken.None).Returns(false);
+        _candidateFactory.Create(
+            command.FirstName, command.LastName,
+            DateOnly.Parse("1998-01-01"),
+            command.Email, command.PhoneCode, command.PhoneNumber)
+            .Returns(_domainFactory.GetDefaultCandidate(Guid.NewGuid()));
+        _cvFactory
+            .CreateFromData(command.Email, Arg.Any<CvData>())
+            .Returns(_domainFactory.GetDefaultCv(Guid.NewGuid()));
+
+        // Act
+        await ActAsync(command);
+
+        // Assert
+        _candidateFactory
+            .Received(1)
+            .Create(command.FirstName, command.LastName, 
+                command.DateOfBirth, command.Email,
+                command.PhoneCode, command.PhoneNumber );
+        _cvFactory
+            .Received(1)
+            .CreateFromData(command.Email, Arg.Any<CvData>());
+
+        await _candidateRepository
+            .Received(1)
+            .CreateNewAsync(Arg.Any<Candidate>(), Arg.Any<CancellationToken>());
+    
+        await _cvRepository
+            .Received(1)
+            .CreateNewAsync(Arg.Any<Cv>(), Arg.Any<CancellationToken>());
+    
+        await _unitOfWork
+            .Received(1)
+            .SaveChangesAsync(Arg.Any<CancellationToken>());
     }
     
-    // Notification is sent
+    [Fact]
+    public async Task HandleAsync_DoesNotUpdateCandidateOrCv_WhenEmailDoesNotExist()
+    {
+        // Arrange
+        var command = new CreateOrUpdateProfileCommand(
+            "Jane", "Jones", "janedoe@example.com", DateOnly.Parse("1998-01-01"),
+            "+1", "98765234", _commandFactory.GetValidCreateCvCommand(5, 4));
+
+        _candidateReadService.CandidateExistsByEmailAsync(command.Email, CancellationToken.None).Returns(false);
+        _candidateFactory.Create(
+                command.FirstName, command.LastName,
+                DateOnly.Parse("1998-01-01"),
+                command.Email, command.PhoneCode, command.PhoneNumber)
+            .Returns(_domainFactory.GetDefaultCandidate(Guid.NewGuid()));
+        _cvFactory
+            .CreateFromData(command.Email, Arg.Any<CvData>())
+            .Returns(_domainFactory.GetDefaultCv(Guid.NewGuid()));
+
+        // Act
+        await ActAsync(command);
+
+        // Assert
+        _candidateProfileUpdateDomainService
+            .DidNotReceive()
+            .Update(Arg.Any<Candidate>(), Arg.Any<string>(), 
+                Arg.Any<string>(), Arg.Any<DateOnly>(), 
+                Arg.Any<string>(), Arg.Any<string>());
     
-    // Save suceeds if notification is not sent
+        _cvUpdateService
+            .DidNotReceive()
+            .Update(Arg.Any<Cv>(), Arg.Any<CvData>());
+
+        await _candidateRepository
+            .DidNotReceive()
+            .UpdateAsync(Arg.Any<Candidate>(), Arg.Any<CancellationToken>());
     
+        await _cvRepository
+            .DidNotReceive()
+            .UpdateAsync(Arg.Any<Cv>(), Arg.Any<CancellationToken>());
+    }
+    
+    [Fact]
+    public async Task HandleAsync_SendsCandidateProfileCreatedNotification_WhenEmailDoesNotExist()
+    {
+        // Arrange
+        var command = new CreateOrUpdateProfileCommand(
+            "Jane", "Jones", "janedoe@example.com", DateOnly.Parse("1998-01-01"),
+            "+1", "98765234", _commandFactory.GetValidCreateCvCommand(5, 4));
+
+        _candidateReadService.CandidateExistsByEmailAsync(command.Email, CancellationToken.None).Returns(false);
+        _candidateFactory.Create(
+                command.FirstName, command.LastName,
+                DateOnly.Parse("1998-01-01"),
+                command.Email, command.PhoneCode, command.PhoneNumber)
+            .Returns(_domainFactory.GetDefaultCandidate(Guid.NewGuid()));
+        _cvFactory
+            .CreateFromData(command.Email, Arg.Any<CvData>())
+            .Returns(_domainFactory.GetDefaultCv(Guid.NewGuid()));
+
+        // Act
+        await ActAsync(command);
+
+        // Assert
+        await _emailSender
+            .Received(1)
+            .SendToAdminAsync(Arg.Any<CandidateProfileCreatedNotification>());
+    
+        await _emailSender
+            .DidNotReceive()
+            .SendToAdminAsync(Arg.Any<CandidateProfileUpdatedNotification>());
+    }
+
+
+
     #region ARRANGE
 
     private readonly ICommandHandler<CreateOrUpdateProfileCommand, Guid> _commandHandler;
+    private readonly ICandidateProfileUpdateDomainService _candidateProfileUpdateDomainService;
     private readonly ICandidateRepository _candidateRepository;
     private readonly IEmailSender _emailSender;
     private readonly ICandidateFactory _candidateFactory;
@@ -128,6 +270,7 @@ public class CreateProfileCommandHandlerTest
     {
         _candidateReadService = Substitute.For<ICandidateReadService>();
         _candidateRepository = Substitute.For<ICandidateRepository>();
+        _candidateProfileUpdateDomainService = Substitute.For<ICandidateProfileUpdateDomainService>();
         _candidateFactory = Substitute.For<ICandidateFactory>();
         _cvRepository = Substitute.For<ICvRepository>();
         _cvUpdateService = Substitute.For<ICvUpdateService>();
@@ -137,6 +280,7 @@ public class CreateProfileCommandHandlerTest
 
         _commandHandler = new CreateProfileCommandHandler(
             _candidateReadService, _candidateRepository, _candidateFactory,
+            _candidateProfileUpdateDomainService,
             _cvRepository, _cvUpdateService, _cvFactory, _unitOfWork, _emailSender
             );
         _commandFactory = new CommandFactory();

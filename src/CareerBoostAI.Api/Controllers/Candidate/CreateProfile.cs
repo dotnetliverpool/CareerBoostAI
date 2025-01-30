@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using CareerBoostAI.Application.Candidate.Commands.CreateOrUpdateData;
-using CareerBoostAI.Application.Candidate.Commands.CreateProfile;
 using CareerBoostAI.Application.Services.JsonService;
 using CareerBoostAI.Infrastructure.Services.JsonService;
 using MediatR;
@@ -41,7 +40,7 @@ public class CreateProfile(ILogger<CreateProfile> logger,
     {
            var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
            var command = jsonService.Deserialize<CreateOrUpdateProfileCommand>(requestBody);
-           var id = await  mediator.Send(command!);
-           return new CreatedResult(location: "None", value: new { Id = id });
+           await  mediator.Send(command!);
+           return new CreatedResult();
     }
 }
