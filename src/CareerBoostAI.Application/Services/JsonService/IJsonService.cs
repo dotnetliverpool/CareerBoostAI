@@ -1,6 +1,6 @@
-﻿namespace CareerBoostAI.Api.JsonService;
+﻿namespace CareerBoostAI.Application.Services.JsonService;
 
-public interface IJsonSerializerService
+public interface IJsonService
 {
     public T? Deserialize<T>(string jsonValue);
 

@@ -49,8 +49,8 @@ public class ParseCv(ILogger<ParseCv> logger, IMediator mediator)
             DocumentName: file.FileName, 
             DocumentStream: documentStream);
 
-        await mediator.Send(command);
-        return new OkObjectResult("Welcome to Azure Functions!");
+        var result = await mediator.Send(command);
+        return new OkObjectResult(new {Data = result});
         
     }
 

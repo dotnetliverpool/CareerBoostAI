@@ -1,18 +1,21 @@
 ﻿using System.Net;
-using CareerBoostAI.Api.JsonService;
 using CareerBoostAI.Application.Candidate.Commands.UpdateCvContent;
+using CareerBoostAI.Application.Services.JsonService;
 using MediatR;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CareerBoostAI.Api.Controllers.Candidate;
 
 public class UpdateCv(ILogger<UpdateCv> logger,
-    IMediator mediator, IJsonSerializerService jsonSerializerService)
+    IMediator mediator,
+    [FromKeyedServices("OpenApi")] IJsonService jsonService)
 {
+    
     [Function(nameof(UpdateCv))]
     [OpenApiOperation(
         operationId:nameof(UpdateCv), tags: [Constants.Tag.Candidate],
@@ -33,7 +36,7 @@ public class UpdateCv(ILogger<UpdateCv> logger,
         Route = Constants.Route.Candidate.UpdateCv)] HttpRequest req)
     {
         var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-        var command = jsonSerializerService.Deserialize<UpdateCvCommand>(requestBody);
+        var command = jsonService.Deserialize<UpdateCvCommand>(requestBody);
         await mediator.Send(command!);
         return new OkObjectResult(new {Message = $"Cv Updated successfully for {command!.Email}"});
         

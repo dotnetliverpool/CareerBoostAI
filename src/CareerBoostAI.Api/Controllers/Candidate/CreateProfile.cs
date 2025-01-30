@@ -1,18 +1,22 @@
 ﻿using System.Net;
-using CareerBoostAI.Api.JsonService;
 using CareerBoostAI.Application.Candidate.Commands.CreateProfile;
+using CareerBoostAI.Application.Services.JsonService;
+using CareerBoostAI.Infrastructure.Services.JsonService;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace CareerBoostAI.Api.Controllers.Candidate;
 
 public class CreateProfile(ILogger<CreateProfile> logger,
-    IMediator mediator, IJsonSerializerService jsonSerializerService)
+    IMediator mediator, 
+    [FromKeyedServices("OpenApi")] IJsonService jsonService)
 {
+    
     [Function(nameof(CreateProfile))]
     [OpenApiOperation(
         operationId: nameof(CreateProfile), 
@@ -35,7 +39,7 @@ public class CreateProfile(ILogger<CreateProfile> logger,
             Route =  Constants.Route.Candidate.CreateProfile)] HttpRequest req)
     {
            var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-           var command = jsonSerializerService.Deserialize<CreateProfileCommand>(requestBody);
+           var command = jsonService.Deserialize<CreateProfileCommand>(requestBody);
            var id = await  mediator.Send(command!);
            return new CreatedResult(location: "None", value: new { Id = id });
     }

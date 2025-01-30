@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace CareerBoostAI.Api.JsonService;
+namespace CareerBoostAI.Infrastructure.Services.JsonService;
 
-public class NewtonSoftDateOnlyConverter : JsonConverter<DateOnly?>
+public class NewtonSoftObjectDateOnlyConverter : JsonConverter<DateOnly?>
 {
     public override void WriteJson(JsonWriter writer, DateOnly? value, JsonSerializer serializer)
     {
