@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using CareerBoostAI.Application.Candidate.Commands.CreateOrUpdateData;
 using CareerBoostAI.Application.Candidate.Commands.CreateProfile;
 using CareerBoostAI.Application.Services.JsonService;
 using CareerBoostAI.Infrastructure.Services.JsonService;
@@ -25,7 +26,7 @@ public class CreateProfile(ILogger<CreateProfile> logger,
         Description = "Creates a new candidate profile with the provided information.")]
     [OpenApiRequestBody(
         contentType: "application/json", 
-        bodyType: typeof(CreateProfileCommand), 
+        bodyType: typeof(CreateOrUpdateProfileCommand), 
         Required = true, 
         Description = "The candidate's profile information.")]
     [OpenApiResponseWithBody(
@@ -39,7 +40,7 @@ public class CreateProfile(ILogger<CreateProfile> logger,
             Route =  Constants.Route.Candidate.CreateProfile)] HttpRequest req)
     {
            var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-           var command = jsonService.Deserialize<CreateProfileCommand>(requestBody);
+           var command = jsonService.Deserialize<CreateOrUpdateProfileCommand>(requestBody);
            var id = await  mediator.Send(command!);
            return new CreatedResult(location: "None", value: new { Id = id });
     }

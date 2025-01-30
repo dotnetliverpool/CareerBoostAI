@@ -4,10 +4,10 @@ namespace CareerBoostAI.Domain.CvContext;
 
 public interface ICvRepository
 {
-    Task<Cv?> GetByEmailAsync(string email);
-    Task<Cv?> GetByIdAsync(EntityId id);
+    Task<Cv?> GetByEmailAsync(string email, CancellationToken cancellationToken);
+    Task<Cv?> GetByIdAsync(EntityId id, CancellationToken cancellationToken);
 
-    Task CreateNewAsync(Cv cv);
+    Task CreateNewAsync(Cv cv, CancellationToken cancellationToken);
 
-    Task UpdateAsync(Cv cv);
+    Task UpdateAsync(Cv cv, CancellationToken cancellationToken);
 }

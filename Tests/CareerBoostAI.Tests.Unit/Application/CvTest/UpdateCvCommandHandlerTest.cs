@@ -27,7 +27,7 @@ public class UpdateCvCommandHandlerTest
             "johndoe@example.com", "Initial Cv Summary", 
             _commandFactory.GetValidCreateExperiences(), _commandFactory.GetValidCreateEducations(),
             _commandFactory.GetValidSkills(), _commandFactory.GetValidLanguages());
-        _cvRepository.GetByEmailAsync(command.Email).Returns((Cv)null!);
+        _cvRepository.GetByEmailAsync(command.Email, CancellationToken.None).Returns((Cv)null!);
 
         // ACT
         var exception = await Record.ExceptionAsync(() => ActAsync(command));
@@ -45,14 +45,14 @@ public class UpdateCvCommandHandlerTest
         var id = Guid.NewGuid();
         var cv = _domainFactory.GetCvFromCommand(id, createCommand);
 
-        _cvRepository.GetByEmailAsync(updateCommand.Email).Returns(cv);
+        _cvRepository.GetByEmailAsync(updateCommand.Email, CancellationToken.None).Returns(cv);
 
         // ACT
         await ActAsync(updateCommand);
 
         // ASSERT
-        await _cvRepository.Received(1).GetByEmailAsync(Arg.Is(updateCommand.Email));
-        await _cvRepository.Received(1).UpdateAsync(Arg.Is(cv));
+        await _cvRepository.Received(1).GetByEmailAsync(Arg.Is(updateCommand.Email), Arg.Any<CancellationToken>());
+        await _cvRepository.Received(1).UpdateAsync(Arg.Is(cv), Arg.Any<CancellationToken>());
         await _unitOfWork.Received(1).SaveChangesAsync(CancellationToken.None);
     }
 
@@ -64,7 +64,7 @@ public class UpdateCvCommandHandlerTest
         var id = Guid.NewGuid();
         var cv = _domainFactory.GetCvFromCommand(id, createCommand);
 
-        _cvRepository.GetByEmailAsync(updateCommand.Email).Returns(cv);
+        _cvRepository.GetByEmailAsync(updateCommand.Email, CancellationToken.None).Returns(cv);
 
         // ACT
         await ActAsync(updateCommand);

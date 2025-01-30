@@ -1,4 +1,5 @@
 ﻿using CareerBoostAI.Application.Candidate;
+using CareerBoostAI.Application.Candidate.Commands.CreateOrUpdateData;
 using CareerBoostAI.Application.Candidate.Commands.CreateProfile;
 using CareerBoostAI.Application.Common.Abstractions;
 using CareerBoostAI.Application.Common.Abstractions.Mediator;
@@ -8,6 +9,7 @@ using CareerBoostAI.Domain.CandidateContext;
 using CareerBoostAI.Domain.CandidateContext.Factories;
 using CareerBoostAI.Domain.CvContext;
 using CareerBoostAI.Domain.CvContext.Factory;
+using CareerBoostAI.Domain.CvContext.Services;
 using NSubstitute;
 using Shouldly;
 using Xunit;
@@ -16,13 +18,13 @@ namespace CareerBoostAI.Tests.Unit.Application.CandidateTest;
 
 public class CreateProfileCommandHandlerTest
 {
-    Task<Guid> ActAsync(CreateProfileCommand command)
+    Task<Guid> ActAsync(CreateOrUpdateProfileCommand command)
         => _commandHandler.Handle(command, CancellationToken.None);
 
     [Fact]
     public async Task HandleAsync_Throws_CandidateProfileAlreadyExistsException_WhenCandidateAlreadyExists()
     {
-        var command = new CreateProfileCommand(
+        var command = new CreateOrUpdateProfileCommand(
             "John", "Doe", "johndoe@example.com", DateOnly.Parse("1998-12-12"),
                 "+44", "1234567890", _commandFactory.GetValidCreateCvCommand());
         
@@ -42,7 +44,7 @@ public class CreateProfileCommandHandlerTest
     public async Task HandleAsync_CallsCreateProfileAndCreateCvOnce_WhenValidDataIsProvided()
     {
         // ARRANGE
-        var command = new CreateProfileCommand(
+        var command = new CreateOrUpdateProfileCommand(
             "John", "Doe", "johndoe@example.com", DateOnly.Parse("1998-12-12"),
             "+44", "1234567890", _commandFactory.GetValidCreateCvCommand()
         );
@@ -79,7 +81,7 @@ public class CreateProfileCommandHandlerTest
     public async Task HandleAsync_SavesCandidateAndCvOnceAndCommitsUnitOfWork_WhenValidDataIsProvided()
     {
         // ARRANGE
-        var command = new CreateProfileCommand(
+        var command = new CreateOrUpdateProfileCommand(
             "John", "Doe", "johndoe@example.com", DateOnly.Parse("1998-12-12"),
             "+44", "1234567890", _commandFactory.GetValidCreateCvCommand()
         );
@@ -96,9 +98,10 @@ public class CreateProfileCommandHandlerTest
 
         // ASSERT
         await _candidateRepository.Received(1).CreateNewAsync(
-            Arg.Any<CareerBoostAI.Domain.CandidateContext.Candidate>());
+            Arg.Any<CareerBoostAI.Domain.CandidateContext.Candidate>(),
+            Arg.Any<CancellationToken>());
         await _cvRepository.Received(1).CreateNewAsync(
-            Arg.Any<Cv>());
+            Arg.Any<Cv>(), Arg.Any<CancellationToken>());
 
         await _unitOfWork.Received(1).SaveChangesAsync(CancellationToken.None);
     }
@@ -109,7 +112,7 @@ public class CreateProfileCommandHandlerTest
     
     #region ARRANGE
 
-    private readonly ICommandHandler<CreateProfileCommand, Guid> _commandHandler;
+    private readonly ICommandHandler<CreateOrUpdateProfileCommand, Guid> _commandHandler;
     private readonly ICandidateRepository _candidateRepository;
     private readonly IEmailSender _emailSender;
     private readonly ICandidateFactory _candidateFactory;
@@ -117,6 +120,7 @@ public class CreateProfileCommandHandlerTest
     private readonly ICvRepository _cvRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ICandidateReadService _candidateReadService;
+    private readonly ICvUpdateService _cvUpdateService;
     private readonly CommandFactory _commandFactory;
     private readonly TestDomainFactory _domainFactory;
 
@@ -126,13 +130,14 @@ public class CreateProfileCommandHandlerTest
         _candidateRepository = Substitute.For<ICandidateRepository>();
         _candidateFactory = Substitute.For<ICandidateFactory>();
         _cvRepository = Substitute.For<ICvRepository>();
+        _cvUpdateService = Substitute.For<ICvUpdateService>();
         _cvFactory = Substitute.For<ICvFactory>();
         _unitOfWork = Substitute.For<IUnitOfWork>();
         _emailSender = Substitute.For<IEmailSender>();
 
         _commandHandler = new CreateProfileCommandHandler(
             _candidateReadService, _candidateRepository, _candidateFactory,
-            _cvRepository, _cvFactory, _unitOfWork, _emailSender
+            _cvRepository, _cvUpdateService, _cvFactory, _unitOfWork, _emailSender
             );
         _commandFactory = new CommandFactory();
         _domainFactory = new TestDomainFactory();

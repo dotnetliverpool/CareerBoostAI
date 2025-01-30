@@ -1,4 +1,5 @@
-﻿using CareerBoostAI.Application.Candidate.Commands.CreateProfile;
+﻿using CareerBoostAI.Application.Candidate.Commands.CreateOrUpdateData;
+using CareerBoostAI.Application.Candidate.Commands.CreateProfile;
 using CareerBoostAI.Application.Common.Abstractions.Mediator;
 
 namespace CareerBoostAI.Application.Candidate.Commands.UpdateCvContent;

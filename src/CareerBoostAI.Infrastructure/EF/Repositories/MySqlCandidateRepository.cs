@@ -10,8 +10,19 @@ internal sealed class MySqlCandidateRepository(CareerBoostWriteDbContext context
     private readonly DbSet<Candidate> _candidates = context.Candidates;
     private readonly CareerBoostWriteDbContext _context = context;
 
-    public async Task CreateNewAsync(Candidate candidate)
+    public async Task CreateNewAsync(Candidate candidate, 
+        CancellationToken cancellationToken)
     {
-        await _candidates.AddAsync(candidate);
+        await _candidates.AddAsync(candidate, cancellationToken);
+    }
+
+    public Task<Candidate?> GetByEmailAsync(string email, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task UpdateAsync(Candidate candidate, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
     }
 }

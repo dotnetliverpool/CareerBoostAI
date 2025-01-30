@@ -1,4 +1,5 @@
 ﻿using CareerBoostAI.Application.Candidate;
+using CareerBoostAI.Application.Candidate.Commands.CreateOrUpdateData;
 using CareerBoostAI.Application.Candidate.Commands.CreateProfile;
 using CareerBoostAI.Domain.CandidateContext.ValueObjects;
 using CareerBoostAI.Domain.Common.ValueObjects;
@@ -17,7 +18,7 @@ public class TestDomainFactory
             Email.Create("johndoe@example.com"), PhoneNumber.Create("+44", "1234567890"));
     }
     
-    public CareerBoostAI.Domain.CandidateContext.Candidate GetCandidateFromCommand(Guid id, CreateProfileCommand command)
+    public CareerBoostAI.Domain.CandidateContext.Candidate GetCandidateFromCommand(Guid id, CreateOrUpdateProfileCommand command)
     {
         return new CareerBoostAI.Domain.CandidateContext.Candidate(
             EntityId.Create(id), Name.Create(command.FirstName, command.LastName), DateOfBirth.Create(command.DateOfBirth), 

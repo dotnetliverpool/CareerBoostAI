@@ -11,24 +11,25 @@ public class MySqlCvRepository(CareerBoostWriteDbContext context) : ICvRepositor
     private readonly DbSet<Cv> _cvs = context.Cvs;
     private readonly DbSet<Skill> _skills = context.Skills;
     private readonly CareerBoostWriteDbContext _context = context;
-    public async Task<Cv?> GetByEmailAsync(string email)
+    public async Task<Cv?> GetByEmailAsync(string email, CancellationToken cancellationToken)
     {
         return await _cvs
-            .FirstOrDefaultAsync(cv => cv.CandidateEmail == Email.Create(email));
+            .FirstOrDefaultAsync(
+                cv => cv.CandidateEmail == Email.Create(email), cancellationToken);
     }
 
-    public async Task<Cv?> GetByIdAsync(EntityId id)
+    public async Task<Cv?> GetByIdAsync(EntityId id, CancellationToken cancellationToken)
     {
-        return await _cvs.FindAsync(id);
+        return await _cvs.FindAsync([id], cancellationToken);
     }
 
-    public async Task CreateNewAsync(Cv cv)
+    public async Task CreateNewAsync(Cv cv, CancellationToken cancellationToken)
     {
         // handle skills and language m - m relationship
-        await _cvs.AddAsync(cv);
+        await _cvs.AddAsync(cv, cancellationToken);
     }
 
-    public Task UpdateAsync(Cv cv)
+    public Task UpdateAsync(Cv cv, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

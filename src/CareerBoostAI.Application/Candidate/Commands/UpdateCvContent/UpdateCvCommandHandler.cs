@@ -15,14 +15,14 @@ public class UpdateCvCommandHandler(
 {
     public async Task Handle(UpdateCvCommand command, CancellationToken cancellationToken)
     {
-        var cv = await cvRepository.GetByEmailAsync(command.Email);
+        var cv = await cvRepository.GetByEmailAsync(command.Email, cancellationToken);
         if (cv is null)
         {
             throw new CandidateCvNotFoundException(command.Email);
         }
 
         cvUpdateService.Update(cv!, command.AsDomainCvData());
-        await cvRepository.UpdateAsync(cv!);
+        await cvRepository.UpdateAsync(cv!, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
     }

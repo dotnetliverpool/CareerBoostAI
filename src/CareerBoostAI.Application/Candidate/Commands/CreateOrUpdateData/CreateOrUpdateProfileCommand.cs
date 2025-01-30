@@ -1,8 +1,8 @@
 ﻿using CareerBoostAI.Application.Common.Abstractions.Mediator;
 
-namespace CareerBoostAI.Application.Candidate.Commands.CreateProfile;
+namespace CareerBoostAI.Application.Candidate.Commands.CreateOrUpdateData;
 
-public sealed record CreateProfileCommand(
+public sealed record CreateOrUpdateProfileCommand(
     string FirstName,
     string LastName,
     string Email,
