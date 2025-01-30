@@ -2,9 +2,18 @@
 
 namespace CareerBoostAI.Domain.Common.Exceptions;
 
-public class CareerBoostAIDomainException : CareerBoostAIException
+public class DuplicatePropertyException : CareerBoostAiDomainException
 {
-    protected CareerBoostAIDomainException(string message) : base(message)
-    {}
+    public DuplicatePropertyException(string parent, string property, object value) 
+        : base($"{parent} Already has {property} property of value [{value}].")
+    {
+    }
     
+    public DuplicatePropertyException(object value) 
+        : base($"duplicate value found for [{value}].")
+    {
+    }
 }
+
+public class EmptyArgumentException(string argName) 
+    : CareerBoostAiDomainException($"{argName} cannot be empty");

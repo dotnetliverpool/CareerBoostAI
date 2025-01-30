@@ -19,7 +19,7 @@ public class AppOcrService : IOcrService
            case SupportedDocumentTypes.Doc:
            case SupportedDocumentTypes.Txt:
            default:
-               throw new CareerBoostAINotImplementedException(
+               throw new CareerBoostAiNotImplementedException(
                    nameof(IOcrImplementation), nameof(documentType) );
         }
         

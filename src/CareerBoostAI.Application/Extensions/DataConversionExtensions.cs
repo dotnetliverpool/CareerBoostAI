@@ -1,4 +1,5 @@
-﻿using CareerBoostAI.Application.Common.Exceptions;
+﻿
+using CareerBoostAI.Shared.Abstractions.Exceptions;
 
 namespace CareerBoostAI.Application.Extensions;
 
@@ -8,7 +9,7 @@ public static class DataConversionExtensions
     {
         if (!Enum.TryParse<TEnum>(enumString, true, out TEnum result))
         {
-            throw new CareerBoostAIApplicationException($"{nameof(ToEnum)} {enumString} is not supported");
+            throw new CareerBoostAiApplicationException($"{nameof(ToEnum)} {enumString} is not supported");
         }
         return result;
     }

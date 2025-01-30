@@ -41,7 +41,8 @@ public sealed class ParseCvCommandHandler(
     {
         if (!documentConstraintsService.SupportsDocumentType(command.DocumentName))
         {
-            throw new UnsupportedFileTypeException(documentConstraintsService.GetSupportedFileTypes());
+            throw new UnsupportedFileTypeException(documentConstraintsService.GetSupportedFileTypes()
+                .Select(ft => ft.ToString()));
         }
 
         if (!documentConstraintsService.SizeWithinLimit(command.DocumentStream.Length))

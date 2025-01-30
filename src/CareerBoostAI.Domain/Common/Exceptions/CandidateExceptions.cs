@@ -1,4 +1,6 @@
-﻿namespace CareerBoostAI.Domain.Common.Exceptions;
+﻿using CareerBoostAI.Shared.Abstractions.Exceptions;
+
+namespace CareerBoostAI.Domain.Common.Exceptions;
 
 public class CandidateExceptions
 {
@@ -6,11 +8,11 @@ public class CandidateExceptions
 }
 
 public class AgeNotWithinAcceptedRangeException()
-    : CareerBoostAIDomainException("Age must be greater than 10 and less than 120.");
+    : CareerBoostAiDomainException("Age must be greater than 10 and less than 120.");
 
 
 public class InvalidEmailFormatException(string email)
-    : CareerBoostAIDomainException($"Email [{email}] does not pass required format");
+    : CareerBoostAiDomainException($"Email [{email}] does not pass required format");
 
 public class InvalidPhoneNumberException(string code, string number)
-    : CareerBoostAIDomainException($"Invalid phone number: {code} - {number}");
+    : CareerBoostAiDomainException($"Invalid phone number: {code} - {number}");
