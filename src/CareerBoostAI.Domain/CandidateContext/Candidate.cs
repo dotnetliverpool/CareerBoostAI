@@ -1,5 +1,7 @@
-﻿using CareerBoostAI.Domain.CandidateContext.ValueObjects;
+﻿using CareerBoostAI.Domain.CandidateContext.Specifications;
+using CareerBoostAI.Domain.CandidateContext.ValueObjects;
 using CareerBoostAI.Domain.Common.Abstractions;
+using CareerBoostAI.Domain.Common.Services;
 using CareerBoostAI.Domain.Common.ValueObjects;
 
 namespace CareerBoostAI.Domain.CandidateContext;
@@ -25,5 +27,19 @@ public class Candidate : AggregateRoot<EntityId>
         Email = email;
         PhoneNumber = phoneNumber;
     }
-    
+
+    public void UpdateName(string firstName, string lastName)
+    {
+        Name = Name.Create(firstName, lastName);
+    }
+
+    public void UpdateDateOfBirth(DateOnly dateOfBirth, IDateTimeProvider dateTimeProvider)
+    {
+        DateOfBirth = ValueObjects.DateOfBirth.Create(dateOfBirth, dateTimeProvider);
+    }
+
+    public void UpdatePhoneNumber(string phoneCode, string number)
+    {
+        PhoneNumber = PhoneNumber.Create(phoneCode, number);
+    }
 }

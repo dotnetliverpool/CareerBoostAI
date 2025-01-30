@@ -1,5 +1,4 @@
 ﻿using CareerBoostAI.Domain.Common.Exceptions;
-using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.CvContext.Factory;
 using CareerBoostAI.Domain.CvContext.ValueObjects;
 using Shouldly;
@@ -30,13 +29,13 @@ public class ModifyContentTest : BaseCvTest
         var cv = factory.CreateFromData("candidate@cv.com", data);
 
         // Act
-        cv.UpdateSummary(inputSummary);  
+        cv.UpdateSummary(inputSummary);
 
         // Assert
         cv.Summary.ShouldNotBeNull();
-        cv.Summary.Value.ShouldBe(expectedSummary); 
+        cv.Summary.Value.ShouldBe(expectedSummary);
     }
-    
+
     [Fact]
     public void UpdateSkills_ShouldAddSkills_WhenSkillsWereEmpty()
     {
@@ -51,19 +50,19 @@ public class ModifyContentTest : BaseCvTest
             Skills = []
         };
 
-        var skillsData = new [] {"C#", "ASP.NET Core"}; 
+        var skillsData = new[] { "C#", "ASP.NET Core" };
 
-        var cv = factory.CreateFromData("candidate@cv.com", data); 
+        var cv = factory.CreateFromData("candidate@cv.com", data);
 
         // Act
-        cv.UpdateSkills(skillsData); 
+        cv.UpdateSkills(skillsData);
 
         // Assert
-        cv.Skills.Count.ShouldBe(2); 
+        cv.Skills.Count.ShouldBe(2);
         cv.Skills.ShouldContain(Skill.Create("C#"));
         cv.Skills.ShouldContain(Skill.Create("ASP.NET Core"));
     }
-    
+
     [Fact]
     public void UpdateSkills_ShouldReplaceSkills_WhenValidDataIsProvided()
     {
@@ -78,20 +77,20 @@ public class ModifyContentTest : BaseCvTest
             Skills = ["C#", "ASP.NET Core", "PYTHON", "PHP"]
         };
 
-        var skillsData = new [] {"C#",  "SQL", "AZURE"}; 
+        var skillsData = new[] { "C#", "SQL", "AZURE" };
 
-        var cv = factory.CreateFromData("candidate@cv.com", data); 
+        var cv = factory.CreateFromData("candidate@cv.com", data);
 
         // Act
-        cv.UpdateSkills(skillsData); 
+        cv.UpdateSkills(skillsData);
 
         // Assert
-        cv.Skills.Count.ShouldBe(3); 
-        cv.Skills.ShouldContain(Skill.Create("C#")); 
+        cv.Skills.Count.ShouldBe(3);
+        cv.Skills.ShouldContain(Skill.Create("C#"));
         cv.Skills.ShouldContain(Skill.Create("SQL"));
-        cv.Skills.ShouldContain(Skill.Create("AZURE")); 
+        cv.Skills.ShouldContain(Skill.Create("AZURE"));
     }
-    
+
     [Fact]
     public void UpdateLanguages_ShouldAddLanguages_WhenLanguagesWereEmpty()
     {
@@ -102,7 +101,7 @@ public class ModifyContentTest : BaseCvTest
             Summary = GetValidCvSummary(),
             Educations = GetValidCvEducations(),
             Experiences = GetValidCvExperiences(),
-            Languages = [],  
+            Languages = [],
             Skills = GetValidCvSkills(2)
         };
 
@@ -111,7 +110,7 @@ public class ModifyContentTest : BaseCvTest
         var cv = factory.CreateFromData("candidate@cv.com", data);
 
         // Act
-        cv.UpdateLanguages(languagesData); 
+        cv.UpdateLanguages(languagesData);
 
         // Assert
         cv.Languages.Count.ShouldBe(2);
@@ -129,26 +128,26 @@ public class ModifyContentTest : BaseCvTest
             Summary = GetValidCvSummary(),
             Educations = GetValidCvEducations(),
             Experiences = GetValidCvExperiences(),
-            Languages = new List<string> { "English", "Spanish", "French", "German" }, 
+            Languages = new List<string> { "English", "Spanish", "French", "German" },
             Skills = ["C#", "ASP.NET Core", "PYTHON", "PHP"]
         };
 
-        var languagesData = new[] { "English", "Arabic" }; 
+        var languagesData = new[] { "English", "Arabic" };
 
         var cv = factory.CreateFromData("candidate@cv.com", data);
 
         // Act
-        cv.UpdateLanguages(languagesData); 
+        cv.UpdateLanguages(languagesData);
 
         // Assert
-        cv.Languages.Count.ShouldBe(2); 
+        cv.Languages.Count.ShouldBe(2);
         cv.Languages.ShouldContain(Language.Create("English"));
         cv.Languages.ShouldContain(Language.Create("Arabic"));
-        cv.Languages.ShouldNotContain(Language.Create("Spanish")); 
-        cv.Languages.ShouldNotContain(Language.Create("French")); 
-        cv.Languages.ShouldNotContain(Language.Create("German")); 
+        cv.Languages.ShouldNotContain(Language.Create("Spanish"));
+        cv.Languages.ShouldNotContain(Language.Create("French"));
+        cv.Languages.ShouldNotContain(Language.Create("German"));
     }
-    
+
     [Fact]
     public void UpdateExperiences_ShouldReplaceExperiences_WhenValidDataIsProvided()
     {
@@ -160,7 +159,7 @@ public class ModifyContentTest : BaseCvTest
             Educations = GetValidCvEducations(),
             Experiences = GetValidCvExperiences(),
             Languages = GetValidCvLanguages(),
-            Skills = GetValidCvSkills(),
+            Skills = GetValidCvSkills()
         };
 
         var cv = factory.CreateFromData("candidate@cv.com", data);
@@ -169,14 +168,14 @@ public class ModifyContentTest : BaseCvTest
         {
             new ExperienceData
             {
-                OrganisationName = "New Company 1", City = "City1", Country = "Country1", 
-                StartDate = DateOnly.Parse("2019-03-01"), EndDate = DateOnly.Parse("2021-03-01"), 
+                OrganisationName = "New Company 1", City = "City1", Country = "Country1",
+                StartDate = DateOnly.Parse("2019-03-01"), EndDate = DateOnly.Parse("2021-03-01"),
                 Description = "Experience 1", Index = 1
             },
             new ExperienceData
             {
-                OrganisationName = "New Company 2", City = "City2", Country = "Country2", 
-                StartDate = DateOnly.Parse("2016-03-01"), EndDate = DateOnly.Parse("2017-03-01"), 
+                OrganisationName = "New Company 2", City = "City2", Country = "Country2",
+                StartDate = DateOnly.Parse("2016-03-01"), EndDate = DateOnly.Parse("2017-03-01"),
                 Description = "Experience 2", Index = 2
             }
         };
@@ -185,7 +184,7 @@ public class ModifyContentTest : BaseCvTest
         cv.UpdateExperiences(newExperiences);
 
         // Assert
-        cv.Experiences.Count.ShouldBe(2); 
+        cv.Experiences.Count.ShouldBe(2);
         cv.HasExperienceAt("New Company 1").ShouldBeTrue();
         cv.HasExperienceAt("New Company 2").ShouldBeTrue();
     }
@@ -201,7 +200,7 @@ public class ModifyContentTest : BaseCvTest
             Educations = GetValidCvEducations(),
             Experiences = GetValidCvExperiences(),
             Languages = GetValidCvLanguages(),
-            Skills = GetValidCvSkills(),
+            Skills = GetValidCvSkills()
         };
 
         var cv = factory.CreateFromData("candidate@cv.com", data);
@@ -228,9 +227,8 @@ public class ModifyContentTest : BaseCvTest
         // Assert
         exception.ShouldNotBeNull();
         exception.ShouldBeOfType<ProfessionalEntrySequenceInvalidException>();
-
     }
-    
+
     [Fact]
     public void UpdateEducations_ShouldReplaceEducations_WhenValidDataIsProvided()
     {
@@ -242,7 +240,7 @@ public class ModifyContentTest : BaseCvTest
             Educations = GetValidCvEducations(),
             Experiences = GetValidCvExperiences(),
             Languages = GetValidCvLanguages(),
-            Skills = GetValidCvSkills(),
+            Skills = GetValidCvSkills()
         };
 
         var cv = factory.CreateFromData("candidate@cv.com", data);
@@ -251,13 +249,13 @@ public class ModifyContentTest : BaseCvTest
         {
             new EducationData
             {
-                OrganisationName = "New University 1",  City = "City1", Country = "Country1",
-                StartDate = DateOnly.Parse("2015-09-01"), EndDate = DateOnly.Parse("2019-06-01"), 
+                OrganisationName = "New University 1", City = "City1", Country = "Country1",
+                StartDate = DateOnly.Parse("2015-09-01"), EndDate = DateOnly.Parse("2019-06-01"),
                 Program = "Program 1", Grade = "A", Index = 1
             },
             new EducationData
             {
-                OrganisationName = "New University 2",  City = "City2", Country = "Country2",
+                OrganisationName = "New University 2", City = "City2", Country = "Country2",
                 StartDate = DateOnly.Parse("2019-09-01"), EndDate = DateOnly.Parse("2021-06-01"),
                 Program = "Master's Degree", Grade = "C", Index = 2
             }
@@ -271,7 +269,7 @@ public class ModifyContentTest : BaseCvTest
         cv.HasEducationalBackgroundAt("New University 1").ShouldBeTrue();
         cv.HasEducationalBackgroundAt("New University 2").ShouldBeTrue();
     }
-    
+
     [Fact]
     public void UpdateEducations_ShouldThrowException_WhenSequenceIsInvalid()
     {
@@ -283,7 +281,7 @@ public class ModifyContentTest : BaseCvTest
             Educations = GetValidCvEducations(),
             Experiences = GetValidCvExperiences(),
             Languages = GetValidCvLanguages(),
-            Skills = GetValidCvSkills(),
+            Skills = GetValidCvSkills()
         };
 
         var cv = factory.CreateFromData("candidate@cv.com", data);
@@ -292,13 +290,13 @@ public class ModifyContentTest : BaseCvTest
         {
             new EducationData
             {
-                OrganisationName = "New University 1",  City = "City1", Country = "Country1",
-                StartDate = DateOnly.Parse("2015-09-01"), EndDate = DateOnly.Parse("2019-06-01"), 
+                OrganisationName = "New University 1", City = "City1", Country = "Country1",
+                StartDate = DateOnly.Parse("2015-09-01"), EndDate = DateOnly.Parse("2019-06-01"),
                 Program = "Program 1", Grade = "A", Index = 1
             },
             new EducationData
             {
-                OrganisationName = "New University 2",  City = "City2", Country = "Country2",
+                OrganisationName = "New University 2", City = "City2", Country = "Country2",
                 StartDate = DateOnly.Parse("2019-09-01"), EndDate = DateOnly.Parse("2021-06-01"),
                 Program = "Master's Degree", Grade = "C", Index = 5
             }
@@ -311,7 +309,4 @@ public class ModifyContentTest : BaseCvTest
         exception.ShouldNotBeNull();
         exception.ShouldBeOfType<ProfessionalEntrySequenceInvalidException>();
     }
-
-
-
 }
