@@ -18,8 +18,11 @@ public sealed class ParseCvCommandHandler(
     public async Task<ParsedCvDocumentDto> Handle(ParseCvCommand command, CancellationToken cancellationToken)
     {
         Validate(command);
+        var documentType = documentConstraintsService.GetDocumentType(command.DocumentName);
         
-        var documentContent = await ocrService.ExtractTextAsync(command.DocumentStream, cancellationToken);
+        var documentContent = await ocrService
+            .ExtractTextAsync(command.DocumentStream, documentType!.Value,
+                cancellationToken);
         if (documentContent is null)
         {
             throw new DocumentParseFailedException();

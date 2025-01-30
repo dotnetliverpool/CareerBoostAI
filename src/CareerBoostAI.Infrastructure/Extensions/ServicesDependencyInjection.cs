@@ -5,6 +5,7 @@ using CareerBoostAI.Domain.Common.Services;
 using CareerBoostAI.Infrastructure.EF.Extensions;
 using CareerBoostAI.Infrastructure.Services;
 using CareerBoostAI.Infrastructure.Services.FileStorageService;
+using CareerBoostAI.Infrastructure.Services.OcrService;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,6 +19,7 @@ public static class ServicesDependencyInjection
         services.AddAzureBlobStorage(configuration);
         services.AddScoped<IStorageService, DummyUploadService>();
         services.AddScoped<IEmailSender, DummyEmailSender>();
+        services.AddScoped<IOcrService, AppOcrService>();
         services.AddScoped<ICvDocumentContentParser, DummyCvDocumentContentParser>();
         services.AddSingleton<IDateTimeProvider, SystemDateTimeProvider>();
         return services;

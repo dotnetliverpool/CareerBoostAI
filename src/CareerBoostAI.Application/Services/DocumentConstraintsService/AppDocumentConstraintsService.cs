@@ -4,10 +4,8 @@ public class AppDocumentConstraintsService : IDocumentConstraintsService
 {
     private readonly long _maxDocumentSize = 5 * 1024 * 1024;
     
-    private readonly HashSet<string> _supportedFileTypes = new()
-    {
-        ".txt", ".pdf", ".doc", ".docx"
-    };
+    private readonly List<SupportedDocumentTypes> _supportedFileTypes = 
+        Enum.GetValues(typeof(SupportedDocumentTypes)).Cast<SupportedDocumentTypes>().ToList();
     public bool SizeWithinLimit(long sizeInBytes)
     {
         return sizeInBytes > 0 
@@ -17,12 +15,24 @@ public class AppDocumentConstraintsService : IDocumentConstraintsService
     public bool SupportsDocumentType(string documentName)
     {
         var extension = Path.GetExtension(documentName)?.ToLowerInvariant();
-        return !string.IsNullOrEmpty(extension) && _supportedFileTypes.Contains(extension);
+        return !string.IsNullOrEmpty(extension) && _supportedFileTypes
+            .Any(type => extension == $".{type.ToString().ToLowerInvariant()}");
+    }
+    
+    public SupportedDocumentTypes? GetDocumentType(string documentName)
+    {
+        var extension = Path.GetExtension(documentName)?.ToLowerInvariant();
+
+        if (string.IsNullOrEmpty(extension))
+            return null;
+
+        return _supportedFileTypes
+            .FirstOrDefault(type => extension == $".{type.ToString().ToLowerInvariant()}");
     }
 
-    public IEnumerable<string> GetSupportedFileTypes()
+    public IEnumerable<SupportedDocumentTypes> GetSupportedFileTypes()
     {
-        return _supportedFileTypes;
+        return Enum.GetValues(typeof(SupportedDocumentTypes)).Cast<SupportedDocumentTypes>();
     }
 
     public string GetMaxSizeInFormat(DocumentSizeFormat format) => format switch

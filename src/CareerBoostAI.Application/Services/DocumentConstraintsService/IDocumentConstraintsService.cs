@@ -1,6 +1,12 @@
 ﻿namespace CareerBoostAI.Application.Services.DocumentConstraintsService;
 
 
+public enum SupportedDocumentTypes
+{
+    Pdf,
+    Doc,
+    Txt
+}
 public enum DocumentSizeFormat
 {
     Kb,
@@ -13,6 +19,8 @@ public interface IDocumentConstraintsService
 
     bool SupportsDocumentType(string documentName);
 
-    public IEnumerable<string> GetSupportedFileTypes();
+    public SupportedDocumentTypes? GetDocumentType(string documentName);
+
+    public IEnumerable<SupportedDocumentTypes> GetSupportedFileTypes();
     string GetMaxSizeInFormat(DocumentSizeFormat format);
 }

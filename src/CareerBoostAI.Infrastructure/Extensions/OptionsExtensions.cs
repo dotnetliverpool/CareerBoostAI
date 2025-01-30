@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using CareerBoostAI.Infrastructure.Common.Exception;
+using Microsoft.Extensions.Configuration;
 
 namespace CareerBoostAI.Infrastructure.Extensions;
 

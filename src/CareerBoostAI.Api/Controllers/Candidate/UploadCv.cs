@@ -18,7 +18,7 @@ public class UploadCv(ILogger<UploadCv> logger, IMediator mediator)
         Description = "Uploads the CV information for a candidate.")]
     [OpenApiRequestBody(
         contentType: "multipart/form-data", 
-        bodyType: typeof(DocumentAddRequest), 
+        bodyType: typeof(UploadCvDocumentRequest), 
         Required = true, 
         Description = "The candidate's CV file to be uploaded.")]
     [OpenApiResponseWithBody(
@@ -59,4 +59,4 @@ public class UploadCv(ILogger<UploadCv> logger, IMediator mediator)
     }
 }
 
-public record DocumentAddRequest(string Email, byte[] File);
+public record UploadCvDocumentRequest(string Email, byte[] File);
