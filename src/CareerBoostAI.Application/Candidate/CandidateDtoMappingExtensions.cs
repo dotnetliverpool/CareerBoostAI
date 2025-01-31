@@ -20,8 +20,7 @@ public static class CandidateDtoMappingExtensions
                 Country = exp.Country,
                 StartDate = exp.StartDate,
                 EndDate = exp.EndDate,
-                Description = exp.Description,
-                Index = exp.SequenceIndex
+                Description = exp.Description
             }),
             Educations = command.Educations.Select(edu => new EducationData
             {
@@ -31,8 +30,7 @@ public static class CandidateDtoMappingExtensions
                 StartDate = edu.StartDate,
                 EndDate = edu.EndDate,
                 Program = edu.Program,
-                Grade = edu.Grade,
-                Index = edu.SequenceIndex
+                Grade = edu.Grade
             }),
             Skills = command.Skills,
             Languages = command.Languages
@@ -51,8 +49,7 @@ public static class CandidateDtoMappingExtensions
                 Country = exp.Country,
                 StartDate = exp.StartDate,
                 EndDate = exp.EndDate,
-                Description = exp.Description,
-                Index = exp.SequenceIndex
+                Description = exp.Description
             }),
             Educations = command.Educations.Select(edu => new EducationData
             {
@@ -62,8 +59,7 @@ public static class CandidateDtoMappingExtensions
                 StartDate = edu.StartDate,
                 EndDate = edu.EndDate,
                 Program = edu.Program,
-                Grade = edu.Grade,
-                Index = edu.SequenceIndex
+                Grade = edu.Grade
             }),
             Skills = command.Skills,
             Languages = command.Languages

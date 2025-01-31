@@ -51,11 +51,10 @@ public class EducationFactoryTest
         var endDate = new DateOnly(2018, 5, 31);
         var program = "BSc Computer Science";
         var grade = "First Class";
-        uint index = 1;
 
         // Act
         var education = Education.Create(
-            id, organisationName, city, country, startDate, endDate, program, grade, index);
+            id, organisationName, city, country, startDate, endDate, program, grade);
 
         // Assert
         education.ShouldNotBeNull();
@@ -68,6 +67,5 @@ public class EducationFactoryTest
         education.TimePeriod.EndDate.ShouldBe(endDate);
         education.EducationalGrade.Program.ShouldBe(program);
         education.EducationalGrade.Grade.ShouldBe(grade);
-        education.SequenceIndex.Value.ShouldBe(index);
     }
 }

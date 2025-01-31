@@ -26,14 +26,12 @@ public sealed record CreateExperienceCommand(
     string Country,
     DateOnly StartDate,
     DateOnly? EndDate,
-    string Description,
-    uint SequenceIndex);
+    string Description);
 public  record CreateEducationCommand(
     string OrganisationName,
     string City,
     string Country,
     DateOnly StartDate,
     DateOnly? EndDate,
-    uint SequenceIndex,
     string Program,
     string Grade);

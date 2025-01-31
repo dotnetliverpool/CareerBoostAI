@@ -17,8 +17,7 @@ public class CvFactory : ICvFactory
                 exp.City, 
                 exp.Country, 
                 exp.StartDate, 
-                exp.EndDate, exp.Description,
-                exp.Index));
+                exp.EndDate, exp.Description));
         var domainEducations = data.Educations
             .Select(edu =>
                 Education.Create(Guid.NewGuid(), edu.OrganisationName,
@@ -27,8 +26,7 @@ public class CvFactory : ICvFactory
                     edu.StartDate,
                     edu.EndDate,
                     edu.Program,
-                    edu.Grade,
-                    edu.Index
+                    edu.Grade
                 ));
         var domainSkills = data.Skills
             .Select(Skill.Create);

@@ -170,13 +170,13 @@ public class ModifyContentTest : BaseCvTest
             {
                 OrganisationName = "New Company 1", City = "City1", Country = "Country1",
                 StartDate = DateOnly.Parse("2019-03-01"), EndDate = DateOnly.Parse("2021-03-01"),
-                Description = "Experience 1", Index = 1
+                Description = "Experience 1"
             },
             new ExperienceData
             {
                 OrganisationName = "New Company 2", City = "City2", Country = "Country2",
                 StartDate = DateOnly.Parse("2016-03-01"), EndDate = DateOnly.Parse("2017-03-01"),
-                Description = "Experience 2", Index = 2
+                Description = "Experience 2"
             }
         };
 
@@ -189,45 +189,7 @@ public class ModifyContentTest : BaseCvTest
         cv.HasExperienceAt("New Company 2").ShouldBeTrue();
     }
 
-    [Fact]
-    public void UpdateExperiences_ShouldThrowException_WhenSequenceIsInvalid()
-    {
-        // Arrange
-        var factory = GetCvFactory();
-        var data = new CvData
-        {
-            Summary = GetValidCvSummary(),
-            Educations = GetValidCvEducations(),
-            Experiences = GetValidCvExperiences(),
-            Languages = GetValidCvLanguages(),
-            Skills = GetValidCvSkills()
-        };
-
-        var cv = factory.CreateFromData("candidate@cv.com", data);
-
-        var invalidExperiences = new[]
-        {
-            new ExperienceData
-            {
-                OrganisationName = "New Company 1", City = "City1", Country = "Country1",
-                StartDate = DateOnly.Parse("2019-03-01"), EndDate = DateOnly.Parse("2021-03-01"),
-                Description = "Experience 1", Index = 1
-            },
-            new ExperienceData
-            {
-                OrganisationName = "New Company 2", City = "City2", Country = "Country2",
-                StartDate = DateOnly.Parse("2016-03-01"), EndDate = DateOnly.Parse("2017-03-01"),
-                Description = "Experience 2", Index = 5
-            }
-        };
-
-        // Act
-        var exception = Record.Exception(() => cv.UpdateExperiences(invalidExperiences));
-
-        // Assert
-        exception.ShouldNotBeNull();
-        exception.ShouldBeOfType<ProfessionalEntrySequenceInvalidException>();
-    }
+    
 
     [Fact]
     public void UpdateEducations_ShouldReplaceEducations_WhenValidDataIsProvided()
@@ -251,13 +213,13 @@ public class ModifyContentTest : BaseCvTest
             {
                 OrganisationName = "New University 1", City = "City1", Country = "Country1",
                 StartDate = DateOnly.Parse("2015-09-01"), EndDate = DateOnly.Parse("2019-06-01"),
-                Program = "Program 1", Grade = "A", Index = 1
+                Program = "Program 1", Grade = "A"
             },
             new EducationData
             {
                 OrganisationName = "New University 2", City = "City2", Country = "Country2",
                 StartDate = DateOnly.Parse("2019-09-01"), EndDate = DateOnly.Parse("2021-06-01"),
-                Program = "Master's Degree", Grade = "C", Index = 2
+                Program = "Master's Degree", Grade = "C"
             }
         };
 
@@ -268,45 +230,5 @@ public class ModifyContentTest : BaseCvTest
         cv.Educations.Count.ShouldBe(2);
         cv.HasEducationalBackgroundAt("New University 1").ShouldBeTrue();
         cv.HasEducationalBackgroundAt("New University 2").ShouldBeTrue();
-    }
-
-    [Fact]
-    public void UpdateEducations_ShouldThrowException_WhenSequenceIsInvalid()
-    {
-        // Arrange
-        var factory = GetCvFactory();
-        var data = new CvData
-        {
-            Summary = GetValidCvSummary(),
-            Educations = GetValidCvEducations(),
-            Experiences = GetValidCvExperiences(),
-            Languages = GetValidCvLanguages(),
-            Skills = GetValidCvSkills()
-        };
-
-        var cv = factory.CreateFromData("candidate@cv.com", data);
-
-        var invalidEducations = new[]
-        {
-            new EducationData
-            {
-                OrganisationName = "New University 1", City = "City1", Country = "Country1",
-                StartDate = DateOnly.Parse("2015-09-01"), EndDate = DateOnly.Parse("2019-06-01"),
-                Program = "Program 1", Grade = "A", Index = 1
-            },
-            new EducationData
-            {
-                OrganisationName = "New University 2", City = "City2", Country = "Country2",
-                StartDate = DateOnly.Parse("2019-09-01"), EndDate = DateOnly.Parse("2021-06-01"),
-                Program = "Master's Degree", Grade = "C", Index = 5
-            }
-        };
-
-        // Act
-        var exception = Record.Exception(() => cv.UpdateEducations(invalidEducations));
-
-        // Assert
-        exception.ShouldNotBeNull();
-        exception.ShouldBeOfType<ProfessionalEntrySequenceInvalidException>();
     }
 }

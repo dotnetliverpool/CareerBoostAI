@@ -2,7 +2,6 @@
 using CareerBoostAI.Domain.CvContext.ValueObjects;
 using Location = CareerBoostAI.Domain.CvContext.ValueObjects.Location;
 using OrganisationName = CareerBoostAI.Domain.CvContext.ValueObjects.OrganisationName;
-using SequenceIndex = CareerBoostAI.Domain.CvContext.ValueObjects.SequenceIndex;
 
 namespace CareerBoostAI.Domain.CvContext.Entities;
 
@@ -15,9 +14,8 @@ public class Education : ProfessionalEntry
         OrganisationName organisationName,
         Location location,
         Period timePeriod,
-        EducationalGrade educationalGrade,
-        SequenceIndex sequenceIndex)
-        : base(id, organisationName, location, timePeriod, sequenceIndex)
+        EducationalGrade educationalGrade)
+        : base(id, organisationName, location, timePeriod)
     {
         EducationalGrade = educationalGrade;
     }
@@ -29,15 +27,14 @@ public class Education : ProfessionalEntry
         string organisationName,
         string city, string country,
         DateOnly startDate, DateOnly? endDate,
-        string program, string grade, uint index)
+        string program, string grade)
     {
         var edId = EntityId.Create(id);
         var orgName = OrganisationName.Create(organisationName);
         var location = Location.Create(city, country);
         var timePeriod = Period.Create(startDate, endDate);
         var gradeDomain = EducationalGrade.Create(program, grade);
-        var sequenceIndex = SequenceIndex.Create(index);
-        return new(edId, orgName, location, timePeriod, gradeDomain, sequenceIndex);
+        return new(edId, orgName, location, timePeriod, gradeDomain);
     }
 
     

@@ -100,31 +100,4 @@ public class ProfessionalEntryFactoryTest
         exception.ShouldNotBeNull();
         exception.ShouldBeOfType<InvalidProfessionalEntryTimePeriodException>();
     }
-    
-    [Fact]
-    public void Create_ShouldReturnSequenceIndex_WhenPassedValidValue()
-    {
-        // Arrange
-        uint validValue = 1;
-
-        // Act
-        var sequenceIndex = SequenceIndex.Create(validValue);
-
-        // Assert
-        sequenceIndex.ShouldNotBeNull();
-        sequenceIndex.Value.ShouldBe(validValue);
-    }
-
-    [Fact]
-    public void Create_ShouldThrowArgumentNullException_WhenValueIsZero()
-    {
-        // Arrange
-        uint invalidValue = 0;
-
-        // Act & Assert
-        var exception = Record.Exception(() => SequenceIndex.Create(invalidValue));
-
-        exception.ShouldNotBeNull();
-        exception.ShouldBeOfType<InvalidEntrySequenceIndexException>();
-    }
 }

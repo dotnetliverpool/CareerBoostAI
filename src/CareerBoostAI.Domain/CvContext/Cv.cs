@@ -3,7 +3,6 @@ using CareerBoostAI.Domain.Common.Exceptions;
 using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.CvContext.Entities;
 using CareerBoostAI.Domain.CvContext.Factory;
-using CareerBoostAI.Domain.CvContext.Specifications;
 using CareerBoostAI.Domain.CvContext.ValueObjects;
 using Education = CareerBoostAI.Domain.CvContext.Entities.Education;
 
@@ -49,16 +48,7 @@ public class Cv : AggregateRoot<EntityId>
     {
         var experienceList = experiences.ToArray();
         var educationList = educations.ToArray();
-        var spec = new ProfessionalEntrySequenceRangesFrom1ToNumberOfEntriesSpec();
-        if (!spec.IsSatisfiedBy(experienceList))
-        {
-            throw new ProfessionalEntrySequenceInvalidException(nameof(Experience));
-        }
-        if (!spec.IsSatisfiedBy(educationList))
-        {
-            throw new ProfessionalEntrySequenceInvalidException(nameof(Education));
-        }
-
+        
         return new(id, summary, candidateEmail, experienceList,
             educationList, skills, languages);
     }
@@ -90,12 +80,7 @@ public class Cv : AggregateRoot<EntityId>
             data => Experience.Create(
                 Guid.NewGuid(), data.OrganisationName,
                 data.City, data.Country, data.StartDate, data.EndDate,
-                data.Description, data.Index)).ToArray();
-        var spec = new ProfessionalEntrySequenceRangesFrom1ToNumberOfEntriesSpec();
-        if (!spec.IsSatisfiedBy(newExperiences))
-        {
-            throw new ProfessionalEntrySequenceInvalidException(nameof(Experience));
-        }
+                data.Description)).ToArray();
         _experiences.Clear();
         _experiences.AddRange(newExperiences);
     }
@@ -106,12 +91,7 @@ public class Cv : AggregateRoot<EntityId>
             data => Education.Create(
                 Guid.NewGuid(), data.OrganisationName,
                 data.City, data.Country, data.StartDate, data.EndDate,
-                data.Program, data.Grade,  data.Index)).ToArray();
-        var spec = new ProfessionalEntrySequenceRangesFrom1ToNumberOfEntriesSpec();
-        if (!spec.IsSatisfiedBy(newEducations))
-        {
-            throw new ProfessionalEntrySequenceInvalidException(nameof(Education));
-        }
+                data.Program, data.Grade)).ToArray();
         _educations.Clear();
         _educations.AddRange(newEducations);
     }

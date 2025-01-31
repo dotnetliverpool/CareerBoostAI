@@ -100,15 +100,14 @@ public class CvFactoryTest : BaseCvTest
         var experiences = experiencesData
             .Select(data => Experience.Create(
                 Guid.NewGuid(), data.OrganisationName, data.City,
-                data.Country, data.StartDate, data.EndDate, data.Description,
-                data.Index)).ToArray();
+                data.Country, data.StartDate, data.EndDate, data.Description)).ToArray();
         
         var educationsData = GetValidCvEducations(3);
         var educations = educationsData
             .Select(data => Education.Create(
                 Guid.NewGuid(), data.OrganisationName, data.City,
                 data.Country, data.StartDate, data.EndDate, 
-                data.Program, data.Grade, data.Index)).ToArray();
+                data.Program, data.Grade)).ToArray();
         
         var skillsData = GetValidCvSkills(10);
         var skills = skillsData.Select(Skill.Create).ToArray();
@@ -153,61 +152,6 @@ public class CvFactoryTest : BaseCvTest
         // Validate Languages
         cv.Languages.Count.ShouldBe(languages.Length);
         cv.Languages.Select(language => language.Value).ShouldBe(languages.Select(language => language.Value));
-    }
-    
-    
-
-    [Theory]
-    [InlineData(new uint[] { 1, 2, 2 })] // Invalid sequence, duplicate 2
-    [InlineData(new uint[] { 1, 2, 4 })] // Invalid sequence, missing 3
-    [InlineData(new uint[] { 1, 1, 2 })] // Invalid sequence, 0 is not a valid index
-    public void Static_Create_ShouldThrowInvalidEntrySequenceIndexException_WhenSequenceIsInvalid(uint[] indexes)
-    {
-        // Arrange
-        var id = EntityId.Create(Guid.NewGuid());
-        var summary = Summary.Create("Valid Summary");
-        var candidateEmail = Email.Create("candidate@example.com");
-
-        // Generate experiences with the sequence indexes
-        var experiencesData = GetValidCvExperiences((uint)indexes.Length)
-            .Select((data, index) => Experience.Create(
-                Guid.NewGuid(),
-                data.OrganisationName,
-                data.City,
-                data.Country,
-                data.StartDate,
-                data.EndDate,
-                data.Description,
-                indexes[index]
-            ));
-
-        // Generate educations with the sequence indexes
-        var educationsData = GetValidCvEducations((uint)indexes.Length)
-            .Select((data, index) => Education.Create(
-                Guid.NewGuid(),
-                data.OrganisationName,
-                data.City,
-                data.Country,
-                data.StartDate,
-                data.EndDate,
-                data.Program,
-                data.Grade,
-                indexes[index]
-            ));
-
-        var skillsData = GetValidCvSkills(10);
-        var skills = skillsData.Select(Skill.Create);
-
-        var languagesData = GetValidCvLanguages(3);
-        var languages = languagesData.Select(Language.Create);
-
-        // Act & Assert
-        var exception = Record.Exception(() => CareerBoostAI.Domain.CvContext.Cv.Create(
-            id, summary, candidateEmail, experiencesData, educationsData, skills, languages));
-
-        // Assert: The exception should be thrown if the sequence is invalid
-        exception.ShouldNotBeNull();
-        exception.ShouldBeOfType<ProfessionalEntrySequenceInvalidException>();
     }
     
     [Fact]

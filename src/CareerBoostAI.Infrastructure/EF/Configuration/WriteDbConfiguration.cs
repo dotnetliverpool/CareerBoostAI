@@ -132,12 +132,6 @@ internal class WriteDbConfiguration :
                 value => Description.Create(value));
         
         builder
-            .Property(exp => exp.SequenceIndex)
-            .HasConversion(
-                idx => idx.Value,
-                value => SequenceIndex.Create(value));
-        
-        builder
             .OwnsOne(exp => exp.Location, lb =>
             {
                 lb.Property(l => l.City).HasColumnName("City");
@@ -167,12 +161,6 @@ internal class WriteDbConfiguration :
             .HasConversion(
                 orgName => orgName.Value,
                 value => OrganisationName.Create(value));
-        
-        builder
-            .Property(edu => edu.SequenceIndex)
-            .HasConversion(
-                idx => idx.Value,
-                value => SequenceIndex.Create(value));
         
         builder
             .OwnsOne(edu => edu.Location, lb =>

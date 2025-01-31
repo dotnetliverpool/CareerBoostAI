@@ -10,20 +10,17 @@ public abstract class ProfessionalEntry : Entity<EntityId>
         EntityId id,
         OrganisationName organisationName,
         Location location,
-        Period timePeriod,
-        SequenceIndex sequenceIndex)
+        Period timePeriod)
     {
         Id = id;
         OrganisationName = organisationName;
         Location = location;
         TimePeriod = timePeriod;
-        SequenceIndex = sequenceIndex;
     }
 
     public OrganisationName OrganisationName { get; }
     public Location Location { get; }
     public Period TimePeriod { get; }
-    public SequenceIndex SequenceIndex { get; }
     
 }
 

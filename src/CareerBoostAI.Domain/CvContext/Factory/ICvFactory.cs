@@ -23,7 +23,6 @@ public abstract class ProfessionalEntryData
     public required string Country { get; init; }
     public required DateOnly StartDate { get; init; }
     public required DateOnly? EndDate { get; init; }
-    public required uint Index { get; init; }
 }
 
 public class ExperienceData : ProfessionalEntryData

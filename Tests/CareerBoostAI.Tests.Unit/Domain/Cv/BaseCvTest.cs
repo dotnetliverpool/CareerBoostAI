@@ -44,8 +44,7 @@ public abstract class BaseCvTest
                 Country = "UK",
                 StartDate = new DateOnly(2018, 6, 1),
                 EndDate = new DateOnly(2022, 8, 31),
-                Description = "Developed enterprise-level applications.",
-                Index = 1
+                Description = "Developed enterprise-level applications."
             },
             new()
             {
@@ -54,8 +53,7 @@ public abstract class BaseCvTest
                 Country = "UK",
                 StartDate = new DateOnly(2015, 3, 1),
                 EndDate = new DateOnly(2018, 5, 31),
-                Description = "Designed cloud-based systems and optimised software processes.",
-                Index = 2
+                Description = "Designed cloud-based systems and optimised software processes."
             },
             new()
             {
@@ -64,8 +62,7 @@ public abstract class BaseCvTest
                 Country = "UK",
                 StartDate = new DateOnly(2012, 8, 1),
                 EndDate = new DateOnly(2015, 2, 28),
-                Description = "Worked on full-stack application development for logistics.",
-                Index = 3
+                Description = "Worked on full-stack application development for logistics."
             },
             new()
             {
@@ -74,8 +71,7 @@ public abstract class BaseCvTest
                 Country = "UK",
                 StartDate = new DateOnly(2010, 1, 1),
                 EndDate = new DateOnly(2012, 7, 31),
-                Description = "Specialised in front-end development and UI design.",
-                Index = 4
+                Description = "Specialised in front-end development and UI design."
             },
             new()
             {
@@ -84,8 +80,7 @@ public abstract class BaseCvTest
                 Country = "UK",
                 StartDate = new DateOnly(2008, 5, 1),
                 EndDate = new DateOnly(2009, 12, 31),
-                Description = "Maintained and enhanced database systems.",
-                Index = 5
+                Description = "Maintained and enhanced database systems."
             },
             new()
             {
@@ -94,8 +89,7 @@ public abstract class BaseCvTest
                 Country = "UK",
                 StartDate = new DateOnly(2006, 9, 1),
                 EndDate = new DateOnly(2008, 4, 30),
-                Description = "Developed scalable APIs for financial services.",
-                Index = 6
+                Description = "Developed scalable APIs for financial services."
             },
             new()
             {
@@ -104,8 +98,7 @@ public abstract class BaseCvTest
                 Country = "UK",
                 StartDate = new DateOnly(2004, 3, 1),
                 EndDate = new DateOnly(2006, 8, 31),
-                Description = "Implemented DevOps pipelines for continuous integration.",
-                Index = 7
+                Description = "Implemented DevOps pipelines for continuous integration."
             },
             new()
             {
@@ -114,8 +107,7 @@ public abstract class BaseCvTest
                 Country = "UK",
                 StartDate = new DateOnly(2002, 7, 1),
                 EndDate = new DateOnly(2004, 2, 28),
-                Description = "Developed cybersecurity solutions for enterprise clients.",
-                Index = 8
+                Description = "Developed cybersecurity solutions for enterprise clients."
             },
             new()
             {
@@ -124,8 +116,7 @@ public abstract class BaseCvTest
                 Country = "UK",
                 StartDate = new DateOnly(2000, 1, 1),
                 EndDate = new DateOnly(2002, 6, 30),
-                Description = "Focused on network management and infrastructure.",
-                Index = 9
+                Description = "Focused on network management and infrastructure."
             },
             new()
             {
@@ -134,8 +125,7 @@ public abstract class BaseCvTest
                 Country = "UK",
                 StartDate = new DateOnly(1998, 9, 1),
                 EndDate = new DateOnly(1999, 12, 31),
-                Description = "Worked as a junior developer creating internal tools.",
-                Index = 10
+                Description = "Worked as a junior developer creating internal tools."
             }
         };
 
@@ -155,8 +145,7 @@ public abstract class BaseCvTest
                 StartDate = new DateOnly(2010, 9, 1),
                 EndDate = new DateOnly(2014, 6, 30),
                 Program = "BSc Computer Science",
-                Grade = "First Class",
-                Index = 1
+                Grade = "First Class"
             },
             new()
             {
@@ -166,8 +155,7 @@ public abstract class BaseCvTest
                 StartDate = new DateOnly(2008, 9, 1),
                 EndDate = new DateOnly(2010, 8, 31),
                 Program = "MSc Artificial Intelligence",
-                Grade = "Distinction",
-                Index = 2
+                Grade = "Distinction"
             },
             new()
             {
@@ -177,8 +165,7 @@ public abstract class BaseCvTest
                 StartDate = new DateOnly(2004, 9, 1),
                 EndDate = new DateOnly(2008, 6, 30),
                 Program = "BEng Software Engineering",
-                Grade = "Upper Second Class",
-                Index = 3
+                Grade = "Upper Second Class"
             },
             new()
             {
@@ -188,8 +175,7 @@ public abstract class BaseCvTest
                 StartDate = new DateOnly(2002, 9, 1),
                 EndDate = new DateOnly(2004, 7, 31),
                 Program = "A-Levels in Maths, Physics, and Computer Science",
-                Grade = "AAA",
-                Index = 4
+                Grade = "AAA"
             }
         };
 

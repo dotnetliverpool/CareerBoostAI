@@ -45,11 +45,10 @@ public class ExperienceFactoryTest
         var startDate = new DateOnly(2020, 1, 1);
         var endDate = new DateOnly(2022, 12, 31);
         var description = "Developed enterprise-level applications.";
-        uint index = 1;
 
         // Act
         var experience = Experience.Create(
-            id, organisationName, city, country, startDate, endDate, description, index);
+            id, organisationName, city, country, startDate, endDate, description);
 
         // Assert
         experience.ShouldNotBeNull();
@@ -61,6 +60,5 @@ public class ExperienceFactoryTest
         experience.TimePeriod.StartDate.ShouldBe(startDate);
         experience.TimePeriod.EndDate.ShouldBe(endDate);
         experience.Description.Value.ShouldBe(description);
-        experience.SequenceIndex.Value.ShouldBe((uint)index);
     }
 }

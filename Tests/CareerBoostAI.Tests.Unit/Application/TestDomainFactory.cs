@@ -47,10 +47,10 @@ public class TestDomainFactory
             Summary.Create(command.Summary), Email.Create("johndoe@example.com"),
             command.Experiences.Select(exp => Experience.Create(
                 Guid.NewGuid(), exp.OrganisationName, exp.City, exp.Country, 
-                exp.StartDate, exp.EndDate, exp.Description, exp.Index)),
+                exp.StartDate, exp.EndDate, exp.Description)),
             command.Educations.Select(edu => Education.Create(
                 Guid.NewGuid(), edu.OrganisationName, edu.City, edu.Country,
-                edu.StartDate, edu.EndDate, edu.Program, edu.Grade, edu.Index)),
+                edu.StartDate, edu.EndDate, edu.Program, edu.Grade)),
             command.Skills.Select(Skill.Create), command.Languages.Select(Language.Create)
             );
     }
@@ -62,10 +62,10 @@ public class TestDomainFactory
             Summary.Create(command.Summary), Email.Create("johndoe@example.com"),
             command.Experiences.Select(exp => Experience.Create(
                 Guid.NewGuid(), exp.OrganisationName, exp.City, exp.Country, 
-                exp.StartDate, exp.EndDate, exp.Description, exp.SequenceIndex)),
+                exp.StartDate, exp.EndDate, exp.Description)),
             command.Educations.Select(edu => Education.Create(
                 Guid.NewGuid(), edu.OrganisationName, edu.City, edu.Country,
-                edu.StartDate, edu.EndDate, edu.Program, edu.Grade, edu.SequenceIndex)),
+                edu.StartDate, edu.EndDate, edu.Program, edu.Grade)),
             command.Skills.Select(Skill.Create), command.Languages.Select(Language.Create)
         );
     }

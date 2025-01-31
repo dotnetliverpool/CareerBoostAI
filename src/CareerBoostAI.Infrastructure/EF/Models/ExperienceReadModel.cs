@@ -21,9 +21,6 @@ public class ExperienceReadModel
     public DateOnly? EndDate { get; set; }
     
     [Required]
-    public uint SequenceIndex { get; set; }
-    
-    [Required]
     public string Description { get; set; }
 
     public Guid CvId { get; set; }

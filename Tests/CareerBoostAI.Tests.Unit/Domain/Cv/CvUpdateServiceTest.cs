@@ -34,8 +34,7 @@ public class CvUpdateServiceTest : BaseCvTest
                 Country = "Country 1",
                 StartDate = DateOnly.Parse("2015-01-01"),
                 EndDate = DateOnly.Parse("2017-01-01"),
-                Description = "Worked as a Developer",
-                Index = 1
+                Description = "Worked as a Developer"
             },
             new ExperienceData
             {
@@ -44,8 +43,7 @@ public class CvUpdateServiceTest : BaseCvTest
                 Country = "Country 2",
                 StartDate = DateOnly.Parse("2017-01-01"),
                 EndDate = DateOnly.Parse("2020-01-01"),
-                Description = "Worked as a Senior Developer",
-                Index = 2
+                Description = "Worked as a Senior Developer"
             }
         };
         var eduUpdate = new List<EducationData>
@@ -58,8 +56,7 @@ public class CvUpdateServiceTest : BaseCvTest
                 City = "City 1",
                 Country = "Country 1",
                 StartDate = DateOnly.Parse("2011-09-01"),
-                EndDate = DateOnly.Parse("2014-06-01"),
-                Index = 1
+                EndDate = DateOnly.Parse("2014-06-01")
             },
             new EducationData
             {
@@ -69,8 +66,7 @@ public class CvUpdateServiceTest : BaseCvTest
                 City = "City 2",
                 Country = "Country 2",
                 StartDate = DateOnly.Parse("2014-09-01"),
-                EndDate = DateOnly.Parse("2016-06-01"),
-                Index = 2
+                EndDate = DateOnly.Parse("2016-06-01")
             }
         };
         

@@ -18,7 +18,6 @@ public abstract class ProfessionalEntryDto
     public required string Country { get; init; }
     public required DateOnly StartDate { get; init; }
     public required DateOnly? EndDate { get; init; }
-    public required uint Index { get; init; }
 }
 
 public class ExperienceDto : ProfessionalEntryDto
