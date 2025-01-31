@@ -41,6 +41,6 @@ public class CreateProfile(ILogger<CreateProfile> logger,
            var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
            var command = jsonService.Deserialize<CreateOrUpdateProfileCommand>(requestBody);
            await  mediator.Send(command!);
-           return new CreatedResult();
+           return new CreatedResult(location: "None", value: new {Message = "Profile created successfully."});
     }
 }

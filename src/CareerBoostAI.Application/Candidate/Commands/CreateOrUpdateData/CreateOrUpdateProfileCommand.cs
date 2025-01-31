@@ -10,7 +10,7 @@ public sealed record CreateOrUpdateProfileCommand(
     string PhoneCode,
     string PhoneNumber,
     CreateCvCommand CreateCvCommand
-) : ICommand<Guid>;
+) : ICommand;
 
 
 public sealed record CreateCvCommand(

@@ -1,4 +1,5 @@
 ﻿using CareerBoostAI.Domain.CandidateContext;
+using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.CvContext.ValueObjects;
 using CareerBoostAI.Infrastructure.EF.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -16,13 +17,15 @@ internal sealed class MySqlCandidateRepository(CareerBoostWriteDbContext context
         await _candidates.AddAsync(candidate, cancellationToken);
     }
 
-    public Task<Candidate?> GetByEmailAsync(string email, CancellationToken cancellationToken)
+    public async Task<Candidate?> GetByEmailAsync(string email, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await _candidates
+            .FirstOrDefaultAsync(candidate => candidate.Email == Email.Create(email), cancellationToken);
     }
 
     public Task UpdateAsync(Candidate candidate, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        _candidates.Update(candidate);
+        return Task.CompletedTask;
     }
 }

@@ -31,7 +31,8 @@ public class MySqlCvRepository(CareerBoostWriteDbContext context) : ICvRepositor
 
     public Task UpdateAsync(Cv cv, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+         _cvs.Update(cv);
+         return Task.CompletedTask;
     }
 
     private async Task<IEnumerable<Skill>> FindNonExistingSkills(IEnumerable<Skill> skills)

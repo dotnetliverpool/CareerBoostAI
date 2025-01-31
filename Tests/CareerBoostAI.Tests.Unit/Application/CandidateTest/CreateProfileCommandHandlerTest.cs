@@ -20,7 +20,7 @@ namespace CareerBoostAI.Tests.Unit.Application.CandidateTest;
 
 public class CreateProfileCommandHandlerTest
 {
-    Task<Guid> ActAsync(CreateOrUpdateProfileCommand command)
+    Task ActAsync(CreateOrUpdateProfileCommand command)
         => _commandHandler.Handle(command, CancellationToken.None);
 
     [Fact]
@@ -253,7 +253,7 @@ public class CreateProfileCommandHandlerTest
 
     #region ARRANGE
 
-    private readonly ICommandHandler<CreateOrUpdateProfileCommand, Guid> _commandHandler;
+    private readonly ICommandHandler<CreateOrUpdateProfileCommand> _commandHandler;
     private readonly ICandidateProfileUpdateDomainService _candidateProfileUpdateDomainService;
     private readonly ICandidateRepository _candidateRepository;
     private readonly IEmailService _emailService;
