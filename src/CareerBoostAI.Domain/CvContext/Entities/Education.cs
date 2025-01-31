@@ -20,7 +20,7 @@ public class Education : ProfessionalEntry
         EducationalGrade = educationalGrade;
     }
 
-   
+    public Education() {}
 
     public static Education Create(
         Guid id,

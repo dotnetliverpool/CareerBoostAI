@@ -187,6 +187,10 @@ internal class WriteDbConfiguration :
     {
         builder.ToTable("uploads");
         builder.HasKey(up => up.Id);
+        builder.Property(up => up.Id)
+            .HasConversion(
+                writeObject => writeObject.Value,
+                storageValue => EntityId.Create(storageValue));
         builder.Property(up => up.UserEmailAddress)
             .HasConversion(
                 writeObject => writeObject.Value,

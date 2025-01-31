@@ -19,6 +19,8 @@ namespace CareerBoostAI.Domain.CvContext.Entities;
             Description = description;
         }
         
+        public Experience() {}
+        
         public Description Description { get; }
 
         public static Experience Create(

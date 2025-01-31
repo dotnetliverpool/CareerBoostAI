@@ -34,7 +34,8 @@ internal class ReadDbConfiguration : IEntityTypeConfiguration<CandidateReadModel
         builder
             .HasOne(cv => cv.CandidateReadModel) 
             .WithOne(candidate => candidate.CvReadModel)  
-            .HasForeignKey<CvReadModel>(cv => cv.CandidateId)  
+            .HasForeignKey<CvReadModel>(cv => cv.CandidateEmail)
+            .HasPrincipalKey<CandidateReadModel>(candidate => candidate.Email)
             .IsRequired();
         
         builder

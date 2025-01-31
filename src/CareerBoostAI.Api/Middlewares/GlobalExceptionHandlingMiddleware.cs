@@ -2,7 +2,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using CareerBoostAI.Shared.Abstractions.Exceptions;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Azure.Functions.Worker.Middleware;
@@ -82,6 +81,6 @@ public class GlobalExceptionHandlingMiddleware : IFunctionsWorkerMiddleware
     private static string ToUnderscoreCase(string value)
     {
         return string.Concat((value).Select((x, i) =>
-            i > 0 && char.IsUpper(x) && !char.IsUpper(value![i - 1]) ? $"_{x}" : x.ToString())).ToLower();
+            i > 0 && char.IsUpper(x) && !char.IsUpper(value[i - 1]) ? $"_{x}" : x.ToString())).ToLower();
     }
 }

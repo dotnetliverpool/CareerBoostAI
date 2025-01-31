@@ -21,6 +21,8 @@ public class Upload : AggregateRoot<EntityId>
         UserEmailAddress = userEmailAddress;
         CreationDateTime = creationDateTime;
     }
+    
+    public Upload() {}
 
     
 }

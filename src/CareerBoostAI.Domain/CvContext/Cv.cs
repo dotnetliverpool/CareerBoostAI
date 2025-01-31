@@ -15,7 +15,6 @@ public class Cv : AggregateRoot<EntityId>
     private List<Skill> _skills;
     private List<Language> _languages;
     
-    
     public Summary Summary { get; private set; }
     public Email CandidateEmail { get; private set; }
     public IReadOnlyCollection<Experience> Experiences => _experiences.AsReadOnly();
@@ -39,6 +38,8 @@ public class Cv : AggregateRoot<EntityId>
         _skills = skills.ToList();
         _languages = languages.ToList();
     }
+    
+    public Cv() {} 
     
     internal static Cv Create(
         EntityId id, Summary summary,

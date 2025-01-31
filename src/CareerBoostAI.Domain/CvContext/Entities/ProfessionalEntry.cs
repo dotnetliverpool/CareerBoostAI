@@ -17,6 +17,8 @@ public abstract class ProfessionalEntry : Entity<EntityId>
         Location = location;
         TimePeriod = timePeriod;
     }
+    
+    public ProfessionalEntry() {}
 
     public OrganisationName OrganisationName { get; }
     public Location Location { get; }

@@ -4,6 +4,7 @@ using CareerBoostAI.Infrastructure.EF.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CareerBoostAI.Infrastructure.EF.Migrations
 {
     [DbContext(typeof(CareerBoostReadDbContext))]
-    partial class CareerBoostReadDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250131031758_AddCandidateEmailColumnToCvTable")]
+    partial class AddCandidateEmailColumnToCvTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,7 +65,10 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
 
                     b.Property<string>("CandidateEmail")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid>("CandidateId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Summary")
                         .IsRequired()
@@ -71,7 +77,7 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CandidateEmail")
+                    b.HasIndex("CandidateId")
                         .IsUnique();
 
                     b.ToTable("Cvs");
@@ -225,8 +231,7 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
                 {
                     b.HasOne("CareerBoostAI.Infrastructure.EF.Models.CandidateReadModel", "CandidateReadModel")
                         .WithOne("CvReadModel")
-                        .HasForeignKey("CareerBoostAI.Infrastructure.EF.Models.CvReadModel", "CandidateEmail")
-                        .HasPrincipalKey("CareerBoostAI.Infrastructure.EF.Models.CandidateReadModel", "Email")
+                        .HasForeignKey("CareerBoostAI.Infrastructure.EF.Models.CvReadModel", "CandidateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
