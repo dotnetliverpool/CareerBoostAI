@@ -12,6 +12,8 @@ internal sealed class MySqlCandidateReadService(CareerBoostReadDbContext context
     
 
     public Task<bool> CandidateExistsByEmailAsync(string email, CancellationToken cancellationToken)
-        => _candidates.AnyAsync(e => e.Email == email, cancellationToken);
-    
+        =>  _candidates
+            .Where(c => c.Email == email)
+            .Select(c => 1) 
+            .AnyAsync(cancellationToken);
 }

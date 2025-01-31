@@ -15,6 +15,8 @@ internal class ReadDbConfiguration : IEntityTypeConfiguration<CandidateReadModel
         builder
             .HasKey(c => c.Id);
         
+        builder.HasIndex(candidate => candidate.Email).IsUnique();
+        
         builder
             .Property(c => c.Id)
             .ValueGeneratedNever();
