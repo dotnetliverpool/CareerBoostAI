@@ -50,7 +50,7 @@ namespace CareerBoostAI.Application.Candidate.Commands.CreateOrUpdateData;
                 .GetByEmailAsync(command.Email, cancellationToken);
             var cv = await cvRepository
                 .GetByEmailAsync(candidate!.Email.Value, cancellationToken);
-            // Update Candidate
+            
             profileUpdateDomainService.Update(candidate!, 
                 command.FirstName, command.LastName, command.DateOfBirth,
                 command.PhoneCode, command.PhoneNumber);

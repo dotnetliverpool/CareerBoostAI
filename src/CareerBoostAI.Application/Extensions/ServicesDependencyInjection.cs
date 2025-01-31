@@ -19,12 +19,12 @@ public static class ServicesDependencyInjection
             config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
         });
         
-        services.AddSingleton<ICandidateFactory, CandidateFactory>();
-        services.AddSingleton<ICvFactory, CvFactory>();
-        services.AddSingleton<IUploadFactory, UploadFactory>();
+        services.AddTransient<ICandidateFactory, CandidateFactory>();
+        services.AddTransient<ICvFactory, CvFactory>();
+        services.AddTransient<IUploadFactory, UploadFactory>();
         services.AddSingleton<IDocumentConstraintsService, AppDocumentConstraintsService>();
-        services.AddSingleton<ICandidateProfileUpdateDomainService, CandidateProfileUpdateService>();
-        services.AddSingleton<ICvUpdateService, CvUpdateService>();
+        services.AddTransient<ICandidateProfileUpdateDomainService, CandidateProfileUpdateService>();
+        services.AddTransient<ICvUpdateService, CvUpdateService>();
         return services;
     }
 }

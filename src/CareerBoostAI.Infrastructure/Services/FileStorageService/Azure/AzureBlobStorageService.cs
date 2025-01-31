@@ -51,13 +51,13 @@ public class AzureBlobStorageService : IStorageService
     
     private static string GetContentType(string fileName)
     {
+        // Have to explicitly ensure it supports filetypes the application supports
         var extension = Path.GetExtension(fileName).ToLowerInvariant();
         return extension switch
         {
             ".txt" => "text/plain",
             ".pdf" => "application/pdf",
             ".doc" => "application/msword",
-            ".docx" => "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             _ => throw new UnsupportedFileTypeException($"The file type '{extension}' is not supported.")
         };
     }

@@ -19,7 +19,7 @@ public static class ServiceInjector
             builder.AddBlobServiceClient(options.StorageConnectionString);
         });
 
-        services.AddScoped<IStorageService, AzureBlobStorageService>();
+        services.AddSingleton<IStorageService, AzureBlobStorageService>();
         return services;
     }
 
