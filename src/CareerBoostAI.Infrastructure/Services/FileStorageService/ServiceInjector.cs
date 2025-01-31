@@ -1,4 +1,5 @@
 ﻿using Azure.Storage.Blobs;
+using CareerBoostAI.Application.Services;
 using Microsoft.Extensions.Azure;
 using CareerBoostAI.Infrastructure.Extensions;
 using CareerBoostAI.Infrastructure.Services.FileStorageService.Azure;
@@ -12,11 +13,13 @@ public static class ServiceInjector
 {
     public static IServiceCollection AddAzureBlobStorage(this IServiceCollection services, IConfiguration configuration)
     {
-        var options = configuration.GetOptions<AzureOptions>("Azure");
+        var options = configuration.GetOptions<AzureOptions>("Storage:Azure");
         services.AddAzureClients(builder =>
         {
             builder.AddBlobServiceClient(options.StorageConnectionString);
         });
+
+        services.AddScoped<IStorageService, AzureBlobStorageService>();
         return services;
     }
 

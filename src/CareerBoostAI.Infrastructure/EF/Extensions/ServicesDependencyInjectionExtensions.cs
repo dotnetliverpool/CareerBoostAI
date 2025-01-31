@@ -19,7 +19,7 @@ public static class ServicesDependencyInjectionExtensions
 {
     public static IServiceCollection AddMySqlService(this IServiceCollection services, IConfiguration configuration)
     {
-        var mySqlOptions = configuration.GetOptions<MySqlOptions>("MySql");
+        var mySqlOptions = configuration.GetOptions<MySqlOptions>("Database:MySql");
         
         var severVersion = new MySqlServerVersion(new Version(mySqlOptions.ServerVersion));
         

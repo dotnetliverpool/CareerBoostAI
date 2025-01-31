@@ -1,6 +1,6 @@
 ﻿namespace CareerBoostAI.Application.Services.EmailService;
 
-public interface IEmailSender
+public interface IEmailService
 {
     Task SendToAdminAsync(IApplicationNotification applicationNotification);
 }

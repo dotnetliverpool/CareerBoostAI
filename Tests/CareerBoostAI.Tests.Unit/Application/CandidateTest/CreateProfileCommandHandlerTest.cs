@@ -123,11 +123,11 @@ public class CreateProfileCommandHandlerTest
         await ActAsync(command);
 
         // Assert
-        await _emailSender
+        await _emailService
             .Received(1)
             .SendToAdminAsync(Arg.Any<CandidateProfileUpdatedNotification>());
 
-        await _emailSender
+        await _emailService
             .DidNotReceive()
             .SendToAdminAsync(Arg.Any<CandidateProfileCreatedNotification>());
     }
@@ -240,11 +240,11 @@ public class CreateProfileCommandHandlerTest
         await ActAsync(command);
 
         // Assert
-        await _emailSender
+        await _emailService
             .Received(1)
             .SendToAdminAsync(Arg.Any<CandidateProfileCreatedNotification>());
     
-        await _emailSender
+        await _emailService
             .DidNotReceive()
             .SendToAdminAsync(Arg.Any<CandidateProfileUpdatedNotification>());
     }
@@ -256,7 +256,7 @@ public class CreateProfileCommandHandlerTest
     private readonly ICommandHandler<CreateOrUpdateProfileCommand, Guid> _commandHandler;
     private readonly ICandidateProfileUpdateDomainService _candidateProfileUpdateDomainService;
     private readonly ICandidateRepository _candidateRepository;
-    private readonly IEmailSender _emailSender;
+    private readonly IEmailService _emailService;
     private readonly ICandidateFactory _candidateFactory;
     private readonly ICvFactory _cvFactory;
     private readonly ICvRepository _cvRepository;
@@ -276,12 +276,12 @@ public class CreateProfileCommandHandlerTest
         _cvUpdateService = Substitute.For<ICvUpdateService>();
         _cvFactory = Substitute.For<ICvFactory>();
         _unitOfWork = Substitute.For<IUnitOfWork>();
-        _emailSender = Substitute.For<IEmailSender>();
+        _emailService = Substitute.For<IEmailService>();
 
         _commandHandler = new CreateProfileCommandHandler(
             _candidateReadService, _candidateRepository, _candidateFactory,
             _candidateProfileUpdateDomainService,
-            _cvRepository, _cvUpdateService, _cvFactory, _unitOfWork, _emailSender
+            _cvRepository, _cvUpdateService, _cvFactory, _unitOfWork, _emailService
             );
         _commandFactory = new CommandFactory();
         _domainFactory = new TestDomainFactory();

@@ -20,6 +20,8 @@ public static class ServiceInjector
         );
         services.AddKernel().AddOpenAIChatCompletion(
             options.ModelId, client);
+        
+        services.AddScoped<IAiClient, SemanticKernelAiClient>();
         return services;
     }
     
@@ -33,6 +35,8 @@ public static class ServiceInjector
                 deploymentName: options.DeploymentName,
                 endpoint: options.EndpointUrl, 
                 apiKey: options.ApiKey, modelId: options.ModelId );
+        
+        services.AddScoped<IAiClient, SemanticKernelAiClient>();
         return services;
     }
 }

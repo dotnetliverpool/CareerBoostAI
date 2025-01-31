@@ -20,7 +20,7 @@ namespace CareerBoostAI.Application.Candidate.Commands.CreateOrUpdateData;
         ICvUpdateService cvUpdateService,
         ICvFactory cvFactory,
         IUnitOfWork unitOfWork,
-        IEmailSender emailSender)
+        IEmailService emailService)
         : ICommandHandler<CreateOrUpdateProfileCommand, Guid>
     {
         public async Task<Guid> Handle(CreateOrUpdateProfileCommand command, CancellationToken cancellationToken)
@@ -40,7 +40,7 @@ namespace CareerBoostAI.Application.Candidate.Commands.CreateOrUpdateData;
                     candidate.Email.Value);
             }
             await unitOfWork.SaveChangesAsync(cancellationToken);
-            await emailSender.SendToAdminAsync(notification);
+            await emailService.SendToAdminAsync(notification);
 
             return candidate.Id.Value;
         }
