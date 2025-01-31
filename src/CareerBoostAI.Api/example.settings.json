@@ -5,12 +5,17 @@
     "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated"
   },
   "AZURE_FUNCTIONS_ENVIRONMENT" : "Development",
-  "MySql": {
-    "ConnectionString": "",
-    "ServerVersion" : "^8.0.0"
+  "Database" : {
+    "MySql": {
+      "ConnectionString": "",
+      "ServerVersion" : "8.0.24"
+    }
   },
-  "Azure": {
-    "StorageConnectionString": ""
+  "Storage" : {
+    "Azure": {
+      "StorageConnectionString": "",
+      "ApiKey" : ""
+    }
   },
   "AI" : {
     "OpenAi" : {
@@ -23,6 +28,22 @@
       "ApiKey" : "",
       "DeploymentName" : "",
       "EndpointUrl" : ""
+    }
+  },
+  "Email" : {
+    "GoogleMail" : {
+      "DefaultFromAddress" : "",
+      "Host" : "smtp.gmail.com",
+      "Port" : "587",
+      "Username" : "",
+      "Password" : "",
+      "DefaultToAddresses" : []
+    },
+    "Smtp" : {
+      "DefaultFromAddress" : "",
+      "Host" : "",
+      "Port" : "",
+      "DefaultToAddresses" : []
     }
   }
 }
