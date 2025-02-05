@@ -1,4 +1,6 @@
-﻿namespace CareerBoostAI.Application.Services;
+﻿using CareerBoostAI.Application.Common.Abstractions.Transaction;
+
+namespace CareerBoostAI.Application.Services;
 
 
 public enum StorageContainer
@@ -27,5 +29,10 @@ public interface IStorageService
     Task<IStorageDocument> UploadFileAsync(
         StorageContainer container,
         Stream documentStream, string documentName, CancellationToken cancellationToken);
+    
+    Task DeleteAsync(StorageContainer container, string documentName, CancellationToken cancellationToken);
+    Task DeleteAsync(string storageAddress, CancellationToken cancellationToken);
+    
+    IRollBackAction GetUploadRollBackAction(string storageAddress);
     
 }

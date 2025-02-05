@@ -2,6 +2,7 @@
 using CareerBoostAI.Application.Candidate.Commands.UploadCvDocument;
 using CareerBoostAI.Application.Common.Abstractions;
 using CareerBoostAI.Application.Common.Abstractions.Mediator;
+using CareerBoostAI.Application.Common.Abstractions.Transaction;
 using CareerBoostAI.Application.Common.Exceptions;
 using CareerBoostAI.Application.Services;
 using CareerBoostAI.Application.Services.DocumentConstraintsService;
@@ -135,6 +136,52 @@ public class UploadCvDocumentCommandHandlerTest
 
         await _unitOfWork.Received(1).SaveChangesAsync(CancellationToken.None);
     }
+    
+    [Fact]
+    public async Task HandleAsync_CallsRegisterRollBackAction_WhenValidDataIsProvided()
+    {
+        // ARRANGE
+        var command = new UploadCvDocumentCommand("johndoe@example.com", 
+            "validCv.pdf", Stream.Null);
+    
+        var storedDocument = new TestStorageDocument
+        {
+            Id = Guid.NewGuid(),
+            Address = "ftp://testpath/00000-00000-0000.pdf",
+            OriginalName = "validCv",
+            FileExtension = ".pdf"
+        };
+    
+        var rollBackAction = Substitute.For<IRollBackAction>();
+
+        _candidateReadService.CandidateExistsByEmailAsync(command.Email, CancellationToken.None)
+            .Returns(true);
+        _documentConstraintsService.SupportsDocumentType(command.DocumentName)
+            .Returns(true);
+        _documentConstraintsService.SizeWithinLimit(command.DocumentStream.Length)
+            .Returns(true);
+    
+        _storageService.UploadFileAsync(
+                StorageContainer.Cv, command.DocumentStream, command.DocumentName, CancellationToken.None)
+            .Returns(storedDocument);
+
+        // Ensure GetUploadRollBackAction is called and returns a mock IRollBackAction
+        _storageService.GetUploadRollBackAction(storedDocument.Address)
+            .Returns(rollBackAction);
+    
+        // ACT
+        await ActAsync(command);
+
+        // ASSERT
+        // Check that RegisterRollBackAction was called with any IRollBackAction
+        _unitOfWork.Received(1)
+            .RegisterRollBackAction(Arg.Any<IRollBackAction>(), CancellationToken.None);
+    
+        // Ensure that GetUploadRollBackAction was called once
+        _storageService.Received(1)
+            .GetUploadRollBackAction(storedDocument.Address);
+    }
+
 
     #region ARRANGE
 

@@ -1,6 +1,8 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using CareerBoostAI.Application.Common.Abstractions.Transaction;
 using CareerBoostAI.Application.Services;
+using CareerBoostAI.Infrastructure.Common.Exception;
 
 namespace CareerBoostAI.Infrastructure.Services.FileStorageService.Azure;
 
@@ -13,22 +15,14 @@ public class AzureBlobUploadDocument : IStorageDocument
     public StorageMedium StorageMedium => StorageMedium.AzureStorageBlob;
 }
 
-public class AzureBlobStorageService : IStorageService
+public class AzureBlobStorageService(BlobServiceClient client) : IStorageService
 {
-
-    private readonly BlobServiceClient _client;
-
-    public AzureBlobStorageService(BlobServiceClient client)
-    {
-        _client = client;
-    }
-
     public async Task<IStorageDocument> UploadFileAsync(
         StorageContainer container,
         Stream documentStream, string documentName, 
         CancellationToken cancellationToken)
     {
-        var containerClient = _client.GetBlobContainerClient(container.ToString());
+        var containerClient = client.GetBlobContainerClient(container.ToString());
         await containerClient.CreateIfNotExistsAsync(PublicAccessType.Blob, 
             cancellationToken: cancellationToken);
         var id = Guid.NewGuid();
@@ -48,7 +42,25 @@ public class AzureBlobStorageService : IStorageService
         };
         return result;
     }
-    
+
+    public async Task DeleteAsync(StorageContainer container, string documentName, CancellationToken cancellationToken)
+    {
+        var containerClient = client.GetBlobContainerClient(container.ToString());
+        var blobClient = containerClient.GetBlobClient(documentName);
+        await blobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken);
+    }
+
+    public async Task DeleteAsync(string storageAddress, CancellationToken cancellationToken)
+    {
+        var blobClient = new BlobClient(new Uri(storageAddress));
+        await blobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken);
+    }
+
+    public IRollBackAction GetUploadRollBackAction(string storageAddress)
+    {
+        return new UploadDocumentRollBackAction(this, storageAddress);
+    }
+
     private static string GetContentType(string fileName)
     {
         // Have to explicitly ensure it supports filetypes the application supports
@@ -57,13 +69,9 @@ public class AzureBlobStorageService : IStorageService
         {
             ".txt" => "text/plain",
             ".pdf" => "application/pdf",
-            ".doc" => "application/msword",
+            ".docx" => "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             _ => throw new UnsupportedFileTypeException($"The file type '{extension}' is not supported.")
         };
     }
 }
 
-public class UnsupportedFileTypeException : Exception
-{
-    public UnsupportedFileTypeException(string message) : base(message) { }
-}

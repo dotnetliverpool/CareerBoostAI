@@ -1,5 +1,6 @@
 ﻿using CareerBoostAI.Application.Common.Abstractions;
 using CareerBoostAI.Application.Common.Abstractions.Mediator;
+using CareerBoostAI.Application.Common.Abstractions.Transaction;
 using CareerBoostAI.Application.Common.Exceptions;
 using CareerBoostAI.Application.Services;
 using CareerBoostAI.Application.Services.DocumentConstraintsService;
@@ -37,7 +38,8 @@ public sealed class UploadCvDocumentCommandHandler(
         
         await uploadRepository.CreateNewAsync(upload, cancellationToken);
         
-        // TODO : What should happen when saving fails,
+        unitOfWork.RegisterRollBackAction(
+            storageService.GetUploadRollBackAction(uploadResult.Address), cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }
 

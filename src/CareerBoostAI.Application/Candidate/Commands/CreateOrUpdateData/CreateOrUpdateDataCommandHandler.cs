@@ -1,5 +1,6 @@
 ﻿using CareerBoostAI.Application.Common.Abstractions;
 using CareerBoostAI.Application.Common.Abstractions.Mediator;
+using CareerBoostAI.Application.Common.Abstractions.Transaction;
 using CareerBoostAI.Application.Notifications;
 using CareerBoostAI.Application.Services.EmailService;
 using CareerBoostAI.Domain.CandidateContext;

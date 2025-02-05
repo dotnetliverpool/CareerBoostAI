@@ -1,5 +1,6 @@
 ﻿using CareerBoostAI.Application.Candidate;
 using CareerBoostAI.Application.Common.Abstractions;
+using CareerBoostAI.Application.Common.Abstractions.Transaction;
 using CareerBoostAI.Domain.CandidateContext;
 using CareerBoostAI.Domain.CvContext;
 using CareerBoostAI.Domain.UploadContext;

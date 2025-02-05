@@ -1,5 +1,6 @@
 ﻿using CareerBoostAI.Application.Common.Abstractions;
 using CareerBoostAI.Application.Common.Abstractions.Mediator;
+using CareerBoostAI.Application.Common.Abstractions.Transaction;
 using CareerBoostAI.Application.Common.Exceptions;
 using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.CvContext;

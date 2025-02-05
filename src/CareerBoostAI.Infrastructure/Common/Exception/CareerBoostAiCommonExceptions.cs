@@ -11,3 +11,5 @@ public class CareerBoostAiNotImplementedException(string abstractionName, string
     : CareerBoostAiInfrastructureException(string.IsNullOrEmpty(expectedImplementation)
         ? $"No implementation for {abstractionName} was found"
         : $"{abstractionName} has no implementation for {expectedImplementation}");
+
+public class UnsupportedFileTypeException(string message) : CareerBoostAiInfrastructureException(message);
