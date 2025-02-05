@@ -18,7 +18,8 @@ public abstract class ProfessionalEntry : Entity<EntityId>
         TimePeriod = timePeriod;
     }
     
-    public ProfessionalEntry() {}
+    #pragma warning disable CS8618
+    protected ProfessionalEntry() {}
 
     public OrganisationName OrganisationName { get; }
     public Location Location { get; }

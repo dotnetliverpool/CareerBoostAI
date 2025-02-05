@@ -1,7 +1,7 @@
 ﻿using CareerBoostAI.Domain.Common.Exceptions;
 using CareerBoostAI.Domain.Common.ValueObjects;
+using CareerBoostAI.Domain.UploadContext;
 using CareerBoostAI.Domain.UploadContext.ValueObjects;
-using CareerBoostAI.Tests.Unit.Domain.Candidate;
 using Shouldly;
 using Xunit;
 

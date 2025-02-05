@@ -22,7 +22,7 @@ public class Upload : AggregateRoot<EntityId>
         UserEmailAddress = userEmailAddress;
         CreationDateTime = creationDateTime;
     }
-    
+    #pragma warning disable CS8618
     public Upload() {}
 
     

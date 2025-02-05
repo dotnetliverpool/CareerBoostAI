@@ -14,6 +14,7 @@ public class Candidate : AggregateRoot<EntityId>
     public Email Email { get; private set; }
     public PhoneNumber PhoneNumber { get; private set; }
     #endregion
+    #pragma warning disable CS8618
     public Candidate() { }
     
     internal Candidate(

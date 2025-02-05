@@ -19,6 +19,7 @@ namespace CareerBoostAI.Domain.CvContext.Entities;
             Description = description;
         }
         
+        #pragma warning disable CS8618
         public Experience() {}
         
         public Description Description { get; }

@@ -19,7 +19,8 @@ public class Education : ProfessionalEntry
     {
         EducationalGrade = educationalGrade;
     }
-
+    
+    #pragma warning disable CS8618
     public Education() {}
 
     public static Education Create(

@@ -1,7 +1,8 @@
 ﻿using CareerBoostAI.Domain.Common.Services;
 using CareerBoostAI.Domain.Common.ValueObjects;
+using CareerBoostAI.Domain.UploadContext.ValueObjects;
 
-namespace CareerBoostAI.Domain.UploadContext.ValueObjects;
+namespace CareerBoostAI.Domain.UploadContext;
 
 public class UploadFactory(IDateTimeProvider dateTimeProvider) : IUploadFactory
 {

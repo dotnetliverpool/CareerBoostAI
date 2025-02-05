@@ -30,10 +30,9 @@ public class Cv : AggregateRoot<EntityId>
         _skills = skills.ToList();
         _languages = languages.ToList();
     }
-
-    public Cv()
-    {
-    }
+    
+    #pragma warning disable CS8618
+    public Cv() { }
 
     public Summary Summary { get; private set; }
     public Email CandidateEmail { get; private set; }
