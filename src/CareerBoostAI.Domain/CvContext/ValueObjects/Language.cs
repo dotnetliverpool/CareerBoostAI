@@ -6,10 +6,12 @@ namespace CareerBoostAI.Domain.CvContext.ValueObjects;
 
 public class Language : ValueObject
 {
+    public Guid Id { get; private set; }
     public string Value { get; }
 
-    private Language(string value)
+    private Language(Guid id, string value)
     {
+        Id = id;
         Value = value;
     }
     
@@ -19,7 +21,7 @@ public class Language : ValueObject
     {
         value.ThrowIfNullOrEmpty(nameof(Language));
         var result = value.Trim().ToLower();
-        return new Language(result);
+        return new Language(Guid.NewGuid(), result);
     }
 
     protected override IEnumerable<object> GetAtomicValues()

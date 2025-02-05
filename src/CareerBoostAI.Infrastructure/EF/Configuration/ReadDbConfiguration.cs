@@ -82,13 +82,13 @@ internal class ReadDbConfiguration : IEntityTypeConfiguration<CandidateReadModel
     public void Configure(EntityTypeBuilder<SkillReadModel> builder)
     {
         builder
-            .HasKey(sk => sk.Name);
+            .HasKey(sk => sk.Id);
     }
 
     public void Configure(EntityTypeBuilder<LanguageReadModel> builder)
     {
         builder
-            .HasKey(lng => lng.Name);
+            .HasKey(lng => lng.Id);
     }
 
 

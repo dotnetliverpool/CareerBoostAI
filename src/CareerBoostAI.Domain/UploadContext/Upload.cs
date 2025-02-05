@@ -7,6 +7,7 @@ namespace CareerBoostAI.Domain.UploadContext;
 
 public class Upload : AggregateRoot<EntityId>
 {
+    // TODO: To manage documents per user, manage a list of documents instead
     public Email UserEmailAddress { get; private set; }
     public Document Document { get; private set; }
     

@@ -5,11 +5,13 @@ namespace CareerBoostAI.Domain.CvContext.ValueObjects;
 
 public class Skill : ValueObject
 {
+    public Guid Id { get; private set; }
     public string Value { get; }
 
-    private Skill(string value)
+    private Skill(Guid id, string value)
     {
         Value = value;
+        Id = id;
     }
     
     public Skill() {}
@@ -18,7 +20,7 @@ public class Skill : ValueObject
     {
         value.ThrowIfNullOrEmpty(nameof(Skill));
         var result = value.Trim().ToLower();
-        return new(result);
+        return new(Guid.NewGuid(), result);
     }
 
     protected override IEnumerable<object> GetAtomicValues()

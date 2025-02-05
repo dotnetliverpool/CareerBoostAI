@@ -79,14 +79,14 @@ internal class WriteDbConfiguration :
         builder.OwnsMany(cv => cv.Skills, sb =>
         {
             sb.ToTable("skills");
-            sb.HasKey(s => s.Value);
+            sb.HasKey(skill => skill.Id);
             sb.Property(s => s.Value).HasColumnName("Name");
             sb.WithOwner().HasForeignKey("CvId");
         });
         builder.OwnsMany(cv => cv.Languages, lb =>
         {
             lb.ToTable("languages");
-            lb.HasKey(l => l.Value);
+            lb.HasKey(l => l.Id);
             lb.Property(l => l.Value).HasColumnName("Name");
             lb.WithOwner().HasForeignKey("CvId");
         });
@@ -191,8 +191,11 @@ internal class WriteDbConfiguration :
             .HasConversion(
                 writeObject => writeObject.Value,
                 storageValue => EntityId.Create(storageValue));
+
         builder.Property(up => up.UserEmailAddress)
-            .HasColumnName("CandidateEmail")
+            .HasColumnName("CandidateEmail");
+        
+        builder.Property(up => up.UserEmailAddress)
             .HasConversion(
                 writeObject => writeObject.Value,
                 storeValue => Email.Create(storeValue));
