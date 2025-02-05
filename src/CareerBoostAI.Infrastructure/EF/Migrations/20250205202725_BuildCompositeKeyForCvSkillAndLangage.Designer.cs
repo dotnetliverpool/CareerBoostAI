@@ -4,6 +4,7 @@ using CareerBoostAI.Infrastructure.EF.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CareerBoostAI.Infrastructure.EF.Migrations
 {
     [DbContext(typeof(CareerBoostReadDbContext))]
-    partial class CareerBoostReadDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250205202725_BuildCompositeKeyForCvSkillAndLangage")]
+    partial class BuildCompositeKeyForCvSkillAndLangage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

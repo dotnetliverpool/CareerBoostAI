@@ -79,14 +79,12 @@ internal class WriteDbConfiguration :
         builder.OwnsMany(cv => cv.Skills, sb =>
         {
             sb.ToTable("skills");
-            sb.HasKey(skill => skill.Id);
             sb.Property(s => s.Value).HasColumnName("Name");
             sb.WithOwner().HasForeignKey("CvId");
         });
         builder.OwnsMany(cv => cv.Languages, lb =>
         {
             lb.ToTable("languages");
-            lb.HasKey(l => l.Id);
             lb.Property(l => l.Value).HasColumnName("Name");
             lb.WithOwner().HasForeignKey("CvId");
         });

@@ -9,7 +9,6 @@ internal sealed class MySqlCandidateRepository(CareerBoostWriteDbContext context
 {
     
     private readonly DbSet<Candidate> _candidates = context.Candidates;
-    private readonly CareerBoostWriteDbContext _context = context;
 
     public async Task CreateNewAsync(Candidate candidate, 
         CancellationToken cancellationToken)

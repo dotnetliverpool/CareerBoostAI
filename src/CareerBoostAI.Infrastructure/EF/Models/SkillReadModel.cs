@@ -6,6 +6,5 @@ public class SkillReadModel
     public string Name { get; set; }
     
     public Guid CvId { get; set; }
-    public CvReadModel Cv { get; set; }
-    // public ICollection<CvReadModel> Cvs { get; set; }
+    public CvReadModel CvReadModel { get; set; }
 }

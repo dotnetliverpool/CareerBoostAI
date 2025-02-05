@@ -1,5 +1,4 @@
 ﻿using CareerBoostAI.Domain.Common.Abstractions;
-using CareerBoostAI.Domain.Common.Exceptions;
 using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.CvContext.Entities;
 using CareerBoostAI.Domain.CvContext.Factory;
@@ -10,24 +9,17 @@ namespace CareerBoostAI.Domain.CvContext;
 
 public class Cv : AggregateRoot<EntityId>
 {
-    private List<Experience> _experiences;
-    private List<Education> _educations;
-    private List<Skill> _skills;
-    private List<Language> _languages;
-    
-    public Summary Summary { get; private set; }
-    public Email CandidateEmail { get; private set; }
-    public IReadOnlyCollection<Experience> Experiences => _experiences.AsReadOnly();
-    public IReadOnlyCollection<Education> Educations => _educations.AsReadOnly();
-    public IReadOnlyCollection<Skill> Skills => _skills.AsReadOnly();
-    public IReadOnlyCollection<Language> Languages => _languages.AsReadOnly();
-    
+    private readonly List<Education> _educations;
+    private readonly List<Experience> _experiences;
+    private readonly List<Language> _languages;
+    private readonly List<Skill> _skills;
+
     private Cv(EntityId id,
         Summary summary,
         Email candidateEmail,
-        IEnumerable<Experience> experiences, 
-        IEnumerable<Education> educations, 
-        IEnumerable<Skill> skills, 
+        IEnumerable<Experience> experiences,
+        IEnumerable<Education> educations,
+        IEnumerable<Skill> skills,
         IEnumerable<Language> languages)
     {
         Id = id;
@@ -38,43 +30,66 @@ public class Cv : AggregateRoot<EntityId>
         _skills = skills.ToList();
         _languages = languages.ToList();
     }
-    
-    public Cv() {} 
-    
+
+    public Cv()
+    {
+    }
+
+    public Summary Summary { get; private set; }
+    public Email CandidateEmail { get; private set; }
+    public IReadOnlyCollection<Experience> Experiences => _experiences.AsReadOnly();
+    public IReadOnlyCollection<Education> Educations => _educations.AsReadOnly();
+    public IReadOnlyCollection<Skill> Skills => _skills.AsReadOnly();
+    public IReadOnlyCollection<Language> Languages => _languages.AsReadOnly();
+
     internal static Cv Create(
         EntityId id, Summary summary,
-        Email candidateEmail, IEnumerable<Experience> experiences, 
-        IEnumerable<Education> educations, IEnumerable<Skill> skills, 
+        Email candidateEmail, IEnumerable<Experience> experiences,
+        IEnumerable<Education> educations, IEnumerable<Skill> skills,
         IEnumerable<Language> languages)
     {
         var experienceList = experiences.ToArray();
         var educationList = educations.ToArray();
-        
-        return new(id, summary, candidateEmail, experienceList,
+
+        return new Cv(id, summary, candidateEmail, experienceList,
             educationList, skills, languages);
     }
 
     public void UpdateSummary(string newSummary)
     {
-        var result = ValueObjects.Summary.Create(newSummary);
-        Summary = result;
+        var result = Summary.Create(newSummary);
+        if (Summary != result)
+        {
+            Summary = result;
+        }
     }
 
     public void UpdateSkills(IEnumerable<string> dataSkills)
     {
-        var newSkills = dataSkills.Select(Skill.Create);  
-        _skills.Clear(); 
-        _skills.AddRange(newSkills);
+        var newSkills = dataSkills.Select(Skill.Create).ToList();
 
+        var skillsToRemove = _skills.Where(x => !newSkills.Contains(x));
+
+        _skills.RemoveAll(skill => skillsToRemove.Contains(skill));
+
+        foreach (var newSkill in newSkills)
+            if (!_skills.Contains(newSkill))
+                _skills.Add(newSkill);
     }
 
     public void UpdateLanguages(IEnumerable<string> dataLanguages)
     {
-        var newLanguages = dataLanguages.Select(Language.Create);
-        _languages.Clear();
-        _languages.AddRange(newLanguages);
+        var newLanguages = dataLanguages.Select(Language.Create).ToList();
+        
+        var languagesToRemove = _languages.Where(existingLanguage => !newLanguages.Contains(existingLanguage));
+        
+        _languages.RemoveAll(language => languagesToRemove.Contains(language));
+        
+        foreach (var newLanguage in newLanguages)
+            if (!_languages.Contains(newLanguage))
+                _languages.Add(newLanguage);
     }
-    
+
     public void UpdateExperiences(IEnumerable<ExperienceData> dataExperiences)
     {
         var newExperiences = dataExperiences.Select(
@@ -85,7 +100,7 @@ public class Cv : AggregateRoot<EntityId>
         _experiences.Clear();
         _experiences.AddRange(newExperiences);
     }
-    
+
     public void UpdateEducations(IEnumerable<EducationData> dataEducations)
     {
         var newEducations = dataEducations.Select(
@@ -104,7 +119,7 @@ public class Cv : AggregateRoot<EntityId>
             .FirstOrDefault(exp => exp.OrganisationName.Equals(orgName));
         return result is not null;
     }
-    
+
     public bool HasEducationalBackgroundAt(string institution)
     {
         var orgName = OrganisationName.Create(institution);
@@ -112,6 +127,4 @@ public class Cv : AggregateRoot<EntityId>
             .FirstOrDefault(edu => edu.OrganisationName.Equals(orgName));
         return result is not null;
     }
-
-    
 }

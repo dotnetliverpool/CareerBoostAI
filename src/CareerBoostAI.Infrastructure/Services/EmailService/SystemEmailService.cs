@@ -10,12 +10,20 @@ public class SystemEmailService(IFluentEmailFactory emailClientFactory,
     private readonly string _defaultToAddresses = String.Join(';', defaultToAddresses);
     public async Task SendToAdminAsync(IApplicationNotification applicationNotification)
     {
-        var subject = BuildSubjectFromNotification(applicationNotification);
-        await emailClientFactory.Create()
-            .Subject(subject)
-            .Body(applicationNotification.GetMessage())
-            .To(_defaultToAddresses)
-            .SendAsync();
+        try
+        {
+            var subject = BuildSubjectFromNotification(applicationNotification);
+            await emailClientFactory.Create()
+                .Subject(subject)
+                .Body(applicationNotification.GetMessage())
+                .To(_defaultToAddresses)
+                .SendAsync();
+        }
+        catch (Exception ex)
+        {
+            // Silently fail, do nothing on exception
+            // Log this error later
+        }
     }
     
     private string BuildSubjectFromNotification(IApplicationNotification applicationNotification)
