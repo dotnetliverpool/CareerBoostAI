@@ -21,7 +21,8 @@ public static class ServicesDependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddMySqlService(configuration);
-        services.AddAzureBlobStorage(configuration);
+        // services.AddAzureBlobStorage(configuration);
+        services.AddSingleton<IStorageService, DummyUploadService>();
         services.AddOpenAiClient(configuration);
         services.AddGoogleFluentEmail(configuration);
         services.AddScoped<IOcrService, AppOcrService>();

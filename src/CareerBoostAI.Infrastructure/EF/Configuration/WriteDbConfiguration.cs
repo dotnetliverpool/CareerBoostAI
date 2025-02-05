@@ -192,6 +192,7 @@ internal class WriteDbConfiguration :
                 writeObject => writeObject.Value,
                 storageValue => EntityId.Create(storageValue));
         builder.Property(up => up.UserEmailAddress)
+            .HasColumnName("CandidateEmail")
             .HasConversion(
                 writeObject => writeObject.Value,
                 storeValue => Email.Create(storeValue));

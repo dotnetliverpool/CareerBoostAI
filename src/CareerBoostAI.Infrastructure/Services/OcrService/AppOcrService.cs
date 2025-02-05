@@ -12,17 +12,13 @@ public class AppOcrService : IOcrService
 {
     private IOcrImplementation GetImplementationFor(SupportedDocumentTypes documentType)
     {
-        switch (documentType)
+        return documentType switch
         {
-           case SupportedDocumentTypes.Pdf:
-               return new PdfPigOcrImplementation();
-           case SupportedDocumentTypes.Doc:
-           case SupportedDocumentTypes.Txt:
-           default:
-               throw new CareerBoostAiNotImplementedException(
-                   nameof(IOcrImplementation), nameof(documentType) );
-        }
-        
+            SupportedDocumentTypes.Pdf => new PdfPigOcrImplementation(),
+            SupportedDocumentTypes.Docx => new OpenXmlDocxImplementation(),
+            SupportedDocumentTypes.Txt => new SystemTxtOctImplementation(),
+            _ => throw new CareerBoostAiNotImplementedException(nameof(IOcrImplementation), nameof(documentType))
+        };
     }
 
     public  async Task<string?> ExtractTextAsync(Stream documentStream, 

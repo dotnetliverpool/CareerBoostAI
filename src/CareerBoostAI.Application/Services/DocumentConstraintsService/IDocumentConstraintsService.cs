@@ -4,7 +4,7 @@
 public enum SupportedDocumentTypes
 {
     Pdf,
-    Doc,
+    Docx,
     Txt
 }
 public enum DocumentSizeFormat

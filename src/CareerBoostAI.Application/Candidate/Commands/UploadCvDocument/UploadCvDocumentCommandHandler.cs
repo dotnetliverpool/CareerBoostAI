@@ -21,6 +21,7 @@ public sealed class UploadCvDocumentCommandHandler(
     {
         await ValidateAsync(command, cancellationToken);
         
+        
         var uploadResult = await storageService.UploadFileAsync(
             StorageContainer.Cv,
             command.DocumentStream,
@@ -35,6 +36,8 @@ public sealed class UploadCvDocumentCommandHandler(
 
         
         await uploadRepository.CreateNewAsync(upload, cancellationToken);
+        
+        // TODO : What should happen when saving fails,
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }
 
