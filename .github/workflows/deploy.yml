@@ -1,0 +1,83 @@
+name: Build, Test and Deploy the CareerBoostAI Api to Azure Functions
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - '**/README.md'
+      - '**/*.yml'
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  DOTNET_PUBLISH_OUTPUT_DIR: .\myapp
+  AZURE_FUNCTIONAPP_NAME: CareerBoostAI-function-app
+  FUNCTION_PROJECT_PATH: src\\CareerBoostAI.Api
+  ROOT_SOLUTION_PATH: .
+  DOTNET_VERSION: '8.x'
+  
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Get the latest source code commit
+        uses: actions/checkout@v4
+
+      - name: Build .Net 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+          
+      - name: Restore solution dependencies
+        run: dotnet restore CareerBoostAI.sln
+        working-directory: ${{ env.ROOT_SOLUTION_PATH }}
+        
+      - name: Build for Testing
+        run: dotnet build --no-restore
+        working-directory: ${{ env.ROOT_SOLUTION_PATH }}
+        
+      - name: Run all tests
+        run: dotnet test --no-build --verbosity normal
+        working-directory: ${{ env.ROOT_SOLUTION_PATH }}
+
+      - name: Build for release
+        run: dotnet build --configuration Release
+
+      - name: Create output directory
+        run: |
+          if (!(Test-Path ${{ env.DOTNET_PUBLISH_OUTPUT_DIR }})) { mkdir ${{ env.DOTNET_PUBLISH_OUTPUT_DIR }} }
+
+
+      - name: dotnet publish
+        run: dotnet publish -c Release -o ${{ env.DOTNET_PUBLISH_OUTPUT_DIR }}
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: .net-app
+          path: ${{ env.DOTNET_PUBLISH_OUTPUT_DIR }}
+
+  deploy:
+    runs-on: windows-latest
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: .net-app
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: "${{ env.AZURE_FUNCTIONAPP_NAME }}"
+          slot-name: 'Production'
+          package: ${{ env.ROOT_SOLUTION_PATH }}
+          publish-profile: ${{  }}
