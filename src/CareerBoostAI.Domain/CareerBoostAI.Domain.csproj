@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Common\Entities\" />
+      <Folder Include="Cv\" />
+      <Folder Include="Profile\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\CareerBoostAI.Shared.Abstractions\CareerBoostAI.Shared.Abstractions.csproj" />
+    </ItemGroup>
+
+    
+
+</Project>

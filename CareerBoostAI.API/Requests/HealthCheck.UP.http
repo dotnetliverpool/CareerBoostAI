@@ -1,6 +1,0 @@
-@CareerBoostAI.API_HostAddress = http://localhost:5173
-
-GET {{CareerBoostAI.API_HostAddress}}/up/
-Accept: application/json
-
-###
