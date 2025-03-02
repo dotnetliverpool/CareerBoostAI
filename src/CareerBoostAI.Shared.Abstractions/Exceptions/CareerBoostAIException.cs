@@ -1,7 +1,15 @@
 ﻿namespace CareerBoostAI.Shared.Abstractions.Exceptions;
 
-public abstract class CareerBoostAIException : Exception
+public abstract class CareerBoostAiException(string message) : Exception(message);
+
+public class CareerBoostAiInfrastructureException : CareerBoostAiException
 {
-    protected CareerBoostAIException(string message) : base(message)
-    {}
+    protected CareerBoostAiInfrastructureException(string message) : base(message)
+    {
+    }
 }
+public class CareerBoostAiApplicationException(string message) : 
+    CareerBoostAiException(message);
+
+public class CareerBoostAiDomainException(string message) :
+    CareerBoostAiException(message);

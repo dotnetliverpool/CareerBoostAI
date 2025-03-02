@@ -6,5 +6,6 @@ public class DomainEvent
        (Guid candidateId, string email ) => new(candidateId, email);
     
     public static PhoneNumberRegisteredEvent PhoneNumberRegistered
-        (Guid cadidateId, string code, string phoneNumber) => new(cadidateId, code, phoneNumber);
+        (Guid candidateId, string code, string phoneNumber) 
+            => new(candidateId, code, phoneNumber);
 }

@@ -1,5 +1,9 @@
 ﻿using CareerBoostAI.Application.Candidate;
 using CareerBoostAI.Application.Common.Abstractions;
+using CareerBoostAI.Application.Common.Abstractions.Transaction;
+using CareerBoostAI.Domain.CandidateContext;
+using CareerBoostAI.Domain.CvContext;
+using CareerBoostAI.Domain.UploadContext;
 using CareerBoostAI.Infrastructure.EF.Contexts;
 using CareerBoostAI.Infrastructure.EF.Options;
 using CareerBoostAI.Infrastructure.EF.Repositories;
@@ -16,7 +20,7 @@ public static class ServicesDependencyInjectionExtensions
 {
     public static IServiceCollection AddMySqlService(this IServiceCollection services, IConfiguration configuration)
     {
-        var mySqlOptions = configuration.GetOptions<MySqlOptions>("MySql");
+        var mySqlOptions = configuration.GetOptions<MySqlOptions>("Database:MySql");
         
         var severVersion = new MySqlServerVersion(new Version(mySqlOptions.ServerVersion));
         
@@ -31,6 +35,8 @@ public static class ServicesDependencyInjectionExtensions
         });
     
         services.AddScoped<ICandidateRepository, MySqlCandidateRepository>();
+        services.AddScoped<ICvRepository, MySqlCvRepository>();
+        services.AddScoped<IUploadRepository, MySqlUploadRepository>();
         services.AddScoped<ICandidateReadService, MySqlCandidateReadService>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         

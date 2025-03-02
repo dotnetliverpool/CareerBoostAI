@@ -4,8 +4,39 @@
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated"
   },
-  "MySql": {
-    "ConnectionString": "Host=;Database=;Username=;Password=",
-    "ServerVersion" : "Greater than or equal to 8.0"
+  "AZURE_FUNCTIONS_ENVIRONMENT" : "Development",
+  "Database" : {
+    "MySql": {
+      "ConnectionString": "",
+      "ServerVersion" : "8.0.24"
+    }
+  },
+  "Storage" : {
+    "Azure": {
+      "ConnectionString": ""
+    }
+  },
+  "AI" : {
+    "OpenAi" : {
+      "ModelId" : "gpt-4o-mini",
+      "EndpointUrl" : "https://models.inference.ai.azure.com",
+      "ApiKey" : ""
+    },
+    "AzureOpenAi" : {
+      "ModelId" : "",
+      "ApiKey" : "",
+      "DeploymentName" : "",
+      "EndpointUrl" : ""
+    }
+  },
+  "Email" : {
+    "Smtp" : {
+      "DefaultFromAddress" : "",
+      "Host" : "smtp.gmail.com",
+      "Port" : "587",
+      "Username" : "",
+      "Password" : "",
+      "DefaultToAddresses" : []
+    }
   }
 }

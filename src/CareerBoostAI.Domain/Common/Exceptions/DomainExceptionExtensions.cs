@@ -1,5 +1,4 @@
 ﻿using CareerBoostAI.Domain.Common.Abstractions;
-using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.Common.Exceptions;
 
@@ -25,11 +24,11 @@ public static class DomainExceptionExtensions
     {
         if (string.IsNullOrEmpty(value))
         {
-            throw new EmptyArgumentException($"{fieldName} cannot be null or empty.");
+            throw new EmptyArgumentException(fieldName);
         }
     }
     
-    public static void ThrowIfContainsDuplicates<T>(this IEnumerable<T> array) where T : ValueObject
+    public static void ThrowIfContainsDuplicates<T>(this IEnumerable<T> array) 
     {
         var set = new HashSet<T>();
 
@@ -42,16 +41,5 @@ public static class DomainExceptionExtensions
         }
     }
 
-    public static void ThrowIfContainsDuplicates<T>(this IEnumerable<Entity<T>> entities)
-    {
-        var entityIds = new HashSet<T>();
-
-        foreach (var entity in entities.ToList())
-        {
-            if (!entityIds.Add(entity.Id)) 
-            {
-                throw new DuplicateEntityException($"Duplicate entity found with Id: {entity.Id}");
-            }
-        }
-    }
+   
 }

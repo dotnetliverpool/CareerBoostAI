@@ -8,8 +8,8 @@
 
     <ItemGroup>
       <Folder Include="Common\Entities\" />
-      <Folder Include="Cv\" />
-      <Folder Include="Profile\" />
+      <Folder Include="CvContext\Specifications\" />
+      <Folder Include="UploadContext\Entities\" />
     </ItemGroup>
 
     <ItemGroup>

@@ -52,6 +52,9 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.ToTable("Candidates");
                 });
 
@@ -60,8 +63,9 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("CandidateId")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("CandidateEmail")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("Summary")
                         .IsRequired()
@@ -70,7 +74,7 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CandidateId")
+                    b.HasIndex("CandidateEmail")
                         .IsUnique();
 
                     b.ToTable("Cvs");
@@ -106,9 +110,6 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
                     b.Property<string>("Program")
                         .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<uint>("SequenceIndex")
-                        .HasColumnType("int unsigned");
 
                     b.Property<DateOnly>("StartDate")
                         .HasColumnType("date");
@@ -147,9 +148,6 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<uint>("SequenceIndex")
-                        .HasColumnType("int unsigned");
-
                     b.Property<DateOnly>("StartDate")
                         .HasColumnType("date");
 
@@ -162,13 +160,17 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
 
             modelBuilder.Entity("CareerBoostAI.Infrastructure.EF.Models.LanguageReadModel", b =>
                 {
-                    b.Property<string>("Name")
-                        .HasColumnType("varchar(255)");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("char(36)");
 
                     b.Property<Guid>("CvId")
                         .HasColumnType("char(36)");
 
-                    b.HasKey("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id", "CvId");
 
                     b.HasIndex("CvId");
 
@@ -177,13 +179,17 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
 
             modelBuilder.Entity("CareerBoostAI.Infrastructure.EF.Models.SkillReadModel", b =>
                 {
-                    b.Property<string>("Name")
-                        .HasColumnType("varchar(255)");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("char(36)");
 
                     b.Property<Guid>("CvId")
                         .HasColumnType("char(36)");
 
-                    b.HasKey("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id", "CvId");
 
                     b.HasIndex("CvId");
 
@@ -196,8 +202,12 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("CandidateId")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("CandidateEmail")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<DateTime>("CreationDateTime")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Extension")
                         .IsRequired()
@@ -217,7 +227,7 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CandidateId");
+                    b.HasIndex("CandidateEmail");
 
                     b.ToTable("UploadReadModel");
                 });
@@ -226,7 +236,8 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
                 {
                     b.HasOne("CareerBoostAI.Infrastructure.EF.Models.CandidateReadModel", "CandidateReadModel")
                         .WithOne("CvReadModel")
-                        .HasForeignKey("CareerBoostAI.Infrastructure.EF.Models.CvReadModel", "CandidateId")
+                        .HasForeignKey("CareerBoostAI.Infrastructure.EF.Models.CvReadModel", "CandidateEmail")
+                        .HasPrincipalKey("CareerBoostAI.Infrastructure.EF.Models.CandidateReadModel", "Email")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -268,20 +279,21 @@ namespace CareerBoostAI.Infrastructure.EF.Migrations
 
             modelBuilder.Entity("CareerBoostAI.Infrastructure.EF.Models.SkillReadModel", b =>
                 {
-                    b.HasOne("CareerBoostAI.Infrastructure.EF.Models.CvReadModel", "Cv")
+                    b.HasOne("CareerBoostAI.Infrastructure.EF.Models.CvReadModel", "CvReadModel")
                         .WithMany("Skills")
                         .HasForeignKey("CvId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cv");
+                    b.Navigation("CvReadModel");
                 });
 
             modelBuilder.Entity("CareerBoostAI.Infrastructure.EF.Models.UploadReadModel", b =>
                 {
                     b.HasOne("CareerBoostAI.Infrastructure.EF.Models.CandidateReadModel", "CandidateReadModel")
                         .WithMany("Uploads")
-                        .HasForeignKey("CandidateId")
+                        .HasForeignKey("CandidateEmail")
+                        .HasPrincipalKey("Email")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

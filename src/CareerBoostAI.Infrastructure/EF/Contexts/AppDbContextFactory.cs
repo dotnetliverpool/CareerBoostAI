@@ -20,7 +20,7 @@ internal class AppDbContextFactory : IDesignTimeDbContextFactory<CareerBoostRead
             .AddJsonFile("settings.json", optional: true, reloadOnChange: true)
             .AddEnvironmentVariables()
             .Build();
-        var mySqlOptions = configuration.GetOptions<MySqlOptions>("MySql");  
+        var mySqlOptions = configuration.GetOptions<MySqlOptions>("Database:MySql");  
         var serverVersion = new MySqlServerVersion(new Version(mySqlOptions.ServerVersion));
 
         var optionsBuilder = new DbContextOptionsBuilder<CareerBoostReadDbContext>();

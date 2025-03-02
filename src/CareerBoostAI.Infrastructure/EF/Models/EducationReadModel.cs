@@ -26,8 +26,6 @@ public class EducationReadModel
     [Required]
     public string Grade { get; set; }
     
-    [Required]
-    public uint SequenceIndex { get; set; }
 
     public Guid CvId { get; set; }
     public CvReadModel CvReadModel { get; set; }
