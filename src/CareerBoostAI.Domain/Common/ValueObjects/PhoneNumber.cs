@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
+using CareerBoostAI.Domain.Common.Abstractions;
 using CareerBoostAI.Domain.Common.Exceptions;
-using CareerBoostAI.Domain.ValueObjects;
 
 namespace CareerBoostAI.Domain.Common.ValueObjects;
 
@@ -19,19 +19,23 @@ public class PhoneNumber : ValueObject
     {
         code.ThrowIfNullOrEmpty("PhoneNumber.Code");
         number.ThrowIfNullOrEmpty("PhoneNumber.Number");
-        
-        if (!IsValidPhoneNumber(code + number))
-        {
-            throw new InvalidPhoneNumberException(code, number);
-        }
+
+        ValidateNumberFormat(code, number);
         return new PhoneNumber(code, number);
     }
     
 
-    private static bool IsValidPhoneNumber(string phoneNumber)
+    private static void ValidateNumberFormat(string code, string number)
     {
-        var phoneRegex = new Regex(@"^\+?[1-9]\d{1,14}$"); 
-        return phoneRegex.IsMatch(phoneNumber);
+        var phoneRegex = new Regex(@"^\+?[1-9]\d{1,14}$");
+        
+        var fullPhoneNumber = code + number;
+        
+        if (fullPhoneNumber.Length < 7 || fullPhoneNumber.Length > 15 || !phoneRegex.IsMatch(fullPhoneNumber))
+        {
+            throw new InvalidPhoneNumberException(code, number);
+        }
+        
     }
 
     protected override IEnumerable<object> GetAtomicValues()

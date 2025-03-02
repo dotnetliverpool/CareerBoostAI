@@ -6,14 +6,15 @@ namespace CareerBoostAI.Infrastructure.EF.Configuration;
 
 internal class ReadDbConfiguration : IEntityTypeConfiguration<CandidateReadModel>, 
     IEntityTypeConfiguration<CvReadModel>, IEntityTypeConfiguration<SkillReadModel>,
-    IEntityTypeConfiguration<ExperienceReadModel>, IEntityTypeConfiguration<EducationReadModel>,
-    IEntityTypeConfiguration<CvLanguage>, IEntityTypeConfiguration<CvSkill>,
+    IEntityTypeConfiguration<ExperienceReadModel>, IEntityTypeConfiguration<EducationReadModel>,    
     IEntityTypeConfiguration<LanguageReadModel>, IEntityTypeConfiguration<UploadReadModel>
 {
     public void Configure(EntityTypeBuilder<CandidateReadModel> builder)
     {
         builder
             .HasKey(c => c.Id);
+        
+        builder.HasIndex(candidate => candidate.Email).IsUnique();
         
         builder
             .Property(c => c.Id)
@@ -34,7 +35,8 @@ internal class ReadDbConfiguration : IEntityTypeConfiguration<CandidateReadModel
         builder
             .HasOne(cv => cv.CandidateReadModel) 
             .WithOne(candidate => candidate.CvReadModel)  
-            .HasForeignKey<CvReadModel>(cv => cv.CandidateId)  
+            .HasForeignKey<CvReadModel>(cv => cv.CandidateEmail)
+            .HasPrincipalKey<CandidateReadModel>(candidate => candidate.Email)
             .IsRequired();
         
         builder
@@ -51,7 +53,7 @@ internal class ReadDbConfiguration : IEntityTypeConfiguration<CandidateReadModel
         
         builder
             .HasMany(cv => cv.Skills)
-            .WithOne(skill => skill.Cv)
+            .WithOne(skill => skill.CvReadModel)
             .HasForeignKey(skill => skill.CvId)
             .OnDelete(DeleteBehavior.Cascade);
         
@@ -79,36 +81,26 @@ internal class ReadDbConfiguration : IEntityTypeConfiguration<CandidateReadModel
     public void Configure(EntityTypeBuilder<SkillReadModel> builder)
     {
         builder
-            .HasKey(sk => sk.Name);
+            .HasKey(sk => new {sk.Id, sk.CvId});
     }
 
     public void Configure(EntityTypeBuilder<LanguageReadModel> builder)
     {
         builder
-            .HasKey(lng => lng.Name);
+            .HasKey(lng => new { lng.Id, lng.CvId });
     }
 
-
-    public void Configure(EntityTypeBuilder<CvLanguage> builder)
-    {
-        builder
-            .HasKey(cl => new { cl.CvId, cl.LanguageId });
-
-    }
-
-    public void Configure(EntityTypeBuilder<CvSkill> builder)
-    {
-        builder
-            .HasKey(cl => new { cl.CvId, cl.SkillId });
-    }
+    
 
     public void Configure(EntityTypeBuilder<UploadReadModel> builder)
     {
         builder.HasKey(up => up.Id);
+        
         builder
             .HasOne(up => up.CandidateReadModel)
             .WithMany(c => c.Uploads)
-            .HasForeignKey(up => up.CandidateId);
+            .HasForeignKey(up => up.CandidateEmail)
+            .HasPrincipalKey(c => c.Email);
 
     }
 }

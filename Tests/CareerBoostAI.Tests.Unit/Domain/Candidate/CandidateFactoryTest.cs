@@ -1,144 +1,183 @@
-﻿using CareerBoostAI.Domain.Candidate.Cv.ValueObjects;
-using CareerBoostAI.Domain.Candidate.CvEntity;
-using CareerBoostAI.Domain.Candidate.CvEntity.ValueObjects;
-using Xunit;
+﻿using CareerBoostAI.Domain.CandidateContext.ValueObjects;
+using CareerBoostAI.Domain.Common.Exceptions;
+using CareerBoostAI.Domain.Common.ValueObjects;
 using Shouldly;
+using Xunit;
 
 namespace CareerBoostAI.Tests.Unit.Domain.Candidate;
 
 public class CandidateFactoryTest : BaseCandidateTest
 {
     [Fact]
-    public void Create_ShouldCreateValidCandidateAggregate()
+    public void Name_StaticFactory_ShouldCreateNameWithValidInput()
     {
         // Arrange
-        var id = Guid.NewGuid();
         var firstName = "John";
         var lastName = "Doe";
-        var dateOfBirth = new DateOnly(1990, 5, 15);
-        var email = "john.doe@example.com";
-        var phoneCode = "+1";
-        var phoneNumber = "1234567890";
-        var cv = CreateCandidateCv();
 
         // Act
-        var candidate = GetCandidateFactory().Create(
-            id, firstName, lastName, dateOfBirth, email, phoneCode, phoneNumber,  cv);
-        
-        // Assert
-        
-    }
+        var candidateName = Name.Create(firstName, lastName);
 
-    [Fact]
-    public void Create_ShouldThrowException_WhenCvIsNull()
-    {
-        // Arrange
-        var id = Guid.NewGuid();
-        var firstName = "John";
-        var lastName = "Doe";
-        var dateOfBirth = new DateOnly(1990, 5, 15);
-        var email = "john.doe@example.com";
-        var phoneCode = "+1";
-        var phoneNumber = "1234567890";
-        CandidateCv candidateCv = null!; // Passing null to test exception
-
-        // Act
-        var candidate = GetCandidateFactory().Create(
-            id, firstName, lastName, dateOfBirth, email, phoneCode, phoneNumber,  candidateCv);
-        
-        // Assert
-        
-    }
-
-    [Fact]
-    public void CreateCv_ShouldCreateValidCvEntity()
-    {
-        // Arrange
-        var id = Guid.NewGuid();
-        var summary = "A summary of the candidate's experiences.";
-        var experiences = new List<(Guid id, string orgName, string city, string country, DateOnly startDate, DateOnly? endDate, string description, uint index)>
-        {
-            (Guid.NewGuid(), "Company A", "City A", "Country A", new DateOnly(2015, 5, 1), null, "Software Developer", 1),
-        };
-        var educations = new List<(Guid id, string orgName, string city, string country, DateOnly startDate, DateOnly? endDate, string program, string grade, uint index)>
-        {
-            (Guid.NewGuid(), "University A", "City B", "Country B", new DateOnly(2012, 9, 1), new DateOnly(2016, 6, 1), "Engineering", "B", 1),
-        };
-        var languages = new List<string> { "English", "French" };
-        var skills = new List<string> { "C#", "JavaScript" };
-
-        // Act
-        var cv = GetCandidateFactory().CreateCv(id, summary, experiences, educations, languages, skills);
 
         // Assert
+        candidateName.ShouldNotBeNull();
+        candidateName.FirstName.ShouldBe("John");
+        candidateName.LastName.ShouldBe("Doe");
     }
 
     [Theory]
-    [InlineData(10)] // Below minimum age limit
-    [InlineData(121)] // Above maximum age limit
-    public void Create_ShouldThrowNotAcceptedWithinAgeLimitException_WhenAgeIsOutOfRange(int age)
+    [InlineData(null, "Doe", "Name.FirstName")]
+    [InlineData("John", null, "Name.LastName")]
+    [InlineData("", "Doe", "Name.FirstName")]
+    [InlineData("John", "", "Name.LastName")]
+    public void Name_StaticFactory_ShouldThrowException_WhenInvalidInputIsProvided(
+        string firstName, string lastName, string expectedMessage)
     {
-        // Arrange
-        var id = Guid.NewGuid();
-        var firstName = "John";
-        var lastName = "Doe";
-        var dateOfBirth = new DateOnly(2000, 1, 1).AddYears(-age); 
-        var email = "john.doe@example.com";
-        var phoneCode = "+1";
-        var phoneNumber = "1234567890";
-        var cvFiles = new List<Guid> { Guid.NewGuid(), Guid.NewGuid() };
-        var cv = CreateCandidateCv();
-        
         // Act
+        var exception = Record.Exception(() => Name.Create(firstName, lastName));
+
+        // Assert
+        exception.ShouldNotBeNull();
+        exception.ShouldBeOfType<EmptyArgumentException>();
+        exception.Message.ShouldContain(expectedMessage);
+    }
+
+    [Theory]
+    [InlineData(null, typeof(EmptyArgumentException), "Email cannot be empty")]
+    [InlineData("", typeof(EmptyArgumentException), "Email cannot be empty")]
+    [InlineData("plainaddress", typeof(InvalidEmailFormatException),
+        "Email [plainaddress] does not pass required format")]
+    [InlineData("missingatsign.com", typeof(InvalidEmailFormatException),
+        "Email [missingatsign.com] does not pass required format")]
+    [InlineData("missingdomain@.com", typeof(InvalidEmailFormatException),
+        "Email [missingdomain@.com] does not pass required format")]
+    [InlineData("missingdot@domain", typeof(InvalidEmailFormatException),
+        "Email [missingdot@domain] does not pass required format")]
+    public void Email_Create_ShouldThrowException_ForInvalidEmails(
+        string emailInput, Type expectedExceptionType, string expectedMessage)
+    {
+        // Act
+        var exception = Record.Exception(() => Email.Create(emailInput));
+
+        // Assert
+        exception.ShouldNotBeNull();
+        exception.ShouldBeOfType(expectedExceptionType);
+        exception.Message.ShouldContain(expectedMessage);
     }
     
-    [Fact]
-    public void Cv_ShouldThrowException_WhenExperienceIndexIsNotInSequence()
+    [Theory]
+    [InlineData("2000-01-01", "2025-01-01")] 
+    [InlineData("2010-12-31", "2025-01-01")] 
+    [InlineData("1905-06-15", "2025-01-01")] 
+    public void DateOfBirth_Create_ShouldReturnValidDateOfBirth_WhenAgeIsValid(
+        string birthDateString, string todayString)
     {
         // Arrange
-        var invalidExperiences = new List<WorkExperience>
-        {
-            WorkExperience.Create(Guid.NewGuid(), "Company A", "City A", "Country A", new DateOnly(2015, 1, 1), null, "Description A", 1),
-            WorkExperience.Create(Guid.NewGuid(), "Company B", "City B", "Country B", new DateOnly(2016, 1, 1), null, "Description B", 3), // Invalid index (should be 2)
-        };
-        var validExperiences = new List<WorkExperience>
-        {
-            WorkExperience.Create(Guid.NewGuid(), "Company A", "City A", "Country A", new DateOnly(2015, 1, 1), null, "Description A", 1),
-            WorkExperience.Create(Guid.NewGuid(), "Company B", "City B", "Country B", new DateOnly(2016, 1, 1), null, "Description B", 2),
-        };
+        var birthDate = DateOnly.Parse(birthDateString);
+        var dateTimeProvider = TestDateTimeProvider.FromDateString(todayString);
 
-        var cv = new CandidateCv(
-            CvId.New(), 
-            Summary.Create("Summary"), 
-            invalidExperiences, 
-            new List<Education>(), 
-            new List<Skill>(), 
-            new List<Language>()
-        );
+        // Act
+        var dob = DateOfBirth.Create(birthDate, dateTimeProvider);
 
-        
+        // Assert
+        dob.ShouldNotBeNull();
+        dob.Value.ShouldBe(birthDate);
     }
-
-    [Fact]
-    public void Cv_ShouldNotThrowException_WhenExperienceIndexIsInSequence()
+    
+    [Theory]
+    [InlineData("2020-01-01", "2025-01-01")] // Age 5, invalid
+    [InlineData("1800-01-01", "2025-01-01")] // Too old, invalid
+    public void DateOfBirth_Create_ShouldThrowException_WhenAgeIsLessThan10OrGreaterThan120(string birthDateString, string todayString)
     {
         // Arrange
-        var experiences = new List<WorkExperience>
-        {
-            WorkExperience.Create(Guid.NewGuid(), "Company A", "City A", "Country A", new DateOnly(2015, 1, 1), null, "Description A", 1),
-            WorkExperience.Create(Guid.NewGuid(), "Company B", "City B", "Country B", new DateOnly(2016, 1, 1), null, "Description B", 2),
-        };
-
-        var cv = new CandidateCv(
-            CvId.New(),
-            Summary.Create("Summary"),
-            experiences,
-            new List<Education>(),
-            new List<Skill>(),
-            new List<Language>()
-        );
-
+         
         
+        var birthDate = DateOnly.Parse(birthDateString);
+        var dateTimeProvider = TestDateTimeProvider.FromDateString(todayString);
+
+        // Act
+        var exception = Record.Exception(() => DateOfBirth.Create(birthDate, dateTimeProvider));
+
+        // Assert
+        exception.ShouldNotBeNull();
+        exception.ShouldBeOfType<AgeNotWithinAcceptedRangeException>();
+    }
+    
+    [Theory]
+    [InlineData("john.doe@example.com")]
+    [InlineData("user123@domain.co.uk")]
+    [InlineData("name.surname@sub.domain.org")]
+    public void Email_Create_ShouldReturnValidEmail_ForValidInput(string emailInput)
+    {
+        // Act
+        var email = Email.Create(emailInput);
+
+        // Assert
+        email.ShouldNotBeNull();
+        email.Value.ShouldBe(emailInput);
+    }
+    
+    [Theory]
+    [InlineData(null, "1234567890", typeof(EmptyArgumentException), "PhoneNumber.Code")]
+    [InlineData("", "1234567890", typeof(EmptyArgumentException), "PhoneNumber.Code")]
+    [InlineData("+44", null, typeof(EmptyArgumentException), "PhoneNumber.Number")]
+    [InlineData("+44", "", typeof(EmptyArgumentException), "PhoneNumber.Number")]
+    [InlineData("+44", "abc123", typeof(InvalidPhoneNumberException), "Invalid phone number: +44 - abc123")]
+    [InlineData("+1", "123", typeof(InvalidPhoneNumberException), "Invalid phone number: +1 - 123")]
+    public void PhoneNumber_Create_ShouldThrowException_ForInvalidInputs(string code, string number, Type exceptionType, string expectedMessage)
+    {
+        // Act
+        var exception = Record.Exception(() => PhoneNumber.Create(code, number));
+
+        // Assert
+        exception.ShouldNotBeNull();
+        exception.ShouldBeOfType(exceptionType);
+        exception.Message.ShouldContain(expectedMessage);
+    }
+    
+    [Theory]
+    [InlineData("+44", "1234567890")]
+    [InlineData("+1", "9876543210")]
+    [InlineData("+91", "9988776655")]
+    public void PhoneNumber_Create_ShouldReturnValidPhoneNumber_ForValidInputs(string code, string number)
+    {
+        // Act
+        var phoneNumber = PhoneNumber.Create(code, number);
+
+        // Assert
+        phoneNumber.ShouldNotBeNull();
+        phoneNumber.Code.ShouldBe(code);
+        phoneNumber.Number.ShouldBe(number);
     }
 
+
+    [Theory]
+    [InlineData("John", "Doe", "john.doe@example.com", "1990-01-01", "+44", "1234567890")]
+    [InlineData("Jane", "Smith", "jane.smith@example.com", "1985-06-15", "+1", "9876543210")]
+    [InlineData("Alex", "Johnson", "alex.johnson@example.com", "2000-11-23", "+91", "5555555555")]
+    public void Create_ShouldReturnValidCandidate_WhenPassedCorrectValues(
+        string firstName, 
+        string lastName, 
+        string email, 
+        string dateOfBirthString, 
+        string phoneCode, 
+        string phoneNumber)
+    {
+        // Arrange
+        var factory = GetCandidateFactory();
+        var dateOfBirth = DateOnly.Parse(dateOfBirthString);
+
+        // Act
+        var candidate = factory.Create(
+            firstName, lastName, dateOfBirth, email, phoneCode, phoneNumber);
+
+        // Assert
+        candidate.ShouldNotBeNull();
+        candidate.Name.FirstName.ShouldBe(firstName);
+        candidate.Name.LastName.ShouldBe(lastName);
+        candidate.Email.Value.ShouldBe(email);
+        candidate.DateOfBirth.Value.ShouldBe(dateOfBirth);
+        candidate.PhoneNumber.Code.ShouldBe(phoneCode);
+        candidate.PhoneNumber.Number.ShouldBe(phoneNumber);
+    }
 }

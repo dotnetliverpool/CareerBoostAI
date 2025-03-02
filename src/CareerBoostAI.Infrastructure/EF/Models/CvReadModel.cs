@@ -14,7 +14,6 @@ public class CvReadModel
     public ICollection<EducationReadModel> Educations { get; set; }
     public ICollection<SkillReadModel> Skills { get; set; }
     public ICollection<LanguageReadModel> Languages { get; set; }
-    
-    public Guid CandidateId { get; set; }
+    public string CandidateEmail { get; set; }
     public CandidateReadModel CandidateReadModel { get; set; }
 }

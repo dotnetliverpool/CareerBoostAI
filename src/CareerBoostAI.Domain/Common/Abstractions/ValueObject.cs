@@ -1,9 +1,4 @@
-﻿namespace CareerBoostAI.Domain.ValueObjects;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
+﻿namespace CareerBoostAI.Domain.Common.Abstractions;
 
 /// <summary>
 /// Represents the base class all value objects derive from.

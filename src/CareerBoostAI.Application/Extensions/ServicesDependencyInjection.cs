@@ -1,7 +1,11 @@
 ﻿using System.Reflection;
-using CareerBoostAI.Application.Services;
-using CareerBoostAI.Domain.Candidate.Factories;
-using CareerBoostAI.Domain.Common.Services;
+using CareerBoostAI.Application.Services.DocumentConstraintsService;
+using CareerBoostAI.Domain.CandidateContext.Factories;
+using CareerBoostAI.Domain.CandidateContext.Services;
+using CareerBoostAI.Domain.CvContext.Factory;
+using CareerBoostAI.Domain.CvContext.Services;
+using CareerBoostAI.Domain.UploadContext;
+using CareerBoostAI.Domain.UploadContext.ValueObjects;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CareerBoostAI.Application.Extensions;
@@ -14,8 +18,13 @@ public static class ServicesDependencyInjection
         {
             config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
         });
-        services.AddSingleton<IDateTimeProvider, SystemDateTimeProvider>();
-        services.AddSingleton<ICandidateFactory, CandidateFactory>();
+        
+        services.AddTransient<ICandidateFactory, CandidateFactory>();
+        services.AddTransient<ICvFactory, CvFactory>();
+        services.AddTransient<IUploadFactory, UploadFactory>();
+        services.AddSingleton<IDocumentConstraintsService, AppDocumentConstraintsService>();
+        services.AddTransient<ICandidateProfileUpdateDomainService, CandidateProfileUpdateService>();
+        services.AddTransient<ICvUpdateService, CvUpdateService>();
         return services;
     }
 }

@@ -1,12 +1,8 @@
-using Azure.Core.Serialization;
 using CareerBoostAI.Application.Extensions;
 using CareerBoostAI.Api.Extensions;
 using CareerBoostAI.Infrastructure.Extensions;
-using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Builder;
-using Microsoft.Azure.Functions.Worker.Extensions.OpenApi.Extensions;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 var builder = FunctionsApplication.CreateBuilder(args);

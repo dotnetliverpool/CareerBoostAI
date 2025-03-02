@@ -1,7 +1,8 @@
-﻿using CareerBoostAI.Api.JsonService;
-using CareerBoostAI.Api.Middlewares;
+﻿using CareerBoostAI.Api.Middlewares;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -9,6 +10,7 @@ namespace CareerBoostAI.Api.Extensions;
 
 public static class ApplicationBuilder
 {
+    
     public static IServiceCollection ConfigureServices(
         this IServiceCollection services, Action<IServiceCollection> configure)
     {
@@ -19,7 +21,6 @@ public static class ApplicationBuilder
     
     public static IServiceCollection RegisterApiServices(this IServiceCollection services)
     {
-        services.AddSingleton<IJsonSerializerService, JsonSerializerService>();
         return services;
     }
     public static FunctionsApplicationBuilder ConfigureApplication(
