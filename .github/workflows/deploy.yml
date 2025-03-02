@@ -12,8 +12,8 @@ on:
 
 env:
   DOTNET_PUBLISH_OUTPUT_DIR: .\myapp
-  AZURE_FUNCTIONAPP_NAME: CareerBoostAI-function-app
-  FUNCTION_PROJECT_PATH: src\\CareerBoostAI.Api
+  AZURE_FUNCTION_APP_NAME: CareerBoostAI-function-app
+  FUNCTION_PROJECT_PATH: .\src\CareerBoostAI.Api\CareerBoostAI.Api.csproj
   ROOT_SOLUTION_PATH: .
   DOTNET_VERSION: '8.x'
   
@@ -51,33 +51,72 @@ jobs:
           if (!(Test-Path ${{ env.DOTNET_PUBLISH_OUTPUT_DIR }})) { mkdir ${{ env.DOTNET_PUBLISH_OUTPUT_DIR }} }
 
 
-      - name: dotnet publish
+      - name: publish release artifact
         run: dotnet publish -c Release -o ${{ env.DOTNET_PUBLISH_OUTPUT_DIR }}
+        
+      - name: Install EF Core tools
+        run: dotnet tool install --global dotnet-ef
+        
+      - name: Update Database
+        shell: powershell
+        run: |
+          dotnet ef database update 
+            --startup-project ${{ env.FUNCTION_PROJECT_PATH }}
+            --project .\src\CareerBoostAI.Infrastructure\CareerBoostAI.Infrastructure.csproj 
+            --context CareerBoostReadDbContext 
+            --connection ${{ secrets.MYSQL_CONNECTION_STRING }}
+        working-directory: ${{ env.ROOT_SOLUTION_PATH }}
+      
+      
+      - name: Login to Azure
+        uses: azure/login@v1
+        with: 
+          creds: {{ $secrets.AZURE_CREDENTIALS }}
+          
+      - name: Deploy App Settings to Azure Function
+        shell: powershell
+        run: |
+            $resourceGroup = "${{ secrets.AZURE_RESOURCE_GROUP }}"
+            $functionAppName = "${{ env.AZURE_FUNCTION_APP_NAME }}"
+            
+            # Create an array of key-value pairs for all settings
+            $appSettings = @(
+              "FUNCTIONS_WORKER_RUNTIME=dotnet-isolated"
+              "AZURE_FUNCTIONS_ENVIRONMENT=Production"
+            
+              # Database Settings
+              "Database:MySql:ConnectionString=${{ secrets.MYSQL_CONNECTION_STRING }}"
+              "Database:MySql:ServerVersion=8.0.24"
+            
+              # Storage Settings
+              "Storage:Azure:ConnectionString=${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}"
+            
+              # AI Settings
+              "AI:OpenAi:ModelId=${{ vars.OPENAI_MODEL_ID }}"
+              "AI:OpenAi:EndpointUrl=${{ vars.OPENAI_ENDPOINT_URL }}"
+              "AI:OpenAi:ApiKey=${{ secrets.OPENAI_API_KEY }}"
+            
+              # Email Settings
+              "Email:Default:DefaultFromAddress=${{ secrets.EMAIL_FROM_ADDRESS }}"
+              "Email:Default:Host=${{ secrets.EMAIL_HOST }}"
+              "Email:Default:Port=${{ secrets.EMAIL_PORT }}"
+              "Email:Default:Username=${{ secrets.EMAIL_USERNAME }}"
+              "Email:Default:Password=${{ secrets.EMAIL_PASSWORD }}"
+              "Email:Default:DefaultToAddresses=${{ secrets.EMAIL_DEFAULT_TO_ADDRESSES }}"
+            )
+          
+            $appSettingsString = $appSettings -join " "
+          
+            az functionapp config appsettings set --name 
+                $functionAppName --resource-group 
+                $resourceGroup --settings $appSettingsString
 
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
-        with:
-          name: .net-app
-          path: ${{ env.DOTNET_PUBLISH_OUTPUT_DIR }}
 
-  deploy:
-    runs-on: windows-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: .net-app
+ 
 
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
+
+      - name: Deploy to Azure Function App
+        uses: azure/webapps-deploy@v2
         with:
-          app-name: "${{ env.AZURE_FUNCTIONAPP_NAME }}"
-          slot-name: 'Production'
-          package: ${{ env.ROOT_SOLUTION_PATH }}
-          publish-profile: ${{  }}
+          app-name: ${{ env.AZURE_FUNCTION_APP_NAME }}
+          package: ${{ env.DOTNET_PUBLISH_OUTPUT_DIR }}

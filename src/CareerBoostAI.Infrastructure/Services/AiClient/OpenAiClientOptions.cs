@@ -7,10 +7,7 @@ public class OpenAiClientOptions
     public string ApiKey { get; set; }
 }
 
-public class AzureOpenAiClientOptions
+public class AzureOpenAiClientOptions : OpenAiClientOptions
 {
     public string DeploymentName { get; set; }
-    public string ModelId { get; set; } 
-    public string EndpointUrl { get; set; }
-    public string ApiKey { get; set; }
 }

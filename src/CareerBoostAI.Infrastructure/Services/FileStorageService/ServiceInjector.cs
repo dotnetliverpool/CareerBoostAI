@@ -16,7 +16,7 @@ public static class ServiceInjector
         var options = configuration.GetOptions<AzureOptions>("Storage:Azure");
         services.AddAzureClients(builder =>
         {
-            builder.AddBlobServiceClient(options.StorageConnectionString);
+            builder.AddBlobServiceClient(options.ConnectionString);
         });
 
         services.AddSingleton<IStorageService, AzureBlobStorageService>();

@@ -8,31 +8,19 @@ namespace CareerBoostAI.Infrastructure.Services.EmailService;
 
 public static class ServiceInjector
 {
-    public static IServiceCollection AddSmtpFluentEmail(
-        this IServiceCollection services, IConfiguration configuration)
-    {
-        var options = configuration.GetOptions<SmtpEmailOptions>("Email:Smtp");
-        services
-            .AddFluentEmail(options.DefaultFromAddress)
-            .AddSmtpSender(options.Host, options.Port);
-        services.AddScoped<IEmailService>(provider => 
-            new SystemEmailService(
-                provider.GetRequiredService<IFluentEmailFactory>(), 
-                options.DefaultToAddresses));
-        return services;
-    }
     
-    public static IServiceCollection AddGoogleFluentEmail(
+    
+    public static IServiceCollection AddFluentSmtpEmail(
         this IServiceCollection services, IConfiguration configuration)
     {
-        var options = configuration.GetOptions<GoogleMailOptions>("Email:GoogleMail");
+        var options = configuration.GetOptions<EmailOptions>("Email:Smtp");
         services
             .AddFluentEmail(options.DefaultFromAddress)
             .AddSmtpSender(options.Host, options.Port, options.Username, options.Password);
         services.AddScoped<IEmailService>(provider => 
             new SystemEmailService(
                 provider.GetRequiredService<IFluentEmailFactory>(), 
-                options.DefaultToAddresses));
+                options.DefaultToAddresses.Split(',').ToList()));
         return services;
     }
 }

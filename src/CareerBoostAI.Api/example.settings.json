@@ -13,8 +13,7 @@
   },
   "Storage" : {
     "Azure": {
-      "StorageConnectionString": "",
-      "ApiKey" : ""
+      "ConnectionString": ""
     }
   },
   "AI" : {
@@ -31,18 +30,12 @@
     }
   },
   "Email" : {
-    "GoogleMail" : {
+    "Smtp" : {
       "DefaultFromAddress" : "",
       "Host" : "smtp.gmail.com",
       "Port" : "587",
       "Username" : "",
       "Password" : "",
-      "DefaultToAddresses" : []
-    },
-    "Smtp" : {
-      "DefaultFromAddress" : "",
-      "Host" : "",
-      "Port" : "",
       "DefaultToAddresses" : []
     }
   }

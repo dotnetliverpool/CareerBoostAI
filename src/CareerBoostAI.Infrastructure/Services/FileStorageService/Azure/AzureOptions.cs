@@ -2,5 +2,5 @@
 
 public class AzureOptions
 {
-    public string StorageConnectionString { get; set; }
+    public string ConnectionString { get; set; }
 }

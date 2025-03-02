@@ -24,7 +24,7 @@ public static class ServicesDependencyInjection
         // services.AddAzureBlobStorage(configuration);
         services.AddSingleton<IStorageService, DummyUploadService>();
         services.AddOpenAiClient(configuration);
-        services.AddGoogleFluentEmail(configuration);
+        services.AddFluentSmtpEmail(configuration);
         services.AddScoped<IOcrService, AppOcrService>();
         services.AddScoped<ICvDocumentContentParser, OpenAiCvContentParser>();
         services.AddKeyedSingleton<IJsonService, SystemJsonService>(JsonServices.System.ToString());
