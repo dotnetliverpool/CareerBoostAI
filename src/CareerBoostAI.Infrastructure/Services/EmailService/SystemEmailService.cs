@@ -19,7 +19,7 @@ public class SystemEmailService(IFluentEmailFactory emailClientFactory,
                 .To(_defaultToAddresses)
                 .SendAsync();
         }
-        catch (Exception ex)
+        catch (Exception _)
         {
             // Silently fail, do nothing on exception
             // Log this error later

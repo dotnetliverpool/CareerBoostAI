@@ -1,4 +1,4 @@
-﻿namespace CareerBoostAI.Infrastructure.Services.LlmService;
+﻿namespace CareerBoostAI.Infrastructure.Services.AiClient;
 
 public class OpenAiClientOptions
 {

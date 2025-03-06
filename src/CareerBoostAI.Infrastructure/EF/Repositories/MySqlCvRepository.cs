@@ -10,7 +10,6 @@ public class MySqlCvRepository(CareerBoostWriteDbContext context) : ICvRepositor
 {
     private readonly DbSet<Cv> _cvs = context.Cvs;
     private readonly DbSet<Skill> _skills = context.Skills;
-    private readonly CareerBoostWriteDbContext _context = context;
     public async Task<Cv?> GetByEmailAsync(string email, CancellationToken cancellationToken)
     {
         return await _cvs

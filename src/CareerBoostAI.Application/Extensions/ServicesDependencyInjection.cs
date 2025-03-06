@@ -5,7 +5,6 @@ using CareerBoostAI.Domain.CandidateContext.Services;
 using CareerBoostAI.Domain.CvContext.Factory;
 using CareerBoostAI.Domain.CvContext.Services;
 using CareerBoostAI.Domain.UploadContext;
-using CareerBoostAI.Domain.UploadContext.ValueObjects;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CareerBoostAI.Application.Extensions;

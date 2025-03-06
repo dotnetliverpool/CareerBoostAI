@@ -1,4 +1,4 @@
-﻿namespace CareerBoostAI.Domain.Constants;
+﻿namespace CareerBoostAI.Domain.Common.Constants;
 
 public class DomainConstants
 {

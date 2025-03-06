@@ -1,8 +1,5 @@
-﻿using CareerBoostAI.Domain.Common.Exceptions;
-using CareerBoostAI.Domain.CvContext.Factory;
+﻿using CareerBoostAI.Domain.CvContext.Factory;
 using CareerBoostAI.Domain.CvContext.ValueObjects;
-using Shouldly;
-using Xunit;
 
 namespace CareerBoostAI.Tests.Unit.Domain.Cv.InvarianceTests;
 

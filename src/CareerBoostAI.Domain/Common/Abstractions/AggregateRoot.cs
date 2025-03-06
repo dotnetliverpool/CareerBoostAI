@@ -1,4 +1,4 @@
-﻿using CareerBoostAI.Domain.Abstractions;
+﻿
 
 namespace CareerBoostAI.Domain.Common.Abstractions;
 

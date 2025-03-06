@@ -1,5 +1,4 @@
-﻿using CareerBoostAI.Application.Common.Abstractions;
-using CareerBoostAI.Application.Common.Abstractions.Mediator;
+﻿using CareerBoostAI.Application.Common.Abstractions.Mediator;
 using CareerBoostAI.Application.Common.Abstractions.Transaction;
 using CareerBoostAI.Application.Notifications;
 using CareerBoostAI.Application.Services.EmailService;
@@ -52,7 +51,7 @@ namespace CareerBoostAI.Application.Candidate.Commands.CreateOrUpdateData;
             var cv = await cvRepository
                 .GetByEmailAsync(candidate!.Email.Value, cancellationToken);
             
-            profileUpdateDomainService.Update(candidate!, 
+            profileUpdateDomainService.Update(candidate, 
                 command.FirstName, command.LastName, command.DateOfBirth,
                 command.PhoneCode, command.PhoneNumber);
             cvUpdateService.Update(cv!, command.CreateCvCommand.AsDomainCvData());

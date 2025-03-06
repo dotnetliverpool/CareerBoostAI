@@ -1,4 +1,4 @@
-﻿namespace CareerBoostAI.Domain.Abstractions;
+﻿namespace CareerBoostAI.Domain.Common.Abstractions;
 
 public interface IDomainEvent
 {

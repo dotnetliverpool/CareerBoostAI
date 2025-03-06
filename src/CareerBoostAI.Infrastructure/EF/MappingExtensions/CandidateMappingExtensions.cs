@@ -32,8 +32,8 @@ public static class CandidateMappinngExtensions
         {
             Id = cvReadModel.Id,
             Summary = cvReadModel.Summary,
-            Skills = cvReadModel.Skills?.Select(cs => cs.Name) ?? [],
-            Languages = cvReadModel.Languages?.Select(cl => cl.Name) ?? [],
+            Skills = cvReadModel.Skills.Select(cs => cs.Name) ,
+            Languages = cvReadModel.Languages.Select(cl => cl.Name),
             Experiences = cvReadModel.Experiences.Select(exp => exp.AsDto()),
             Educations = cvReadModel.Educations.Select(exp => exp.AsDto()),
             

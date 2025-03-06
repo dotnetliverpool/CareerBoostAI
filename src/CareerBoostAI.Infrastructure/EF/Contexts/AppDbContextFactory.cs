@@ -13,20 +13,25 @@ internal class AppDbContextFactory : IDesignTimeDbContextFactory<CareerBoostRead
     
     public CareerBoostReadDbContext CreateDbContext(string[] args)
     {
-        var configuration = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
-            .AddJsonFile("dev.settings.json", optional:true, reloadOnChange: true)
-            .AddJsonFile("settings.json", optional: true, reloadOnChange: true)
-            .AddEnvironmentVariables()
-            .Build();
-        var mySqlOptions = configuration.GetOptions<MySqlOptions>("Database:MySql");  
-        var serverVersion = new MySqlServerVersion(new Version(mySqlOptions.ServerVersion));
-
+        
         var optionsBuilder = new DbContextOptionsBuilder<CareerBoostReadDbContext>();
-        optionsBuilder.UseMySql(
-            connectionString: mySqlOptions.ConnectionString,
-            serverVersion: serverVersion);
+
+        if (!optionsBuilder.IsConfigured) // Only configure if EF hasn't already set it
+        {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("dev.settings.json", optional:true, reloadOnChange: true)
+                .AddJsonFile("settings.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables()
+                .Build();
+            var mySqlOptions = configuration.GetOptions<MySqlOptions>("Database:MySql");  
+            var serverVersion = new MySqlServerVersion(new Version(mySqlOptions.ServerVersion));
+            
+            optionsBuilder.UseMySql(
+                connectionString: mySqlOptions.ConnectionString,
+                serverVersion: serverVersion);
+        }
 
         return new CareerBoostReadDbContext(optionsBuilder.Options);
     }

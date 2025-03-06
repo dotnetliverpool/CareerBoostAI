@@ -1,6 +1,6 @@
 ﻿using CareerBoostAI.Application.Common.Abstractions.Transaction;
 using CareerBoostAI.Infrastructure.EF.Contexts;
-using CareerBoostAI.Shared.Abstractions.Exceptions;
+
 
 namespace CareerBoostAI.Infrastructure.EF.Transaction;
 

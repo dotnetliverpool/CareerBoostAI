@@ -1,5 +1,4 @@
 ﻿using CareerBoostAI.Domain.CvContext.Entities;
-using Shouldly;
 
 namespace CareerBoostAI.Tests.Unit.Domain.Cv;
 

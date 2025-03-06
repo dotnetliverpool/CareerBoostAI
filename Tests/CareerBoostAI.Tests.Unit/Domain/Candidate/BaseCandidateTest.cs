@@ -2,7 +2,6 @@
 using CareerBoostAI.Domain.CandidateContext.ValueObjects;
 using CareerBoostAI.Domain.Common.Services;
 using CareerBoostAI.Domain.Common.ValueObjects;
-using NSubstitute;
 
 namespace CareerBoostAI.Tests.Unit.Domain.Candidate;
 

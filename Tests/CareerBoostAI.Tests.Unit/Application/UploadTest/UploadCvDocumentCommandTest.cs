@@ -1,6 +1,5 @@
 ﻿using CareerBoostAI.Application.Candidate;
 using CareerBoostAI.Application.Candidate.Commands.UploadCvDocument;
-using CareerBoostAI.Application.Common.Abstractions;
 using CareerBoostAI.Application.Common.Abstractions.Mediator;
 using CareerBoostAI.Application.Common.Abstractions.Transaction;
 using CareerBoostAI.Application.Common.Exceptions;
@@ -8,8 +7,6 @@ using CareerBoostAI.Application.Services;
 using CareerBoostAI.Application.Services.DocumentConstraintsService;
 using CareerBoostAI.Domain.UploadContext;
 using NSubstitute;
-using Shouldly;
-using Xunit;
 
 namespace CareerBoostAI.Tests.Unit.Application.UploadTest;
 
@@ -217,8 +214,9 @@ public class UploadCvDocumentCommandHandlerTest
 public class TestStorageDocument : IStorageDocument
 {
     public Guid Id { get; init; }
-    public string Address { get; init; }
-    public string OriginalName { get; init; }
-    public string FileExtension { get; init; }
-    public StorageMedium StorageMedium { get; }
+    public required string Address { get; init; }
+    public required string OriginalName { get; init; }
+    public required string FileExtension { get; init; }
+    public StorageMedium StorageMedium 
+        => StorageMedium.AzureStorageBlob;
 }

@@ -1,9 +1,7 @@
-﻿using Azure.Storage.Blobs;
-using CareerBoostAI.Application.Services;
+﻿using CareerBoostAI.Application.Services;
 using Microsoft.Extensions.Azure;
 using CareerBoostAI.Infrastructure.Extensions;
 using CareerBoostAI.Infrastructure.Services.FileStorageService.Azure;
-using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

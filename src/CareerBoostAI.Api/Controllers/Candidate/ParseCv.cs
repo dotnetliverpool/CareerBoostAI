@@ -2,14 +2,13 @@
 using CareerBoostAI.Application.Candidate.Commands.ParseCv;
 using MediatR;
 using Microsoft.Azure.Functions.Worker;
-using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 
 namespace CareerBoostAI.Api.Controllers.Candidate;
 
-public class ParseCv(ILogger<ParseCv> logger, IMediator mediator)
+public class ParseCv( IMediator mediator)
 {
     [Function(nameof(ParseCv))]
     [OpenApiOperation(operationId: nameof(ParseCv), 

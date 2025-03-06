@@ -1,3 +1,2 @@
-using Xunit;
-using NSubstitute;
-using Shouldly;
+global using Xunit;
+global using Shouldly;

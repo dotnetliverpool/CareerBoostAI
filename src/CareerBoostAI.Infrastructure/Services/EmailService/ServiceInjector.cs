@@ -20,7 +20,7 @@ public static class ServiceInjector
         services.AddScoped<IEmailService>(provider => 
             new SystemEmailService(
                 provider.GetRequiredService<IFluentEmailFactory>(), 
-                options.DefaultToAddresses.Split(',').ToList()));
+                options.DefaultToAddresses?.Split(',').ToList() ?? new List<string>()));
         return services;
     }
 }

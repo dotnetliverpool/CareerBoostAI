@@ -9,9 +9,9 @@ namespace CareerBoostAI.Infrastructure.Services.FileStorageService.Azure;
 public class AzureBlobUploadDocument : IStorageDocument
 {
     public Guid Id { get; init; }
-    public string Address { get; init; }
-    public string OriginalName { get; init; }
-    public string FileExtension { get; init; }
+    public required string Address { get; init; }
+    public required string OriginalName { get; init; }
+    public required string FileExtension { get; init; }
     public StorageMedium StorageMedium => StorageMedium.AzureStorageBlob;
 }
 

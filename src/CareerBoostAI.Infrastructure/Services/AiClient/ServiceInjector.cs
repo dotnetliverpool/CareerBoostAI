@@ -1,7 +1,5 @@
 ﻿using System.ClientModel;
-using CareerBoostAI.Infrastructure.Extensions;
-using CareerBoostAI.Infrastructure.Services.LlmService;
-using Microsoft.Extensions.Configuration;
+using CareerBoostAI.Infrastructure.Extensions;using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.SemanticKernel;
 using OpenAI;

@@ -6,8 +6,6 @@ using CareerBoostAI.Application.Services;
 using CareerBoostAI.Application.Services.CvParseService;
 using CareerBoostAI.Application.Services.DocumentConstraintsService;
 using NSubstitute;
-using Shouldly;
-using Xunit;
 
 namespace CareerBoostAI.Tests.Unit.Application.CvTest;
 

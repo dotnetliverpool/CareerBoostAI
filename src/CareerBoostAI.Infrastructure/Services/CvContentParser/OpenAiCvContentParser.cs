@@ -1,12 +1,7 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-using CareerBoostAI.Application.Candidate.DTO;
-using CareerBoostAI.Application.Common.Abstractions.AiDto;
+﻿using CareerBoostAI.Application.Candidate.DTO;
 using CareerBoostAI.Application.Services.CvParseService;
 using CareerBoostAI.Application.Services.JsonService;
-using CareerBoostAI.Infrastructure.Common.Exception;
 using CareerBoostAI.Infrastructure.Services.AiClient;
-using CareerBoostAI.Infrastructure.Services.JsonService;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CareerBoostAI.Infrastructure.Services.CvContentParser;

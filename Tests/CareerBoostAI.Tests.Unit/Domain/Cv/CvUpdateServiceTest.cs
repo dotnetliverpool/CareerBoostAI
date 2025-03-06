@@ -1,9 +1,6 @@
-﻿using CareerBoostAI.Domain.Common.ValueObjects;
-using CareerBoostAI.Domain.CvContext.Factory;
+﻿using CareerBoostAI.Domain.CvContext.Factory;
 using CareerBoostAI.Domain.CvContext.Services;
 using CareerBoostAI.Domain.CvContext.ValueObjects;
-using Shouldly;
-using Xunit;
 
 namespace CareerBoostAI.Tests.Unit.Domain.Cv;
 

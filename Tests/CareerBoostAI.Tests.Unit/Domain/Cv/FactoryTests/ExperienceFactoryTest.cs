@@ -2,8 +2,7 @@
 using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.CvContext.Entities;
 using CareerBoostAI.Domain.CvContext.ValueObjects;
-using Shouldly;
-using Xunit;
+
 
 namespace CareerBoostAI.Tests.Unit.Domain.Cv.FactoryTests;
 

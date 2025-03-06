@@ -1,10 +1,7 @@
-﻿using System.Text;
-using CareerBoostAI.Application.Services;
+﻿using CareerBoostAI.Application.Services;
 using CareerBoostAI.Application.Services.DocumentConstraintsService;
 using CareerBoostAI.Infrastructure.Common.Exception;
 using CareerBoostAI.Infrastructure.Services.OcrService.Implementations;
-using Microsoft.Extensions.FileProviders;
-using UglyToad.PdfPig;
 
 namespace CareerBoostAI.Infrastructure.Services.OcrService;
 

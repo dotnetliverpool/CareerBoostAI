@@ -1,6 +1,4 @@
-﻿using CareerBoostAI.Application.Candidate;
-using CareerBoostAI.Application.Candidate.Commands.UpdateCvContent;
-using CareerBoostAI.Application.Common.Abstractions;
+﻿using CareerBoostAI.Application.Candidate.Commands.UpdateCvContent;
 using CareerBoostAI.Application.Common.Abstractions.Mediator;
 using CareerBoostAI.Application.Common.Abstractions.Transaction;
 using CareerBoostAI.Application.Common.Exceptions;
@@ -8,9 +6,6 @@ using CareerBoostAI.Domain.CvContext;
 using CareerBoostAI.Domain.CvContext.Factory;
 using CareerBoostAI.Domain.CvContext.Services;
 using NSubstitute;
-using NSubstitute.ReceivedExtensions;
-using Shouldly;
-using Xunit;
 
 namespace CareerBoostAI.Tests.Unit.Application.CvTest;
 

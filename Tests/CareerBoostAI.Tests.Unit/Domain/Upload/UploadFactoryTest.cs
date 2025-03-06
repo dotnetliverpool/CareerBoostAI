@@ -2,8 +2,6 @@
 using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.UploadContext;
 using CareerBoostAI.Domain.UploadContext.ValueObjects;
-using Shouldly;
-using Xunit;
 
 namespace CareerBoostAI.Tests.Unit.Domain.Upload;
 

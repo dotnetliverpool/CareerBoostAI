@@ -1,7 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using CareerBoostAI.Domain.Common.Abstractions;
 using CareerBoostAI.Domain.Common.Exceptions;
-using CareerBoostAI.Domain.Common.Services;
 
 namespace CareerBoostAI.Domain.Common.ValueObjects;
 

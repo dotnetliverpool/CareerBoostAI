@@ -1,6 +1,5 @@
 ﻿using CareerBoostAI.Domain.CandidateContext;
 using CareerBoostAI.Domain.Common.ValueObjects;
-using CareerBoostAI.Domain.CvContext.ValueObjects;
 using CareerBoostAI.Infrastructure.EF.Contexts;
 using Microsoft.EntityFrameworkCore;
 namespace CareerBoostAI.Infrastructure.EF.Repositories;

@@ -1,21 +1,15 @@
 ﻿using CareerBoostAI.Application.Candidate;
-using CareerBoostAI.Application.Candidate.Commands.CreateOrUpdateData;
-using CareerBoostAI.Application.Common.Abstractions;
-using CareerBoostAI.Application.Common.Abstractions.Mediator;
+using CareerBoostAI.Application.Candidate.Commands.CreateOrUpdateData;using CareerBoostAI.Application.Common.Abstractions.Mediator;
 using CareerBoostAI.Application.Common.Abstractions.Transaction;
-using CareerBoostAI.Application.Common.Exceptions;
 using CareerBoostAI.Application.Notifications;
 using CareerBoostAI.Application.Services.EmailService;
 using CareerBoostAI.Domain.CandidateContext;
 using CareerBoostAI.Domain.CandidateContext.Factories;
 using CareerBoostAI.Domain.CandidateContext.Services;
-using CareerBoostAI.Domain.Common.ValueObjects;
 using CareerBoostAI.Domain.CvContext;
 using CareerBoostAI.Domain.CvContext.Factory;
 using CareerBoostAI.Domain.CvContext.Services;
 using NSubstitute;
-using Shouldly;
-using Xunit;
 
 namespace CareerBoostAI.Tests.Unit.Application.CandidateTest;
 

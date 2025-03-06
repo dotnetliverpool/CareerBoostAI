@@ -1,6 +1,4 @@
-﻿using CareerBoostAI.Domain.Common.Abstractions;
-
-namespace CareerBoostAI.Domain.Common.Exceptions;
+﻿namespace CareerBoostAI.Domain.Common.Exceptions;
 
 public static class DomainExceptionExtensions
 {

@@ -1,6 +1,6 @@
 ﻿using CareerBoostAI.Application.Services;
 using CareerBoostAI.Application.Services.CvParseService;
-using CareerBoostAI.Application.Services.EmailService;
+
 using CareerBoostAI.Application.Services.JsonService;
 using CareerBoostAI.Domain.Common.Services;
 using CareerBoostAI.Infrastructure.EF.Extensions;

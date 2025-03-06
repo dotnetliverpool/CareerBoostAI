@@ -1,5 +1,4 @@
-﻿using CareerBoostAI.Application.Services.DocumentConstraintsService;
-using CareerBoostAI.Shared.Abstractions.Exceptions;
+﻿using CareerBoostAI.Shared.Abstractions.Exceptions;
 
 namespace CareerBoostAI.Application.Common.Exceptions;
 

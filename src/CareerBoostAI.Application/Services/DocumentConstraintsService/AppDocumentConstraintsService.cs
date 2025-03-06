@@ -14,14 +14,14 @@ public class AppDocumentConstraintsService : IDocumentConstraintsService
 
     public bool SupportsDocumentType(string documentName)
     {
-        var extension = Path.GetExtension(documentName)?.ToLowerInvariant();
+        var extension = Path.GetExtension(documentName).ToLowerInvariant();
         return !string.IsNullOrEmpty(extension) && _supportedFileTypes
             .Any(type => extension == $".{type.ToString().ToLowerInvariant()}");
     }
     
     public SupportedDocumentTypes? GetDocumentType(string documentName)
     {
-        var extension = Path.GetExtension(documentName)?.ToLowerInvariant();
+        var extension = Path.GetExtension(documentName).ToLowerInvariant();
 
         if (string.IsNullOrEmpty(extension))
             return null;

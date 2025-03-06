@@ -1,4 +1,5 @@
-﻿using CareerBoostAI.Domain.Abstractions;
+﻿
+using CareerBoostAI.Domain.Common.Abstractions;
 
 namespace CareerBoostAI.Domain.Common.Events;
 

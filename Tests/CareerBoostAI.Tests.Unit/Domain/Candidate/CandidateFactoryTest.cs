@@ -1,8 +1,6 @@
 ﻿using CareerBoostAI.Domain.CandidateContext.ValueObjects;
 using CareerBoostAI.Domain.Common.Exceptions;
 using CareerBoostAI.Domain.Common.ValueObjects;
-using Shouldly;
-using Xunit;
 
 namespace CareerBoostAI.Tests.Unit.Domain.Candidate;
 

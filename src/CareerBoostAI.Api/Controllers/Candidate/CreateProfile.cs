@@ -1,18 +1,16 @@
 ﻿using System.Net;
 using CareerBoostAI.Application.Candidate.Commands.CreateOrUpdateData;
 using CareerBoostAI.Application.Services.JsonService;
-using CareerBoostAI.Infrastructure.Services.JsonService;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace CareerBoostAI.Api.Controllers.Candidate;
 
-public class CreateProfile(ILogger<CreateProfile> logger,
+public class CreateProfile(
     IMediator mediator, 
     [FromKeyedServices("OpenApi")] IJsonService jsonService)
 {

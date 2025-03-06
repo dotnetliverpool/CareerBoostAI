@@ -1,6 +1,5 @@
 ﻿using CareerBoostAI.Application.Common.Abstractions.Transaction;
 using CareerBoostAI.Application.Services;
-using Microsoft.Extensions.Logging;
 
 namespace CareerBoostAI.Infrastructure.Services.FileStorageService.Azure;
 
