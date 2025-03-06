@@ -59,12 +59,8 @@ jobs:
         
       - name: Update Database
         shell: powershell
-        run: >-
-          dotnet ef database update 
-            --startup-project ${{ env.FUNCTION_PROJECT_PATH }}
-            --project .\src\CareerBoostAI.Infrastructure\CareerBoostAI.Infrastructure.csproj 
-            --context CareerBoostReadDbContext 
-            --connection ${{ secrets.MYSQL_CONNECTION_STRING }}
+        run: |
+          dotnet ef database update --startup-project ${{ env.FUNCTION_PROJECT_PATH }} --project .\src\CareerBoostAI.Infrastructure\CareerBoostAI.Infrastructure.csproj --context CareerBoostReadDbContext --connection ${{ secrets.MYSQL_CONNECTION_STRING }}
         working-directory: ${{ env.ROOT_SOLUTION_PATH }}
       
       
