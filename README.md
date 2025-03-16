@@ -3,8 +3,8 @@
 [![.NET](https://img.shields.io/badge/.NET%208-512BD4?style=for-the-badge&logo=.net&logoColor=white)](https://dotnet.microsoft.com/download)
 [![Azure](https://img.shields.io/badge/Azure-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white)](https://azure.microsoft.com/)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=for-the-badge)](https://www.gnu.org/licenses/gpl-3.0)
-[!Tests](https://github.com/dotnetliverpool/CareerBoostAI/actions/workflows/test.yml/badge.svg)
 [![DotNet Liverpool](https://img.shields.io/badge/DotNet_Liverpool-Community-blue?style=for-the-badge)](https://dotnetliverpool.org.uk)
+[![Tests](https://github.com/dotnetliverpool/CareerBoostAI/actions/workflows/test.yml/badge.svg)](https://github.com/dotnetliverpool/CareerBoostAI/actions/workflows/test.yml)
 
 [![CareerBoostAI Architecture](https://github.com/user-attachments/assets/b02351e0-b103-414d-bb93-33d32261cc1b)](https://miro.com/app/board/uXjVL3G3HTE=/?share_link_id=970213690232)
 
