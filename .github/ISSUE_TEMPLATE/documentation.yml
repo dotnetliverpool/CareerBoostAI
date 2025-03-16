@@ -1,0 +1,77 @@
+name: 📝 Documentation Improvement
+description: Suggest improvements to our documentation
+title: "[Docs]: "
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to help us improve our documentation!
+        
+  - type: dropdown
+    id: doc-type
+    attributes:
+      label: Documentation Type
+      description: What type of documentation needs improvement?
+      options:
+        - README
+        - API Documentation
+        - Code Comments
+        - Architecture Documentation
+        - Setup/Installation Guide
+        - Contributing Guidelines
+        - Other (specify in description)
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: Documentation Location
+      description: Where is the documentation you'd like to improve? (URL or file path)
+      placeholder: e.g., /docs/api.md or https://github.com/.../docs/api.md
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What's Wrong?
+      description: Describe what's wrong or missing in the current documentation
+      placeholder: The documentation is missing information about...
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested Improvement
+      description: Describe your suggestion for improving the documentation
+      placeholder: I suggest adding/changing...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: domain
+    attributes:
+      label: Related Domain Area
+      description: Which domain area does this documentation relate to?
+      multiple: true
+      options:
+        - CV Analysis
+        - Job Matching
+        - Career Path
+        - User Management
+        - Infrastructure/Cross-cutting
+        - General Project Documentation
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this documentation improvement, you agree to follow our [Code of Conduct](../CODE_OF_CONDUCT.md)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true 
