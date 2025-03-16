@@ -1,0 +1,30 @@
+name: 🧪 Test
+
+on:
+  push:
+    branches: [ "main", "dev" ]
+  pull_request:
+    branches: [ "main", "dev" ]
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  test:
+    name: Build and Test
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: 🔧 Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
+        
+    - name: 🔄 Restore dependencies
+      run: dotnet restore
+      
+    - name: 🏗️ Build
+      run: dotnet build --no-restore --configuration Release
+      
+    - name: 🧪 Run tests
+      run: dotnet test --no-build --configuration Release --verbosity normal 
